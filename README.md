@@ -1,0 +1,1 @@
+# accimoto-pieces-manager
