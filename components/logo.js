@@ -18,7 +18,13 @@ export default class Logo extends Component {
       : require('../assets/images/logo_gb.png');
 
       return (
-        <Image resizeMode="contain" source={src} style={this.props.style} />
+        <Image resizeMode="contain" source={src} style={[styles.logo,this.props.style]} />
       )
     }
 }
+
+const styles = StyleSheet.create({
+  logo: {
+    width: "80%",
+  }
+});
