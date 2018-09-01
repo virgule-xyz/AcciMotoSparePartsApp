@@ -3,15 +3,10 @@ import {ColorOrange, ColorBlack, ButtonHeight} from '../UI';
 import ActionButton from '../components/button';
 import Logo from '../components/logo';
 import {
-  Platform,
   StyleSheet,
   Container,
-  TouchableNativeFeedback,
   Text,
-  BackHandler,
-  PermissionsAndroid,
-  View,
-  AsyncStorage
+  View
 } from 'react-native';
 
 type Props = {};
