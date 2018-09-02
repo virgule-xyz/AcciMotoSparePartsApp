@@ -30,7 +30,8 @@ export default class SparePartSelector extends Component {
     this.state = {
       searching: false,
       found: false,
-      part: null
+      part: null,
+      openbarcode: true
     }
   }
 
@@ -108,26 +109,30 @@ export default class SparePartSelector extends Component {
       <Text style={styles.title}>{
           this.state.found
             ? lg.selectionnez_une_piece_6
-            : (this.state.searching ? lg.selectionnez_une_piece_5 : lg.selectionnez_une_piece_1)
+            : (
+              this.state.searching
+              ? lg.selectionnez_une_piece_5
+              : lg.selectionnez_une_piece_1)
         }</Text>
       <TextInput editable={!this.state.searching} style={[
           styles.input,
           (
-            this.state.searching | this.state.found
+            this.state.searching | this.state.found | this.state.openbarcode
             ? styles.hide
             : null)
-        ]} placeholder={lg.selectionnez_une_piece_2} allowFontScaling={true} autoFocus={false} clearTextOnFocus={true} keyboardType='number-pad' returnKeyType='search' returnKeyLabel='Trouver' underlineColorAndroid={ColorOrange} onSubmitEditing={this.onSubmitEditing}/>
+        ]} placeholder={lg.selectionnez_une_piece_2} allowFontScaling={true} autoFocus={false} clearTextOnFocus={true} keyboardType='number-pad' returnKeyType='search' underlineColorAndroid={ColorOrange} onSubmitEditing={this.onSubmitEditing}/>
       <Text style={[
           styles.label_or,
           (
-            this.state.searching | this.state.found
+            this.state.searching | this.state.found | this.state.openbarcode
             ? styles.hide
             : null)
         ]}>{lg.selectionnez_une_piece_3}</Text>
+
       <TouchableOpacity disabled={this.state.searching} onPress={this.onPressBarcode} style={[
           styles.codebar,
           (
-            this.state.searching | this.state.found
+            this.state.searching | this.state.found | this.state.openbarcode
             ? styles.hide
             : null)
         ]}>
