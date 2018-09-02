@@ -12,6 +12,7 @@ export const UIStrings = {
   'fr': {
     'oui': 'oui',
     'non': 'non',
+    'annuler': 'Annuler',
     'accueil': 'ACCUEIL',
     'selection_de_la_piece': 'Sélection de la pièce',
     'indiquer_numero_piece': 'Veuillez indiquer le numéro de la pièce :',
@@ -25,11 +26,14 @@ export const UIStrings = {
     'selectionnez_une_piece_5': 'Nous recherchons la pièce...',
     'selectionnez_une_piece_6': 'La pièce a bien été trouvée.',
     'piece_inexistante': 'Cette pièce n\'existe pas !',
-    'next_step': 'Prendre des photos'
+    'next_step': 'Prendre des photos',
+    'permission_camera_title':'Demande d\'autorisation',
+    'permission_camera_message': 'Vous devez autoriser l\'usage de la caméra',
   },
   'gb': {
     'oui': 'yes',
     'non': 'no',
+    'annuler': 'Cancel',
     'accueil': 'HOME',
     'selection_de_la_piece': 'Spare part select',
     'indiquer_numero_piece': 'Please provide piece id:',
@@ -43,6 +47,8 @@ export const UIStrings = {
     'selectionnez_une_piece_5': 'We are searching for the piece...',
     'selectionnez_une_piece_6': 'Spare part found.',
     'piece_inexistante': 'This piece does not exist!',
-    'next_step': 'Take pictures'
+    'next_step': 'Take pictures',
+    'permission_camera_title':'Authorization request',
+    'permission_camera_message': 'Please allow camera usage',
   }
 };

@@ -8,7 +8,7 @@ export default createStackNavigator({
   Screen2: Screen2,
   ScreenBarcode: Screen3
 }, {
-  initialRouteName: 'Screen2',
+  initialRouteName: 'Start',
   navigationOptions: {
     header: null
   }

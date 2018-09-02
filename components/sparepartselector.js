@@ -20,8 +20,11 @@ import {
   ButtonRadius,
   ButtonElevation,
   ButtonFontSize,
+  ButtonPadding,
   ColorOrange
 } from '../UI';
+
+import {RNCamera} from 'react-native-camera';
 
 export default class SparePartSelector extends Component {
 
@@ -31,39 +34,20 @@ export default class SparePartSelector extends Component {
       searching: false,
       found: false,
       part: null,
-      openbarcode: true
+      openbarcode: false
     }
-  }
-
-  ComponentDidMount = () => {
-    async function requestCameraPermission() {
-      try {
-        const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA, {
-          'title': 'Cool Photo App Camera Permission',
-          'message': 'Cool Photo App needs access to your camera ' + 'so you can take awesome pictures.'
-        })
-        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          console.log("You can use the camera")
-        } else {
-          console.log("Camera permission denied")
-        }
-      } catch (err) {
-        console.warn(err)
-      }
-    }
-
-    // requestCameraPermission();
   }
 
   onError = () => {
+    this.setState({searching: false, found: false, part: null, openbarcode: false});
     const lg = UIStrings[this.props.language];
     ToastAndroid.showWithGravity(lg.piece_inexistante, ToastAndroid.SHORT, ToastAndroid.CENTER);
-    this.setState({searching: false, found: false, part: null});
   }
 
   searchSparePart = (partId) => {
+    console.warn('searchSparePart:', partId);
     if (partId && partId.length > 0) {
-      this.setState({searching: true, found: false, part: partId});
+      this.setState({searching: true, found: false, part: partId, openbarcode: false});
       setTimeout(() => {
         this.setState({searching: false, found: true});
       }, 2000);
@@ -81,10 +65,21 @@ export default class SparePartSelector extends Component {
 
   onPressBarcode = () => {
     Keyboard.dismiss;
-    this.setState({searching: true, found: false});
-    setTimeout(() => {
-      this.searchSparePart(null);
-    }, 1000);
+    this.setState({searching: false, openbarcode: true, found: false});
+  }
+
+  onCancelBarcode = () => {
+    Keyboard.dismiss;
+    this.setState({searching: false, found: false, openbarcode: false});
+  }
+
+  onBarcodeRead = (event) => {
+    console.warn(event.data);
+    if (event.data !== null) {
+      this.setState({openbarcode: false});
+      this.searchSparePart(event.data);
+    }
+    return;
   }
 
   render() {
@@ -112,19 +107,22 @@ export default class SparePartSelector extends Component {
             : (
               this.state.searching
               ? lg.selectionnez_une_piece_5
-              : lg.selectionnez_une_piece_1)
+              : (
+                this.state.openbarcode
+                ? null
+                : lg.selectionnez_une_piece_1))
         }</Text>
       <TextInput editable={!this.state.searching} style={[
           styles.input,
           (
-            this.state.searching | this.state.found | this.state.openbarcode
+            this.state.searching | this.state.found | this.state.openbarcode
             ? styles.hide
             : null)
         ]} placeholder={lg.selectionnez_une_piece_2} allowFontScaling={true} autoFocus={false} clearTextOnFocus={true} keyboardType='number-pad' returnKeyType='search' underlineColorAndroid={ColorOrange} onSubmitEditing={this.onSubmitEditing}/>
       <Text style={[
           styles.label_or,
           (
-            this.state.searching | this.state.found | this.state.openbarcode
+            this.state.searching | this.state.found | this.state.openbarcode
             ? styles.hide
             : null)
         ]}>{lg.selectionnez_une_piece_3}</Text>
@@ -132,7 +130,7 @@ export default class SparePartSelector extends Component {
       <TouchableOpacity disabled={this.state.searching} onPress={this.onPressBarcode} style={[
           styles.codebar,
           (
-            this.state.searching | this.state.found | this.state.openbarcode
+            this.state.searching | this.state.found | this.state.openbarcode
             ? styles.hide
             : null)
         ]}>
@@ -161,6 +159,30 @@ export default class SparePartSelector extends Component {
             height: 40
           }}/>
       </TouchableOpacity>
+      <View style={[
+          styles.barcodewrapper,
+          (
+            this.state.openbarcode
+            ? null
+            : styles.hide)
+        ]}>
+        <RNCamera ref={ref => {
+            this.camera = ref;
+          }} style={styles.preview} type={RNCamera.Constants.Type.back} permissionDialogTitle={lg.permission_camera_title} permissionDialogMessage={lg.permission_camera_message} onBarCodeRead={this.onBarcodeRead}>
+          <View style={{
+              width: '80%',
+              height: '60%',
+              borderWidth: 2,
+              borderColor: 'red'
+            }}></View>
+        </RNCamera>
+        <TouchableOpacity style={styles.cancel} onPress={this.onCancelBarcode}>
+          <Text style={{
+              fontSize: ButtonFontSize,
+              color: '#fff'
+            }}>{lg.annuler}</Text>
+        </TouchableOpacity>
+      </View>
     </View>)
   }
 }
@@ -173,7 +195,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#FFF',
     width: '80%',
-    maxHeight: '50%',
+    maxHeight: '60%',
     paddingTop: 10,
     paddingBottom: 10
   },
@@ -224,5 +246,30 @@ const styles = StyleSheet.create({
   },
   show: {
     display: 'flex'
+  },
+  barcodewrapper: {
+    alignSelf: 'flex-start',
+    width: '100%',
+    height: 220 + ButtonHeight + ButtonElevation
+  },
+  preview: {
+    flex: 0,
+    flexGrow: 0,
+    width: '100%',
+    height: 200,
+    overflow: 'hidden',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 20
+  },
+  cancel: {
+    backgroundColor: ColorOrange,
+    height: ButtonHeight,
+    borderRadius: ButtonRadius,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    elevation: ButtonElevation,
+    paddingLeft: ButtonPadding,
+    paddingRight: ButtonPadding
   }
 });
