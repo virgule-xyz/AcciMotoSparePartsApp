@@ -6,9 +6,9 @@ import Screen3 from './screens/Screen3';
 export default createStackNavigator({
   Start: Screen1,
   Screen2: Screen2,
-  ScreenBarcode: Screen3
+  Screen3: Screen3
 }, {
-  initialRouteName: 'Start',
+  initialRouteName: 'Screen3',
   navigationOptions: {
     header: null
   }

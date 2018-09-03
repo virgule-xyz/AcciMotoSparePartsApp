@@ -5,16 +5,20 @@ import {
   Platform,
   StyleSheet,
   BackHandler,
+  TouchableOpacity,
+  Image,
   Text,
   View
 } from 'react-native';
 
-import {
+import UI, {
   UIStrings,
   ButtonHeight,
   ButtonRadius,
+  ButtonPadding,
   ButtonElevation,
   ButtonFontSize,
+  ButtonMargins,
   ColorOrange
 } from '../UI';
 
@@ -45,7 +49,25 @@ export default class Screen3 extends Component<Props> {
     const lg = UIStrings[language];
     return (<View style={styles.container}>
       <AppHeader language={language}/>
-      <Text>TEXTE</Text>
+      <View>
+        <Text>rond gris, nom de la pièce</Text>
+        <Text>marque / modèle / type de pièce</Text>
+        <Text>Ligne #1</Text>
+        <Text>Ligne #2</Text>
+      </View>
+      <View>
+        <Text>Galerie de photos et bouto d'effacement</Text>
+      </View>
+      <View style={styles.actionButtonWrapper}>
+        <TouchableOpacity style={[styles.actionButton, styles.actionButtonNew]} onPress={this.props.onButtonNewPress}>
+          <Image source={require('../assets/images/add.png')} style={styles.icons} />
+          <Text style={styles.buttonText}>Nouvelle photo</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.actionButton, styles.actionButtonEnd]} onPress={this.props.onButtonEndPress}>
+          <Text style={styles.buttonText}>Terminer</Text>
+          <Image source={require('../assets/images/check_mark.png')} style={styles.icons} />
+        </TouchableOpacity>
+      </View>
       <AppFooter navigation={this.props.navigation} language={language} uploaderCount={0}/>
     </View>);
   }
@@ -57,6 +79,33 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF'
+    backgroundColor: '#fff'
+  },
+  actionButtonWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '80%',
+    marginTop:ButtonMargins
+  },
+  actionButton: {
+    fontSize: ButtonFontSize,
+    paddingLeft: ButtonPadding/2,
+    paddingRight: ButtonPadding/2,
+    borderRadius: ButtonRadius,
+    backgroundColor: ColorOrange,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  actionButtonNew: {
+    width:'40%'
+  },
+  actionButtonEnd: {
+    width:'40%'
+  },
+  icons: {
+    width:ButtonHeight-10,
+    height:ButtonHeight-10
   }
 });
