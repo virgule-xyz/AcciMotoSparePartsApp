@@ -46,10 +46,13 @@ export default class SparePartSelector extends Component {
 
   searchSparePart = (partId) => {
     console.warn('searchSparePart:', partId);
+    //TODO : Faire la recherche dela pièce par le code et récupérer les infos de la pièce
     if (partId && partId.length > 0) {
       this.setState({searching: true, found: false, part: partId, openbarcode: false});
       setTimeout(() => {
         this.setState({searching: false, found: true});
+        //TODO : Envoyer vers l'écran 3 avec les données de la pièce
+        this.props.onSuccess();
       }, 2000);
     } else {
       this.onError();

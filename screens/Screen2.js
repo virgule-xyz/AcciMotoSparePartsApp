@@ -22,15 +22,21 @@ export default class Screen2 extends Component<Props> {
     this.backHandler.remove();
   }
 
+    onSuccess = () => {
+      const language = this.props.navigation.getParam('language', 'fr');
+      this.props.navigation.navigate('Screen3', {language: language});
+    }
+
   /**
    * [render description]
    * @return {[type]} [description]
+   * TODO: Ajouter une props onFound
    */
   render() {
     const language = this.props.navigation.getParam('language', 'fr');
     return (<View style={styles.container}>
       <AppHeader language={language}/>
-        <SparePartSelector style={styles.spareParts} language={language}/>
+        <SparePartSelector style={styles.spareParts} onSuccess={this.onSuccess} language={language}/>
       <AppFooter navigation={this.props.navigation} language={language} uploaderCount={0}/>
     </View>);
   }

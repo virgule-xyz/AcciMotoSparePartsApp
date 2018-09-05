@@ -1,10 +1,12 @@
 export const ColorOrange = '#ff9800';
 export const ColorBlack = '#454447';
+export const ColorGray = '#858487';
 export const ButtonHeight = 44;
 export const ButtonMargins = 10;
 export const ButtonRadius = 3;
 export const ButtonElevation = 4;
 export const ButtonFontSize = 16;
+export const TextFontSize = 16;
 export const ButtonPadding = 30;
 export const AlertTitle = "AcciMoto";
 
