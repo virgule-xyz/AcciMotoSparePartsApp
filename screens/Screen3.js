@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import AppHeader from '../components/header';
 import AppFooter from '../components/footer';
 import SparePartResume from '../components/sparepartresume';
+import EmptyPicture from '../components/emptypicture';
+import PartPicture from '../components/partpicture';
+import AddPictureButton from '../components/addpicturebutton';
 import {
   Platform,
   StyleSheet,
@@ -9,6 +12,7 @@ import {
   TouchableOpacity,
   Image,
   Text,
+  ScrollView,
   View
 } from 'react-native';
 
@@ -63,14 +67,22 @@ export default class Screen3 extends Component<Props> {
           marginTop: 150
         }}>
         <SparePartResume language={language}/>
-        <View>
-          <TouchableOpacity style={styles.actionButtonNew} onPress={this.props.onButtonNewPress}>
-            <Image source={require('../assets/images/add.png')} style={styles.icons}/>
-            <Text style={styles.buttonText}>Nouvelle photo</Text>
-          </TouchableOpacity>
-        </View>
+      <ScrollView contentContainerStyle={styles.picturesWrapper}>
+          <PartPicture/>
+          <PartPicture/>
+          <PartPicture/>
+          <PartPicture/>
+          <PartPicture/>
+          <PartPicture/>
+          <PartPicture/>
+          <PartPicture/>
+          <AddPictureButton language={language}/>
+          <EmptyPicture/>
+          <EmptyPicture/>
+          <EmptyPicture/>
+      </ScrollView>
         <View style={styles.actionButtonWrapper}>
-          <TouchableOpacity style={[styles.actionButton, styles.actionButtonEnd, 'display':'none']} onPress={this.props.onButtonEndPress}>
+          <TouchableOpacity style={[styles.actionButton, styles.actionButtonEnd, 'display' : 'none']} onPress={this.props.onButtonEndPress}>
             <Text style={styles.buttonText}>Terminer</Text>
             <Image source={require('../assets/images/check_mark.png')} style={styles.icons}/>
           </TouchableOpacity>
@@ -80,14 +92,22 @@ export default class Screen3 extends Component<Props> {
     </View>);
   }
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
     justifyContent: 'flex-start',
     alignItems: 'center',
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    overflow: 'hidden'
+  },
+  picturesWrapper: {
+    position: 'relative',
+    backgroundColor: 'blue',
+    marginHorizontal: '10%',
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    height: 2 * ButtonHeight +150
   },
   actionButtonWrapper: {
     flexDirection: 'row',
@@ -105,26 +125,26 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center'
   },
-  actionButtonNew: {
-    borderRadius: ButtonRadius,
-    backgroundColor: ColorOrange,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: ButtonHeight+50,
-    height: ButtonHeight+50,
-    elevation: ButtonElevation
-  },
+  // actionButtonNew: {
+  //   borderRadius: ButtonRadius,
+  //   backgroundColor: ColorOrange,
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  //   width: ButtonHeight+50,
+  //   height: ButtonHeight+50,
+  //   elevation: ButtonElevation
+  // },
   actionButtonEnd: {
     width: '40%',
     display: 'none'
   },
-  icons: {
-    width: ButtonHeight - 10,
-    height: ButtonHeight - 10
-  },
-  buttonText: {
-    fontSize: ButtonFontSize,
-    textAlign: 'center',
-    color: ColorBlack
-  }
+  // icons: {
+  //   width: ButtonHeight - 10,
+  //   height: ButtonHeight - 10
+  // },
+  // buttonText: {
+  //   fontSize: ButtonFontSize,
+  //   textAlign: 'center',
+  //   color: ColorBlack
+  // }
 });

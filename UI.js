@@ -1,6 +1,7 @@
 export const ColorOrange = '#ff9800';
-export const ColorBlack = '#454447';
-export const ColorGray = '#858487';
+export const ColorBlack = '#333';
+export const ColorGray = '#878787';
+export const ColorLightGray = '#B2B2B2';
 export const ButtonHeight = 44;
 export const ButtonMargins = 10;
 export const ButtonRadius = 3;

@@ -22,6 +22,7 @@ import {
   ColorOrange,
   ColorBlack,
   ColorGray,
+  ColorLightGray,
   TextFontSize
 } from '../UI';
 
@@ -71,14 +72,16 @@ const styles = StyleSheet.create({
   wrapper: {
     marginBottom: ButtonMargins,
     width: '80%',
+    marginHorizontal:'10%',
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    overflow:'hidden'
   },
   partwrapper:{
     marginLeft:5
   },
   puce: {
-    backgroundColor: ColorGray,
+    backgroundColor: ColorLightGray,
     borderRadius: 100,
     width: 30,
     height: 30,
