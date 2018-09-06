@@ -67,20 +67,22 @@ export default class Screen3 extends Component<Props> {
           marginTop: 150
         }}>
         <SparePartResume language={language}/>
-      <ScrollView contentContainerStyle={styles.picturesWrapper}>
-          <PartPicture/>
-          <PartPicture/>
-          <PartPicture/>
-          <PartPicture/>
-          <PartPicture/>
-          <PartPicture/>
-          <PartPicture/>
-          <PartPicture/>
-          <AddPictureButton language={language}/>
-          <EmptyPicture/>
-          <EmptyPicture/>
-          <EmptyPicture/>
-      </ScrollView>
+      <View style={styles.scrollPictureViewWrapper}>
+          <ScrollView contentContainerStyle={styles.picturesWrapper}>
+            <AddPictureButton language={language}/>
+            <PartPicture/>
+            <PartPicture/>
+            <PartPicture/>
+            <PartPicture/>
+            <PartPicture/>
+            <PartPicture/>
+            <PartPicture/>
+            <PartPicture/>
+            <EmptyPicture/>
+            <EmptyPicture/>
+            <EmptyPicture/>
+          </ScrollView>
+        </View>
         <View style={styles.actionButtonWrapper}>
           <TouchableOpacity style={[styles.actionButton, styles.actionButtonEnd, 'display' : 'none']} onPress={this.props.onButtonEndPress}>
             <Text style={styles.buttonText}>Terminer</Text>
@@ -101,13 +103,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     overflow: 'hidden'
   },
+  scrollPictureViewWrapper: {
+    height: 2 * ButtonHeight + 150
+  },
   picturesWrapper: {
-    position: 'relative',
-    backgroundColor: 'blue',
+    marginHorizontal: '10%',
     marginHorizontal: '10%',
     flexWrap: 'wrap',
-    flexDirection: 'row',
-    height: 2 * ButtonHeight +150
+    flexDirection: 'row'
   },
   actionButtonWrapper: {
     flexDirection: 'row',

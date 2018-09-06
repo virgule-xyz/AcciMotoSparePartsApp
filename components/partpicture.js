@@ -2,7 +2,14 @@ import React, {Component} from 'react';
 
 import {Platform, StyleSheet, Image, TouchableOpacity, View} from 'react-native';
 
-import {ButtonHeight, ButtonRadius, ColorGray, TextFontSize} from '../UI';
+import {
+  ButtonHeight,
+  ButtonElevation,
+  ButtonRadius,
+  ColorGray,
+  TextFontSize,
+  ColorOrange
+} from '../UI';
 
 export default class PartPicture extends Component {
 
@@ -16,10 +23,10 @@ export default class PartPicture extends Component {
   //   </View>)
   // }
   render() {
-    return (<TouchableOpacity style={styles.pictureWrapper}>
+    return (<View style={styles.pictureWrapper}>
       <Image source={require('../assets/images/test.jpeg')} style={styles.inPicture}/>
-      <Image source={require('../assets/images/trash.png')} style={styles.icons}/>
-    </TouchableOpacity>)
+      <TouchableOpacity style={styles.iconsWrapper}><Image source={require('../assets/images/trash.png')} style={styles.icons}/></TouchableOpacity>
+    </View>)
   }
 }
 
@@ -36,14 +43,19 @@ const styles = StyleSheet.create({
   inPicture: {
     width: ButtonHeight + 50,
     height: ButtonHeight + 50,
-    position:'absolute',
-    top:0,
-    left:0,
+    position: 'absolute',
+    top: 0,
+    left: 0,
     resizeMode: 'contain'
   },
+  iconsWrapper: {
+    padding: ButtonElevation,
+    elevation: ButtonElevation
+  },
   icons: {
-    width: ButtonHeight - 10,
-    height: ButtonHeight - 10,
-    opacity:0.9
+    width: 24,
+    height: 24,
+    resizeMode: 'contain',
+    tintColor: '#fff'
   }
 });
