@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
-import AppHeader from '../components/header';
-import AppFooter from '../components/footer';
+import AppHeader from '@components/header';
+import AppFooter from '@components/footer';
+import SparePartResume from '@components/sparepartresume';
+import EmptyPicture from '@components/emptypicture';
+import PartPicture from '@components/partpicture';
+import AddPictureButton from '@components/addpicturebutton';
 import {
   Platform,
   StyleSheet,
@@ -8,6 +12,7 @@ import {
   TouchableOpacity,
   Image,
   Text,
+  ScrollView,
   View
 } from 'react-native';
 
@@ -19,7 +24,8 @@ import UI, {
   ButtonElevation,
   ButtonFontSize,
   ButtonMargins,
-  ColorOrange
+  ColorOrange,
+  ColorBlack
 } from '../UI';
 
 type Props = {};
@@ -40,6 +46,42 @@ export default class Screen3 extends Component<Props> {
     this.backHandler.remove();
   }
 
+  onButtonEndPress = () => {
+    return false;
+  }
+
+  onButtonNewPress = () => {
+    return false;
+  }
+
+  getPictures = () => {
+    const pictures = [
+      {
+        'name': '@assets/images/test.jpeg'
+      }, {
+        'name': '@assets/images/test.jpeg'
+      }, {
+        'name': '@assets/images/test.jpeg'
+      }, {
+        'name': '@assets/images/test.jpeg'
+      }, {
+        'name': '@assets/images/test.jpeg'
+      }, {
+        'name': '@assets/images/test.jpeg'
+      }
+    ];
+    return pictures;
+  }
+
+  getPicturesCount = () => {
+    return this.getPictures().length;
+  }
+
+  getPicturesList = () => {
+    var ret = this.getPictures().map((p) => <PartPicture key={p.name} file={p.name}/>);
+    return ret;
+  }
+
   /**
    * [render description]
    * @return {[type]} [description]
@@ -47,65 +89,47 @@ export default class Screen3 extends Component<Props> {
   render() {
     const language = this.props.navigation.getParam('language', 'fr');
     const lg = UIStrings[language];
+    const uploaderCount = 0;
+
     return (<View style={styles.container}>
       <AppHeader language={language}/>
-      <View>
-        <Text>rond gris, nom de la pièce</Text>
-        <Text>marque / modèle / type de pièce</Text>
-        <Text>Ligne #1</Text>
-        <Text>Ligne #2</Text>
+      <View style={{
+          marginTop: 150
+        }}>
+        <SparePartResume language={language} navigation={this.props.navigation}/>
+        <View style={styles.scrollPictureViewWrapper}>
+          <ScrollView contentContainerStyle={styles.picturesWrapper}>
+            <AddPictureButton language={language}/>
+            {this.getPicturesList()}
+            <EmptyPicture count={this.getPicturesCount()}/>
+          </ScrollView>
+        </View>
       </View>
-      <View>
-        <Text>Galerie de photos et bouto d'effacement</Text>
-      </View>
-      <View style={styles.actionButtonWrapper}>
-        <TouchableOpacity style={[styles.actionButton, styles.actionButtonNew]} onPress={this.props.onButtonNewPress}>
-          <Image source={require('../assets/images/add.png')} style={styles.icons} />
-          <Text style={styles.buttonText}>Nouvelle photo</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.actionButton, styles.actionButtonEnd]} onPress={this.props.onButtonEndPress}>
-          <Text style={styles.buttonText}>Terminer</Text>
-          <Image source={require('../assets/images/check_mark.png')} style={styles.icons} />
-        </TouchableOpacity>
-      </View>
-      <AppFooter navigation={this.props.navigation} language={language} uploaderCount={0}/>
+      <AppFooter navigation={this.props.navigation} language={language} count={this.getPicturesCount()} uploaderCount={uploaderCount}/>
     </View>);
   }
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    overflow: 'hidden'
   },
-  actionButtonWrapper: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: '80%',
-    marginTop:ButtonMargins
+  scrollPictureViewWrapper: {
+    height: 2 * ButtonHeight + 130,
+    overflow: 'hidden'
   },
-  actionButton: {
-    fontSize: ButtonFontSize,
-    paddingLeft: ButtonPadding/2,
-    paddingRight: ButtonPadding/2,
-    borderRadius: ButtonRadius,
-    backgroundColor: ColorOrange,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center'
+  picturesWrapper: {
+    marginHorizontal: '10%',
+    marginHorizontal: '10%',
+    flexWrap: 'wrap',
+    flexDirection: 'row'
   },
-  actionButtonNew: {
-    width:'40%'
-  },
-  actionButtonEnd: {
-    width:'40%'
-  },
-  icons: {
-    width:ButtonHeight-10,
-    height:ButtonHeight-10
+  buttonend: {
+    alignSelf:"flex-start",
+    alignContent:"flex-start",
   }
 });

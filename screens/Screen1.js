@@ -1,50 +1,36 @@
 import React, {Component} from 'react';
 import {ColorOrange, ColorBlack, ButtonHeight} from '../UI';
-import ActionButton from '../components/button';
-import Logo from '../components/logo';
-import {
-  StyleSheet,
-  Container,
-  Text,
-  View
-} from 'react-native';
+import ActionButton from '@components/button';
+import Logo from '@components/logo';
+import {StyleSheet, Container, Text, View} from 'react-native';
 
-type Props = {};
+export default function Screen1(props) {
 
-export default class Screen1 extends Component<Props> {
-  constructor(props) {
-    super(props);
-  }
+  const nextScreen = "Screen2";
 
   onPressFR = () => {
-    this.props.navigation.navigate('Screen2', {language: 'fr'});
+    props.navigation.navigate(nextScreen, {language: 'fr'});
   }
 
   onPressPL = () => {
-    this.props.navigation.navigate('Screen2', {language: 'gb'});
+    props.navigation.navigate(nextScreen, {language: 'gb'});
   }
 
-  /**
-   * [render description]
-   * @return {[type]} [description]
-   */
-  render() {
-    return (<View style={styles.container}>
-      <Logo style={styles.logo} language='fr'/>
-      <View style={styles.buttons}>
-        <ActionButton style={{
-            width: "35%"
-          }} label="Français" onPress={() => {
-            this.onPressFR()
-          }}/>
-        <ActionButton style={{
-            width: "35%"
-          }} label="Polski" onPress={() => {
-            this.onPressPL()
-          }}/>
-      </View>
-    </View>);
-  }
+  return (<View style={styles.container}>
+    <Logo style={styles.logo} language='fr'/>
+    <View style={styles.buttons}>
+      <ActionButton style={{
+          width: "35%"
+        }} label="Français" onPress={() => {
+          onPressFR()
+        }}/>
+      <ActionButton style={{
+          width: "35%"
+        }} label="Polski" onPress={() => {
+          onPressPL()
+        }}/>
+    </View>
+  </View>);
 }
 
 const styles = StyleSheet.create({

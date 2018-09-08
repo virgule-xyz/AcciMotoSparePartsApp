@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 
 import {View, Alert, Text, StyleSheet, TouchableNativeFeedback} from 'react-native';
 
+import ButtonEndPictures from '@components/buttonendpictures';
+
 import {
   UIStrings,
   ButtonHeight,
@@ -13,14 +15,9 @@ import {
   AlertTitle
 } from '../UI';
 
-export default class AppFooter extends Component {
-
-  constructor(props) {
-    super(props);
-  }
-
-  askBeforeGoBackHome = () => {
-    const lg = UIStrings[this.props.navigation.getParam('language', 'fr')];
+function HomeButton(props) {
+  const lg = UIStrings[props.language];
+  askBeforeGoBackLanguages = () => {
     Alert.alert(AlertTitle, lg.question_retour_home, [
       {
         text: lg.non,
@@ -29,39 +26,49 @@ export default class AppFooter extends Component {
       }, {
         text: lg.oui,
         onPress: () => {
-          this.props.navigation.popToTop();
+          props.navigation.popToTop();
         }
       }
     ], {cancelable: false})
   }
-
-  render() {
-    const lg = UIStrings[this.props.navigation.getParam('language', 'fr')];
-
-    const backButton = (<TouchableNativeFeedback onPress={() => {
-          this.askBeforeGoBackHome();
-        }}>
-        <View style={styles.backHome}>
-          <Text style={{
-              textTransform: 'uppercase'
-            }}>{lg.accueil}</Text>
-        </View>
-      </TouchableNativeFeedback>);
-
-    if (this.props.uploaderCount === 0)
-      return (<View style={styles.footerWrapper}>
-        {backButton}
-      </View>)
-    else
-      return (<View style={styles.footerWrapper}>
-
-        {backButton}
-
-        <View style={styles.counter}>
-          <Text style={styles.counterText}>{this.props.uploaderCount}</Text>
-        </View>
-      </View>)
+  askBeforeGoBackHome = () => {
+    Alert.alert(AlertTitle, lg.question_retour_piece, [
+      {
+        text: lg.non,
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel'
+      }, {
+        text: lg.oui,
+        onPress: () => {
+          props.navigation.navigate('Screen2');
+        }
+      }
+    ], {cancelable: false})
   }
+  if (props.home !== true)
+    return (<TouchableNativeFeedback onPress={() => {
+        askBeforeGoBackHome();
+      }}>
+      <Text style={[props.style, styles.backHome]}>{lg.changer.toUpperCase()}</Text>
+    </TouchableNativeFeedback>)
+  else
+    return (<TouchableNativeFeedback onPress={() => {
+        askBeforeGoBackLanguages();
+      }}>
+      <Text style={styles.backLanguages}>{lg.accueil.toLowerCase()}</Text>
+    </TouchableNativeFeedback>);
+  }
+
+export default function AppFooter(props) {
+  const language = props.navigation.getParam('language', 'fr');
+
+  return (<View style={styles.footerWrapper}>
+    <HomeButton navigation={props.navigation} language={language} home={props.home}/>
+    <ButtonEndPictures navigation={props.navigation} language={language} count={props.count}/>
+    <View style={styles.counter}>
+      <Text style={styles.counterText}>{props.uploaderCount}</Text>
+    </View>
+  </View>)
 }
 
 const styles = StyleSheet.create({
@@ -79,13 +86,28 @@ const styles = StyleSheet.create({
     borderRadius: ButtonRadius,
     fontSize: ButtonFontSize,
     height: ButtonHeight,
-    paddingRight: ButtonPadding,
-    paddingLeft: ButtonPadding,
-    color: '#000',
+    lineHeight: ButtonHeight,
+    paddingRight: ButtonPadding / 2,
+    paddingLeft: ButtonPadding / 2,
+    color: '#999',
     textAlign: 'center',
     marginLeft: 17,
     justifyContent: 'center',
-    elevation: ButtonElevation
+    elevation: ButtonElevation / 2
+  },
+  backLanguages: {
+    backgroundColor: '#f5f5f5',
+    borderRadius: ButtonRadius,
+    fontSize: ButtonFontSize,
+    height: ButtonHeight,
+    lineHeight: ButtonHeight,
+    paddingRight: ButtonPadding,
+    paddingLeft: ButtonPadding,
+    color: '#999',
+    textAlign: 'center',
+    marginLeft: 17,
+    justifyContent: 'center',
+    elevation: ButtonElevation / 2
   },
   counter: {
     backgroundColor: '#04a9f4',
