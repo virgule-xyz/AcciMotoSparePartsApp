@@ -11,23 +11,11 @@ import {
   ColorOrange
 } from '../UI';
 
-export default class PartPicture extends Component {
-
-  constructor(props) {
-    super(props);
-  }
-
-  // render() {
-  //   return (<View style={styles.onePictureWrapper}>
-  //     <Image source={require('../assets/images/test.jpeg')} style={styles.inPicture}/>
-  //   </View>)
-  // }
-  render() {
-    return (<View style={styles.pictureWrapper}>
-      <Image source={require('../assets/images/test.jpeg')} style={styles.inPicture}/>
-      <TouchableOpacity style={styles.iconsWrapper}><Image source={require('../assets/images/trash.png')} style={styles.icons}/></TouchableOpacity>
-    </View>)
-  }
+export default function PartPicture(props) {
+  return (<View style={styles.pictureWrapper}>
+    <Image source={require('@assets/images/test.jpeg')} style={styles.inPicture}/>
+    <TouchableOpacity style={styles.iconsWrapper}><Image source={require('@assets/images/trash.png')} style={styles.icons}/></TouchableOpacity>
+  </View>)
 }
 
 const styles = StyleSheet.create({

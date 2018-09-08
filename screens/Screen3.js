@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import AppHeader from '../components/header';
-import AppFooter from '../components/footer';
-import SparePartResume from '../components/sparepartresume';
-import EmptyPicture from '../components/emptypicture';
-import PartPicture from '../components/partpicture';
-import AddPictureButton from '../components/addpicturebutton';
+import AppHeader from '@components/header';
+import AppFooter from '@components/footer';
+import SparePartResume from '@components/sparepartresume';
+import EmptyPicture from '@components/emptypicture';
+import PartPicture from '@components/partpicture';
+import AddPictureButton from '@components/addpicturebutton';
 import {
   Platform,
   StyleSheet,
@@ -66,8 +66,8 @@ export default class Screen3 extends Component<Props> {
       <View style={{
           marginTop: 150
         }}>
-        <SparePartResume language={language}/>
-      <View style={styles.scrollPictureViewWrapper}>
+        <SparePartResume language={language} navigation={this.props.navigation} />
+        <View style={styles.scrollPictureViewWrapper}>
           <ScrollView contentContainerStyle={styles.picturesWrapper}>
             <AddPictureButton language={language}/>
             <PartPicture/>

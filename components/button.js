@@ -4,18 +4,12 @@ import {Text, TouchableOpacity, StyleSheet} from 'react-native';
 
 import {ColorOrange, ButtonRadius, ButtonMargins, ButtonElevation} from "../UI";
 
-export default class ActionButton extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (<TouchableOpacity style={[styles.buttonWrapper, this.props.style]} onPress={() => {
-        this.props.onPress()
-      }}>
-      <Text style={styles.buttonText}>{this.props.label}</Text>
-    </TouchableOpacity>)
-  }
+export default function ActionButton(props) {
+  return (<TouchableOpacity style={[styles.buttonWrapper, props.style]} onPress={() => {
+      this.props.onPress()
+    }}>
+    <Text style={styles.buttonText}>{props.label}</Text>
+  </TouchableOpacity>)
 }
 
 const styles = StyleSheet.create({

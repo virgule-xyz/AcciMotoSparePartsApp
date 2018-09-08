@@ -26,22 +26,12 @@ import {
   TextFontSize
 } from '../UI';
 
-export default class AddPictureButton extends Component {
-
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    const lg = UIStrings[this.props.language];
-    return (
-          <TouchableOpacity style={styles.actionButtonNew} onPress={this.props.onButtonNewPress}>
-            <Image source={require('../assets/images/add.png')} style={styles.icons}/>
-            <Text style={styles.buttonText}>Nouvelle photo</Text>
-          </TouchableOpacity>
-
-)
-  }
+export default function AddPictureButton(props) {
+  const lg = UIStrings[props.language];
+  return (<TouchableOpacity style={styles.actionButtonNew} onPress={props.onButtonNewPress}>
+    <Image source={require('../assets/images/add.png')} style={styles.icons}/>
+    <Text style={styles.buttonText}>Nouvelle photo</Text>
+  </TouchableOpacity>)
 }
 
 const styles = StyleSheet.create({
@@ -50,10 +40,10 @@ const styles = StyleSheet.create({
     backgroundColor: ColorOrange,
     justifyContent: 'center',
     alignItems: 'center',
-    width: ButtonHeight+50,
-    height: ButtonHeight+50,
+    width: ButtonHeight + 50,
+    height: ButtonHeight + 50,
     elevation: ButtonElevation,
-    margin:5
+    margin: 5
   },
   icons: {
     width: ButtonHeight - 10,

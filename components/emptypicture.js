@@ -13,15 +13,8 @@ import {
   TextFontSize
 } from '../UI';
 
-export default class EmptyPicture extends Component {
-
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
+export default function EmptyPicture() {
     return (<View style={styles.emptybutton}/>)
-  }
 }
 
 const styles = StyleSheet.create({

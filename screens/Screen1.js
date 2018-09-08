@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {ColorOrange, ColorBlack, ButtonHeight} from '../UI';
-import ActionButton from '../components/button';
-import Logo from '../components/logo';
+import ActionButton from '@components/button';
+import Logo from '@components/logo';
 import {
   StyleSheet,
   Container,

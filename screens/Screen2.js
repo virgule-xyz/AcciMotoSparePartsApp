@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import SparePartSelector from '../components/sparepartselector';
-import AppHeader from '../components/header';
-import AppFooter from '../components/footer';
+import SparePartSelector from '@components/sparepartselector';
+import AppHeader from '@components/header';
+import AppFooter from '@components/footer';
 import {StyleSheet, BackHandler, View} from 'react-native';
 
 type Props = {};
@@ -37,7 +37,7 @@ export default class Screen2 extends Component<Props> {
     return (<View style={styles.container}>
       <AppHeader language={language}/>
         <SparePartSelector style={styles.spareParts} onSuccess={this.onSuccess} language={language}/>
-      <AppFooter navigation={this.props.navigation} language={language} uploaderCount={0}/>
+      <AppFooter navigation={this.props.navigation} nopiece={true} language={language} uploaderCount={0}/>
     </View>);
   }
 }

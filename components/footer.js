@@ -13,14 +13,10 @@ import {
   AlertTitle
 } from '../UI';
 
-export default class AppFooter extends Component {
+export default function AppFooter(props) {
 
-  constructor(props) {
-    super(props);
-  }
-
-  askBeforeGoBackHome = () => {
-    const lg = UIStrings[this.props.navigation.getParam('language', 'fr')];
+  askBeforeGoBackLanguages = () => {
+    const lg = UIStrings[props.navigation.getParam('language', 'fr')];
     Alert.alert(AlertTitle, lg.question_retour_home, [
       {
         text: lg.non,
@@ -29,40 +25,32 @@ export default class AppFooter extends Component {
       }, {
         text: lg.oui,
         onPress: () => {
-          this.props.navigation.popToTop();
+          props.navigation.popToTop();
         }
       }
     ], {cancelable: false})
   }
+  const lg = UIStrings[props.navigation.getParam('language', 'fr')];
 
-  render() {
-    const lg = UIStrings[this.props.navigation.getParam('language', 'fr')];
+  const homeButton = (<TouchableNativeFeedback onPress={() => {
+      askBeforeGoBackLanguages();
+    }}>
+    <Text style={styles.backLanguages}>{lg.accueil.toLowerCase()}</Text>
+  </TouchableNativeFeedback>);
 
-    const backButton = (<TouchableNativeFeedback onPress={() => {
-          this.askBeforeGoBackHome();
-        }}>
-        <View style={styles.backHome}>
-          <Text style={{
-              textTransform: 'uppercase'
-            }}>{lg.accueil}</Text>
-        </View>
-      </TouchableNativeFeedback>);
-
-    if (this.props.uploaderCount === 0)
-      return (<View style={styles.footerWrapper}>
-        {backButton}
-      </View>)
-    else
-      return (<View style={styles.footerWrapper}>
-
-        {backButton}
-
-        <View style={styles.counter}>
-          <Text style={styles.counterText}>{this.props.uploaderCount}</Text>
-        </View>
-      </View>)
-  }
+  if (props.uploaderCount === 0)
+    return (<View style={styles.footerWrapper}>
+      {homeButton}
+    </View>)
+  else
+    return (<View style={styles.footerWrapper}>
+      {homeButton}
+      <View style={styles.counter}>
+        <Text style={styles.counterText}>{props.uploaderCount}</Text>
+      </View>
+    </View>)
 }
+
 
 const styles = StyleSheet.create({
   footerWrapper: {
@@ -86,6 +74,20 @@ const styles = StyleSheet.create({
     marginLeft: 17,
     justifyContent: 'center',
     elevation: ButtonElevation
+  },
+  backLanguages: {
+    backgroundColor: '#f5f5f5',
+    borderRadius: ButtonRadius,
+    fontSize: ButtonFontSize,
+    height: ButtonHeight,
+    lineHeight: ButtonHeight,
+    paddingRight: ButtonPadding,
+    paddingLeft: ButtonPadding,
+    color: '#999',
+    textAlign: 'center',
+    marginLeft: 17,
+    justifyContent: 'center',
+    elevation: ButtonElevation / 2
   },
   counter: {
     backgroundColor: '#04a9f4',
