@@ -15,9 +15,9 @@ export const UIStrings = {
   'fr': {
     'oui': 'oui',
     'non': 'non',
-    'changer': 'Changer de pièce',
+    'changer': '< Changer',
     'annuler': 'Annuler',
-    'accueil': 'LANGUES',
+    'accueil': '< LANGUES',
     'selection_de_la_piece': 'Sélection de la pièce',
     'indiquer_numero_piece': 'Veuillez indiquer le numéro de la pièce :',
     'ok': 'OK',
@@ -34,13 +34,14 @@ export const UIStrings = {
     'next_step': 'Prendre des photos',
     'permission_camera_title':'Demande d\'autorisation',
     'permission_camera_message': 'Vous devez autoriser l\'usage de la caméra',
+    'terminer': 'Terminer'
   },
   'gb': {
     'oui': 'yes',
     'non': 'no',
-    'changer': 'Switch piece',
+    'changer': '< Switch',
     'annuler': 'Cancel',
-    'accueil': 'LANGS',
+    'accueil': '< LANGS',
     'selection_de_la_piece': 'Spare part select',
     'indiquer_numero_piece': 'Please provide piece id:',
     'ok': 'OK',
@@ -57,5 +58,6 @@ export const UIStrings = {
     'next_step': 'Take pictures',
     'permission_camera_title':'Authorization request',
     'permission_camera_message': 'Please allow camera usage',
+    'terminer': 'Finish'
   }
 };

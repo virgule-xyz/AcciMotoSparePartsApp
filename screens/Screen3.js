@@ -54,6 +54,34 @@ export default class Screen3 extends Component<Props> {
     return false;
   }
 
+  getPictures = () => {
+    const pictures = [
+      {
+        'name': '@assets/images/test.jpeg'
+      }, {
+        'name': '@assets/images/test.jpeg'
+      }, {
+        'name': '@assets/images/test.jpeg'
+      }, {
+        'name': '@assets/images/test.jpeg'
+      }, {
+        'name': '@assets/images/test.jpeg'
+      }, {
+        'name': '@assets/images/test.jpeg'
+      }
+    ];
+    return pictures;
+  }
+
+  getPicturesCount = () => {
+    return this.getPictures().length;
+  }
+
+  getPicturesList = () => {
+    var ret = this.getPictures().map((p) => <PartPicture key={p.name} file={p.name}/>);
+    return ret;
+  }
+
   /**
    * [render description]
    * @return {[type]} [description]
@@ -61,36 +89,23 @@ export default class Screen3 extends Component<Props> {
   render() {
     const language = this.props.navigation.getParam('language', 'fr');
     const lg = UIStrings[language];
+    const uploaderCount = 0;
+
     return (<View style={styles.container}>
       <AppHeader language={language}/>
       <View style={{
           marginTop: 150
         }}>
-        <SparePartResume language={language} navigation={this.props.navigation} />
+        <SparePartResume language={language} navigation={this.props.navigation}/>
         <View style={styles.scrollPictureViewWrapper}>
           <ScrollView contentContainerStyle={styles.picturesWrapper}>
             <AddPictureButton language={language}/>
-            <PartPicture/>
-            <PartPicture/>
-            <PartPicture/>
-            <PartPicture/>
-            <PartPicture/>
-            <PartPicture/>
-            <PartPicture/>
-            <PartPicture/>
-            <EmptyPicture/>
-            <EmptyPicture/>
-            <EmptyPicture/>
+            {this.getPicturesList()}
+            <EmptyPicture count={this.getPicturesCount()}/>
           </ScrollView>
         </View>
-        <View style={styles.actionButtonWrapper}>
-          <TouchableOpacity style={[styles.actionButton, styles.actionButtonEnd, 'display' : 'none']} onPress={this.props.onButtonEndPress}>
-            <Text style={styles.buttonText}>Terminer</Text>
-            <Image source={require('../assets/images/check_mark.png')} style={styles.icons}/>
-          </TouchableOpacity>
-        </View>
       </View>
-      <AppFooter navigation={this.props.navigation} language={language} uploaderCount={0}/>
+      <AppFooter navigation={this.props.navigation} language={language} count={this.getPicturesCount()} uploaderCount={uploaderCount}/>
     </View>);
   }
 }
@@ -104,7 +119,8 @@ const styles = StyleSheet.create({
     overflow: 'hidden'
   },
   scrollPictureViewWrapper: {
-    height: 2 * ButtonHeight + 150
+    height: 2 * ButtonHeight + 130,
+    overflow: 'hidden'
   },
   picturesWrapper: {
     marginHorizontal: '10%',
@@ -112,42 +128,8 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     flexDirection: 'row'
   },
-  actionButtonWrapper: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: '80%'
-  },
-  actionButton: {
-    fontSize: ButtonFontSize,
-    paddingLeft: ButtonPadding / 2,
-    paddingRight: ButtonPadding / 2,
-    borderRadius: ButtonRadius,
-    backgroundColor: ColorOrange,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  },
-  // actionButtonNew: {
-  //   borderRadius: ButtonRadius,
-  //   backgroundColor: ColorOrange,
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  //   width: ButtonHeight+50,
-  //   height: ButtonHeight+50,
-  //   elevation: ButtonElevation
-  // },
-  actionButtonEnd: {
-    width: '40%',
-    display: 'none'
-  },
-  // icons: {
-  //   width: ButtonHeight - 10,
-  //   height: ButtonHeight - 10
-  // },
-  // buttonText: {
-  //   fontSize: ButtonFontSize,
-  //   textAlign: 'center',
-  //   color: ColorBlack
-  // }
+  buttonend: {
+    alignSelf:"flex-start",
+    alignContent:"flex-start",
+  }
 });

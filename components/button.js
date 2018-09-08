@@ -6,7 +6,7 @@ import {ColorOrange, ButtonRadius, ButtonMargins, ButtonElevation} from "../UI";
 
 export default function ActionButton(props) {
   return (<TouchableOpacity style={[styles.buttonWrapper, props.style]} onPress={() => {
-      this.props.onPress()
+      props.onPress()
     }}>
     <Text style={styles.buttonText}>{props.label}</Text>
   </TouchableOpacity>)

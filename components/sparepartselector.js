@@ -50,8 +50,7 @@ export default class SparePartSelector extends Component {
     if (partId && partId.length > 0) {
       this.setState({searching: true, found: false, part: partId, openbarcode: false});
       setTimeout(() => {
-        this.setState({searching: false, found: true});
-        //TODO : Envoyer vers l'écran 3 avec les données de la pièce
+        this.setState({searching: false, found: false, part: null, openbarcode: false});
         this.props.onSuccess();
       }, 2000);
     } else {

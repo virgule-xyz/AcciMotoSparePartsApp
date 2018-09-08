@@ -26,8 +26,6 @@ import {
   TextFontSize
 } from '../UI';
 
-import ButtonPieceChange from '@components/buttonpiecechange';
-
 export default function SparePartResume(props) {
   getPartDatas = () => {
     return {
@@ -54,11 +52,6 @@ export default function SparePartResume(props) {
     <View style={styles.partwrapper}>
       <Text style={styles.head1}>
         {name}</Text>
-      <ButtonPieceChange language={props.language} navigation={props.navigation} style={{
-          position: 'absolute',
-          top: ButtonHeight / -2,
-          right: 0
-        }}/>
       <Text style={styles.head2}>{trademark.toUpperCase()}
         / {model.toUpperCase()}
         / {type.toUpperCase()}</Text>
