@@ -28,9 +28,7 @@ import UI, {
   ColorBlack
 } from '../UI';
 
-type Props = {};
-
-export default class Screen3 extends Component<Props> {
+export default class Screen3 extends Component {
   constructor(props) {
     super(props);
   }
@@ -82,6 +80,10 @@ export default class Screen3 extends Component<Props> {
     return ret;
   }
 
+  onButtonNewPress = () => {
+    this.props.navigation.navigate("Ecran4", {language: 'fr'});
+  }
+
   /**
    * [render description]
    * @return {[type]} [description]
@@ -99,7 +101,7 @@ export default class Screen3 extends Component<Props> {
         <SparePartResume language={language} navigation={this.props.navigation}/>
         <View style={styles.scrollPictureViewWrapper}>
           <ScrollView contentContainerStyle={styles.picturesWrapper}>
-            <AddPictureButton language={language}/>
+            <AddPictureButton language={language} navigation={this.props.navigation} />
             {this.getPicturesList()}
             <EmptyPicture count={this.getPicturesCount()}/>
           </ScrollView>
@@ -129,7 +131,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   buttonend: {
-    alignSelf:"flex-start",
-    alignContent:"flex-start",
+    alignSelf: "flex-start",
+    alignContent: "flex-start"
   }
 });

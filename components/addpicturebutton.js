@@ -28,11 +28,14 @@ import {
 
 export default function AddPictureButton(props) {
   const lg = UIStrings[props.language];
-  return (<TouchableOpacity style={styles.actionButtonNew} onPress={props.onButtonNewPress}>
+  return (<TouchableOpacity style={styles.actionButtonNew} onPress={() => {
+        props.navigation.navigate("Screen4");
+      }}>
     <Image source={require('../assets/images/add.png')} style={styles.icons}/>
     <Text style={styles.buttonText}>Nouvelle photo</Text>
   </TouchableOpacity>)
 }
+
 
 const styles = StyleSheet.create({
   actionButtonNew: {
