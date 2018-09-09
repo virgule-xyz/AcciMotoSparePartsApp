@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import AppHeader from '@components/header';
 import AppFooter from '@components/footer';
+import Button from '@components/button';
 import {
   Platform,
   StyleSheet,
@@ -50,6 +51,9 @@ export default class Screen5 extends Component {
       <View style={styles.body}>
         <Text style={styles.text}>Les photos de cette pièce sont en cours de remontée vers les serveurs...</Text>
         <Text style={styles.text}>Le nombre de photos en cours de chargement vers les serveurs est systématiquement indiqué en bas à droite dans le rond bleu.</Text>
+        <Button label={lg.changerdepiece} onPress={ () => {
+          this.props.navigation.navigate("Screen2");
+        }} />
       </View>
       <AppFooter navigation={this.props.navigation} language={language} uploaderCount={uploaderCount}/>
     </View>);
