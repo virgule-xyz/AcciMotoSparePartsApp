@@ -1,14 +1,42 @@
 import React, {Component} from 'react';
 
-import {Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
 
-import {ColorOrange, ButtonRadius, ButtonMargins, ButtonElevation} from "../UI";
+import {
+  ColorOrange,
+  ColorLightGray,
+  ButtonRadius,
+  ButtonHeight,
+  ButtonPadding,
+  ButtonMargins,
+  ButtonElevation
+} from "../UI";
 
 export default function ActionButton(props) {
-  return (<TouchableOpacity style={[styles.buttonWrapper, props.style]} onPress={() => {
+  const bgcolor = (props.type && props.type === 'cancel')
+    ? ColorLightGray
+    : ColorOrange;
+  let content = null;
+  let icon = null;
+
+  if (props.icon == 'camera') {
+    icon = require('@assets/images/camera.png');
+  }
+
+  if (props.icon && props.icon.length > 0) {
+    content = (<Image source={icon} style={styles.buttonImage}/>)
+  } else {
+    content = (<Text style={styles.buttonText}>{props.label}</Text>)
+  }
+  return (<TouchableOpacity style={[
+      styles.buttonWrapper,
+      props.style, {
+        backgroundColor: bgcolor
+      }
+    ]} onPress={() => {
       props.onPress()
     }}>
-    <Text style={styles.buttonText}>{props.label}</Text>
+    {content}
   </TouchableOpacity>)
 }
 
@@ -16,10 +44,16 @@ const styles = StyleSheet.create({
   buttonWrapper: {
     backgroundColor: ColorOrange,
     borderRadius: ButtonRadius,
-    paddingTop: ButtonMargins,
-    paddingBottom: ButtonMargins,
+    paddingHorizontal: ButtonPadding,
     textAlign: "center",
+    alignItems: "center",
+    justifyContent: "center",
+    height: ButtonHeight,
     elevation: ButtonElevation
+  },
+  buttonImage: {
+    width: (ButtonHeight - ButtonMargins) * 90 / 100,
+    height: (ButtonHeight - ButtonMargins) * 90 / 100
   },
   buttonText: {
     color: "#fff",
