@@ -1,12 +1,25 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import { StyleSheet, BackHandler, View } from 'react-native';
 import SparePartSelector from '@components/sparepartselector';
 import AppHeader from '@components/header';
 import AppFooter from '@components/footer';
-import {StyleSheet, BackHandler, View} from 'react-native';
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#FFF',
+  },
+});
 
 export default class Screen2 extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      pending: 3,
+    }
   }
 
   componentDidMount() {
@@ -15,6 +28,7 @@ export default class Screen2 extends Component {
       return true;
     });
   }
+  
 
   componentWillUnmount() {
     this.backHandler.remove();
@@ -22,7 +36,7 @@ export default class Screen2 extends Component {
 
   onSuccess = () => {
     const language = this.props.navigation.getParam('language', 'fr');
-    this.props.navigation.navigate('Screen3', {language: language});
+    this.props.navigation.navigate('Screen3', { language });
   }
 
   /**
@@ -32,20 +46,12 @@ export default class Screen2 extends Component {
    */
   render() {
     const language = this.props.navigation.getParam('language', 'fr');
-    return (<View style={styles.container}>
-      <AppHeader language={language}/>
-      <SparePartSelector style={styles.spareParts} onSuccess={this.onSuccess} language={language}/>
-      <AppFooter navigation={this.props.navigation} home={true} language={language} uploaderCount={0}/>
-    </View>);
+    return (
+      <View style={styles.container}>
+        <AppHeader language={language} />
+        <SparePartSelector style={styles.spareParts} onSuccess={this.onSuccess} language={language} />
+        <AppFooter navigation={this.props.navigation} home language={language} uploaderCount={this.state.pending} />
+      </View>
+    );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: "column",
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#FFF'
-  }
-});
