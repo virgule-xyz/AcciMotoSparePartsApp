@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
 export default class Screen4 extends Component {
   constructor(props) {
     super(props);
+    this.camera = null;
     this.state = {
       pending: 3,
       pictures: [
@@ -67,7 +68,7 @@ export default class Screen4 extends Component {
           name: '@assets/images/test.jpeg',
         },
       ],
-    }
+    };
   }
 
   componentDidMount() {
@@ -79,6 +80,15 @@ export default class Screen4 extends Component {
 
   componentWillUnmount() {
     this.backHandler.remove();
+  }
+
+  takePicture = async function () {
+    const language = this.props.navigation.getParam('language', 'fr');
+    if (this.camera) {
+      const options = { base64: false };
+      const data = await this.camera.takePictureAsync(options);
+      this.props.navigation.navigate('Screen3', { language, picture: data.uri });
+    }
   }
 
   render() {
@@ -103,17 +113,13 @@ export default class Screen4 extends Component {
             <Button
               style={styles.valider}
               icon="camera"
-              onPress={() => {
-                this.props.navigation.navigate('Screen3');
-              }}
+              onPress={() => this.takePicture()}
             />
             <Button
               style={styles.annuler}
               type="cancel"
               label={lg.annuler}
-              onPress={() => {
-                this.props.navigation.navigate('Screen3');
-              }}
+              onPress={() => this.props.navigation.navigate('Screen3')}
             />
           </View>
         </View>

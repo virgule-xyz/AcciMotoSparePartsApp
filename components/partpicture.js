@@ -40,9 +40,10 @@ const styles = StyleSheet.create({
 });
 
 export default function PartPicture(props) {
+  let filesource = { uri: props.file };
   return (
     <View style={styles.pictureWrapper}>
-      <Image source={require('@assets/images/test.jpeg')} style={styles.inPicture} />
+      <Image source={filesource} style={styles.inPicture} />
       <TouchableOpacity onPress={props.onDelete} style={styles.iconsWrapper}><Image source={require('@assets/images/trash.png')} style={styles.icons} /></TouchableOpacity>
     </View>
   );

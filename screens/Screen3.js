@@ -49,29 +49,26 @@ export default class Screen3 extends Component {
     super(props);
     this.state = {
       pending: 3,
-      pictures: [
-        {
-          name: '@assets/images/test.jpeg',
-        }, {
-          name: '@assets/images/test.jpeg',
-        }, {
-          name: '@assets/images/test.jpeg',
-        }, {
-          name: '@assets/images/test.jpeg',
-        }, {
-          name: '@assets/images/test.jpeg',
-        }, {
-          name: '@assets/images/test.jpeg',
-        },
-      ],
+      pictures: [],
     };
   }
 
   componentDidMount() {
+    const picture = this.props.navigation.getParam('picture');
+
     this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
       this.props.navigation.goBack();
       return true;
     });
+
+    if (picture) {
+      const pictures = [...this.state.pictures];
+      pictures.push({
+        name: picture,
+      });
+      this.setState({
+      pictures });
+    }
   }
 
   componentWillUnmount() {
