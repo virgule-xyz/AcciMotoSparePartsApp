@@ -12,7 +12,7 @@ export default createStackNavigator({
   Screen4: Screen4,
   Screen5: Screen5
 }, {
-  initialRouteName: 'Screen4',
+  initialRouteName: 'Screen5',
   navigationOptions: {
     header: null
   }
