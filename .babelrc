@@ -1,4 +1,4 @@
 {
-  "presets": ["react-native"],
-  "retainLines": true
+  "presets": ["module:metro-react-native-babel-preset"],
+  "plugins": ["styled-components"]
 }

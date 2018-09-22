@@ -1,92 +1,125 @@
-import React, {Component} from 'react';
+import React, {
+    Component
+} from 'react';
 
 import {
-  Platform,
-  StyleSheet,
-  PermissionsAndroid,
-  TouchableOpacity,
-  Text,
-  Image,
-  TextInput,
-  Keyboard,
-  ActivityIndicator,
-  ToastAndroid,
-  View
+    Platform,
+    StyleSheet,
+    PermissionsAndroid,
+    TouchableOpacity,
+    Text,
+    Image,
+    TextInput,
+    Keyboard,
+    ActivityIndicator,
+    ToastAndroid,
+    View
 } from 'react-native';
 
 import {
-  UIStrings,
-  ButtonHeight,
-  ButtonRadius,
-  ButtonElevation,
-  ButtonFontSize,
-  ButtonPadding,
-  ColorOrange
+    UIStrings,
+    ButtonHeight,
+    ButtonRadius,
+    ButtonElevation,
+    ButtonFontSize,
+    ButtonPadding,
+    ColorOrange
 } from '../UI';
 
-import {RNCamera} from 'react-native-camera';
+import {
+    RNCamera
+} from 'react-native-camera';
 
 export default class SparePartSelector extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      searching: false,
-      found: false,
-      part: null,
-      openbarcode: false
+    constructor(props) {
+        super(props);
+        this.state = {
+            searching: false,
+            found: false,
+            part: null,
+            openbarcode: false
+        }
     }
-  }
 
-  onError = () => {
-    this.setState({searching: false, found: false, part: null, openbarcode: false});
-    const lg = UIStrings[this.props.language];
-    ToastAndroid.showWithGravity(lg.piece_inexistante, ToastAndroid.SHORT, ToastAndroid.CENTER);
-  }
-
-  searchSparePart = (partId) => {
-    console.warn('searchSparePart:', partId);
-    //TODO : Faire la recherche dela pièce par le code et récupérer les infos de la pièce
-    if (partId && partId.length > 0) {
-      this.setState({searching: true, found: false, part: partId, openbarcode: false});
-      setTimeout(() => {
-        this.setState({searching: false, found: false, part: null, openbarcode: false});
-        this.props.onSuccess();
-      }, 2000);
-    } else {
-      this.onError();
+    onError = () => {
+        this.setState({
+            searching: false,
+            found: false,
+            part: null,
+            openbarcode: false
+        });
+        const lg = UIStrings[this.props.language];
+        ToastAndroid.showWithGravity(lg.piece_inexistante, ToastAndroid.SHORT, ToastAndroid.CENTER);
     }
-  }
 
-  onSubmitEditing = (event) => {
-    Keyboard.dismiss;
-    const partId = event.nativeEvent.text;
-    this.setState({searching: true, found: false, part: partId});
-    this.searchSparePart(partId);
-  }
-
-  onPressBarcode = () => {
-    Keyboard.dismiss;
-    this.setState({searching: false, openbarcode: true, found: false});
-  }
-
-  onCancelBarcode = () => {
-    Keyboard.dismiss;
-    this.setState({searching: false, found: false, openbarcode: false});
-  }
-
-  onBarcodeRead = (event) => {
-    console.warn(event.data);
-    if (event.data !== null) {
-      this.setState({openbarcode: false});
-      this.searchSparePart(event.data);
+    searchSparePart = (partId) => {
+        console.warn('searchSparePart:', partId);
+        //TODO : Faire la recherche dela pièce par le code et récupérer les infos de la pièce
+        if (partId && partId.length > 0) {
+            this.setState({
+                searching: true,
+                found: false,
+                part: partId,
+                openbarcode: false
+            });
+            setTimeout(() => {
+                this.setState({
+                    searching: false,
+                    found: false,
+                    part: null,
+                    openbarcode: false
+                });
+                this.props.onSuccess();
+            }, 2000);
+        } else {
+            this.onError();
+        }
     }
-    return;
-  }
 
-  render() {
-    const lg = UIStrings[this.props.language];
-    return (<View style={[
+    onSubmitEditing = (event) => {
+        Keyboard.dismiss;
+        const partId = event.nativeEvent.text;
+        this.setState({
+            searching: true,
+            found: false,
+            part: partId
+        });
+        this.searchSparePart(partId);
+    }
+
+    onPressBarcode = () => {
+        Keyboard.dismiss;
+        this.setState({
+            searching: false,
+            openbarcode: true,
+            found: false
+        });
+    }
+
+    onCancelBarcode = () => {
+        Keyboard.dismiss;
+        this.setState({
+            searching: false,
+            found: false,
+            openbarcode: false
+        });
+    }
+
+    onBarcodeRead = (event) => {
+        console.warn(event.data);
+        if (event.data !== null) {
+            this.setState({
+                openbarcode: false
+            });
+            this.searchSparePart(event.data);
+        }
+        return;
+    }
+
+    render() {
+        const lg = UIStrings[this.props.language];
+        return (<View style={[
         styles.sparepartswrapper,
         (
           this.state.found
@@ -186,92 +219,92 @@ export default class SparePartSelector extends Component {
         </TouchableOpacity>
       </View>
     </View>)
-  }
+    }
 }
 
 const styles = StyleSheet.create({
-  sparepartswrapper: {
-    flex: 1,
-    flexDirection: "column",
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: '#FFF',
-    width: '80%',
-    maxHeight: '60%',
-    paddingTop: 10,
-    paddingBottom: 10
-  },
-  sparepartswrapper_found: {
-    justifyContent: 'center'
-  },
-  input: {
-    width: '100%',
-    textAlign: 'center',
-    margin: 0
-  },
-  title: {
-    fontSize: 24,
-    textAlign: 'center',
-    marginBottom: 30
-  },
-  label: {
-    fontSize: 16,
-    textAlign: 'center',
-    margin: 0
-  },
-  label_or: {
-    fontSize: 24,
-    textAlign: 'center'
-  },
-  codebar: {
-    backgroundColor: ColorOrange,
-    height: ButtonHeight,
-    borderRadius: ButtonRadius,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    width: '100%',
-    elevation: ButtonElevation
-  },
-  nextstep: {
-    backgroundColor: ColorOrange,
-    height: ButtonHeight,
-    borderRadius: ButtonRadius,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    width: '100%',
-    elevation: ButtonElevation
-  },
-  hide: {
-    display: 'none'
-  },
-  show: {
-    display: 'flex'
-  },
-  barcodewrapper: {
-    alignSelf: 'flex-start',
-    width: '100%',
-    height: 220 + ButtonHeight + ButtonElevation
-  },
-  preview: {
-    flex: 0,
-    flexGrow: 0,
-    width: '100%',
-    height: 200,
-    overflow: 'hidden',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 20
-  },
-  cancel: {
-    backgroundColor: ColorOrange,
-    height: ButtonHeight,
-    borderRadius: ButtonRadius,
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    elevation: ButtonElevation,
-    paddingLeft: ButtonPadding,
-    paddingRight: ButtonPadding
-  }
+    sparepartswrapper: {
+        flex: 1,
+        flexDirection: "column",
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        backgroundColor: '#FFF',
+        width: '80%',
+        maxHeight: '60%',
+        paddingTop: 10,
+        paddingBottom: 10
+    },
+    sparepartswrapper_found: {
+        justifyContent: 'center'
+    },
+    input: {
+        width: '100%',
+        textAlign: 'center',
+        margin: 0
+    },
+    title: {
+        fontSize: 24,
+        textAlign: 'center',
+        marginBottom: 30
+    },
+    label: {
+        fontSize: 16,
+        textAlign: 'center',
+        margin: 0
+    },
+    label_or: {
+        fontSize: 24,
+        textAlign: 'center'
+    },
+    codebar: {
+        backgroundColor: ColorOrange,
+        height: ButtonHeight,
+        borderRadius: ButtonRadius,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        width: '100%',
+        elevation: ButtonElevation
+    },
+    nextstep: {
+        backgroundColor: ColorOrange,
+        height: ButtonHeight,
+        borderRadius: ButtonRadius,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        width: '100%',
+        elevation: ButtonElevation
+    },
+    hide: {
+        display: 'none'
+    },
+    show: {
+        display: 'flex'
+    },
+    barcodewrapper: {
+        alignSelf: 'flex-start',
+        width: '100%',
+        height: 220 + ButtonHeight + ButtonElevation
+    },
+    preview: {
+        flex: 0,
+        flexGrow: 0,
+        width: '100%',
+        height: 200,
+        overflow: 'hidden',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 20
+    },
+    cancel: {
+        backgroundColor: ColorOrange,
+        height: ButtonHeight,
+        borderRadius: ButtonRadius,
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        elevation: ButtonElevation,
+        paddingLeft: ButtonPadding,
+        paddingRight: ButtonPadding
+    }
 });

@@ -1,9 +1,9 @@
 import {
-  AppRegistry
+    AppRegistry
 } from 'react-native';
 import App from './App';
 import {
-  name as appName
+    name as appName
 } from './app.json';
 
 AppRegistry.registerComponent(appName, () => App);
