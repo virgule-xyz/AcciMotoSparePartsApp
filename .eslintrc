@@ -1,9 +1,19 @@
 {
-  "parser": "babel-eslint",
-  "extends": "airbnb",
+  "parser":  "babel-eslint",
+  "extends": [
+    "airbnb"
+  ],
   "plugins": [
+    "react",
     "react-native",
     "jsx-a11y",
     "import"
-  ]
+  ],
+  "rules":{
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "import/no-unresolved":"off",
+    "space-in-parens":"off",
+    "comma-dangle":"off",
+    "eol-last":"off",
+  }
 }

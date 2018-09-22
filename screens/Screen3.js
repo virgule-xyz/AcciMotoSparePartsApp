@@ -129,6 +129,10 @@ export default class Screen3 extends Component {
               <AddPictureButton language={language} navigation={this.props.navigation} />
               {this.getPicturesList()}
               <EmptyPicture count={this.getPicturesCount()} />
+              <EmptyPicture count={this.getPicturesCount()} />
+              <EmptyPicture count={this.getPicturesCount()} />
+              <EmptyPicture count={this.getPicturesCount()} />
+              <EmptyPicture count={this.getPicturesCount()} />
             </ScrollView>
           </View>
         </View>

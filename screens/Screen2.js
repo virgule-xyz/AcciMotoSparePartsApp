@@ -28,7 +28,7 @@ export default class Screen2 extends Component {
       return true;
     });
   }
-  
+
 
   componentWillUnmount() {
     this.backHandler.remove();

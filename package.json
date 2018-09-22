@@ -7,28 +7,26 @@
     "test": "jest"
   },
   "dependencies": {
-    "react": "16.4.1",
-    "react-native": "0.56.0",
-    "react-navigation": "^2.12.1",
-    "react-native-camera": "git+https://git@github.com/react-native-community/react-native-camera",
-    "babel-jest": "23.4.2",
-    "babel-preset-react-native": "5.0.2",
-    "jest": "23.5.0",
-    "react-test-renderer": "16.4.1"
-  },
-  "jest": {
-    "preset": "react-native"
-  },
-  "devDependencies": {
     "babel-eslint": "^9.0.0",
+    "babel-jest": "23.4.2",
     "babel-preset-flow": "^6.23.0",
+    "babel-preset-react-native": "5.0.2",
     "eslint": "^5.5.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.11.1",
-    "eslint-plugin-react-native": "^3.2.1",
+    "eslint-plugin-react-native": "^3.3.0",
     "flow-bin": "^0.75.0",
-    "prettier-eslint": "^8.8.2"
+    "jest": "23.5.0",
+    "prettier-eslint": "^8.8.2",
+    "react": "16.4.1",
+    "react-native": "0.56.0",
+    "react-native-camera": "git+https://git@github.com/react-native-community/react-native-camera.git",
+    "react-navigation": "^2.13.0",
+    "react-test-renderer": "16.4.1"
+  },
+  "jest": {
+    "preset": "react-native"
   }
 }
