@@ -1,3 +1,6 @@
+import React, {
+    Component
+} from 'react';
 export const ColorOrange = '#ff9800';
 export const ColorBlack = '#333';
 export const ColorGray = '#878787';
@@ -11,6 +14,9 @@ export const TextFontSize = 16;
 export const ButtonPadding = 30;
 export const AlertTitle = 'AcciMoto';
 
+/**
+ * Les chaines utilisées dans l'application
+ */
 export const UIStrings = {
     fr: {
         oui: 'oui',
@@ -37,6 +43,7 @@ export const UIStrings = {
         permission_camera_message: 'Vous devez autoriser l\'usage de la caméra',
         terminer: 'Terminer',
         question_effacer_piece: 'Effacer cette photo ?',
+        nouvelle_photo: 'Nouvelle photo'
     },
     gb: {
         oui: 'yes',
@@ -63,5 +70,23 @@ export const UIStrings = {
         permission_camera_message: 'Please allow camera usage',
         terminer: 'Finish',
         question_effacer_piece: 'Scratch that picture?',
+        nouvelle_photo: 'New picture'
     },
 };
+
+export var withLanguage = OtherComponent => class extends Component {
+    constructor(props) {
+        super(props);
+        this.country = 'fr';
+        this.language = UIStrings['fr'];
+    }
+
+    componentWillMount = () => {
+        this.country = this.props.navigation && this.props.navigation.state && this.props.navigation.state.params ? this.props.navigation.state.params.country : this.props.country ? this.props.country : 'fr';
+        this.language = UIStrings[this.country];
+    }
+
+    render = () => (
+        <OtherComponent {...this.props} language={this.language} country={this.country} />
+    )
+}

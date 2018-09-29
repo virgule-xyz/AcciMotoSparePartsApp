@@ -3,7 +3,6 @@ import React, {
 } from 'react';
 
 import {
-    Platform,
     StyleSheet,
     View
 } from 'react-native';
@@ -11,10 +10,13 @@ import {
 import {
     ButtonHeight,
     ButtonRadius,
-    ColorLightGray,
-    TextFontSize
+    ColorLightGray
 } from '../UI';
 
+/**
+ * Un bloc image vide
+ * @param {*} props 
+ */
 export default function EmptyPicture(props) {
     if (props.count > 0)
         return null
@@ -22,6 +24,9 @@ export default function EmptyPicture(props) {
         return (<View style={styles.emptybutton}/>)
 }
 
+/**
+ * STYLE
+ */
 const styles = StyleSheet.create({
     emptybutton: {
         borderRadius: ButtonRadius,

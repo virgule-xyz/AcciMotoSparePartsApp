@@ -7,37 +7,39 @@ import {
     Image,
     Text,
     StyleSheet,
-    TouchableNativeFeedback
+    TouchableOpacity
 } from 'react-native';
-
 import {
-    UIStrings,
+    withNavigation
+} from 'react-navigation';
+import {
+    withLanguage,
     ButtonHeight,
-    ButtonMargins,
     ButtonFontSize,
     ButtonRadius,
     ButtonPadding,
     ButtonElevation,
-    ColorOrange,
-    AlertTitle
+    ColorOrange
 } from '../UI';
 
-export default function ButtonEndPictures(props) {
-    const lg = UIStrings[props.navigation.getParam('language', 'fr')];
-
-    if (props.count > 0) {
-        return (<TouchableNativeFeedback onPress={() => {
-        props.navigation.navigate("Screen5");
+class ButtonEndPictures extends Component {
+    render = () => {
+        if (this.props.count > 0) {
+            return (<TouchableOpacity onPress={() => {
+        this.props.navigation.navigate("Screen5");
       }}>
-      <View style={[styles.button, props.style]}>
+      <View style={[styles.button, this.props.style]}>
         <Image style={styles.icons} source={require('@assets/images/check_mark.png')}/>
-        <Text style={styles.text}>{lg.terminer.toUpperCase()}</Text>
+        <Text style={styles.text}>{this.props.language.terminer.toUpperCase()}</Text>
       </View>
-    </TouchableNativeFeedback>);
-    } else {
-        return null;
+    </TouchableOpacity>);
+        } else {
+            return null;
+        }
     }
 }
+
+export default withNavigation(withLanguage(ButtonEndPictures));
 
 const styles = StyleSheet.create({
     button: {

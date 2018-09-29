@@ -1,20 +1,19 @@
 import React, {
     Component
 } from 'react';
-
 import Logo from './logo';
 
 import {
     View,
-    Text,
     StyleSheet
 } from 'react-native';
 
-export default function AppHeader(props) {
-    return (<View style={styles.headerWrapper}>
-    <Logo language={props.language} style={styles.logo}/>
-  </View>)
-}
+import {withNavigation} from 'react-navigation';
+import {withLanguage} from '../UI';
+
+const AppHeader = () => (<View style={styles.headerWrapper}>
+    <Logo {...this.props} style={styles.logo}/>
+</View>)
 
 const styles = StyleSheet.create({
     headerWrapper: {
@@ -30,3 +29,5 @@ const styles = StyleSheet.create({
         height: 100
     }
 });
+
+export default withNavigation(withLanguage(AppHeader));

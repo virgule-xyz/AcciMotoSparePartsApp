@@ -3,25 +3,13 @@ import React, {
 } from 'react';
 
 import {
-    Platform,
     StyleSheet,
-    TouchableOpacity,
     Text,
-    Image,
-    ActivityIndicator,
-    ToastAndroid,
     View
 } from 'react-native';
 
 import {
-    UIStrings,
-    ButtonHeight,
-    ButtonRadius,
-    ButtonElevation,
-    ButtonFontSize,
-    ButtonPadding,
     ButtonMargins,
-    ColorOrange,
     ColorBlack,
     ColorGray,
     ColorLightGray,
@@ -40,7 +28,6 @@ export default function SparePartResume(props) {
         }
     }
 
-    const lg = UIStrings[props.language];
     var {
         name,
         trademark,

@@ -3,40 +3,37 @@ import React, {
 } from 'react';
 
 import {
-    Platform,
     StyleSheet,
     TouchableOpacity,
     Text,
-    Image,
-    ActivityIndicator,
-    ToastAndroid,
-    View
+    Image
 } from 'react-native';
 
+import {withNavigation} from 'react-navigation';
+
 import {
-    UIStrings,
+    withLanguage,
     ButtonHeight,
     ButtonRadius,
     ButtonElevation,
     ButtonFontSize,
-    ButtonPadding,
-    ButtonMargins,
     ColorOrange,
-    ColorBlack,
-    ColorGray,
-    ColorLightGray,
-    TextFontSize
+    ColorBlack
 } from '../UI';
 
-export default function AddPictureButton(props) {
-    const lg = UIStrings[props.language];
-    return (<TouchableOpacity style={styles.actionButtonNew} onPress={() => {
-        props.navigation.navigate("Screen4");
-      }}>
-    <Image source={require('../assets/images/add.png')} style={styles.icons}/>
-    <Text style={styles.buttonText}>Nouvelle photo</Text>
-  </TouchableOpacity>)
+class AddPictureButton extends Component {
+    render = () => {
+        return (<TouchableOpacity style={styles.actionButtonNew} onPress={() => {
+            this.props.navigation.navigate("Screen4");
+          }}>
+        <Image source={require('../assets/images/add.png')} style={styles.icons}/>
+        <Text style={styles.buttonText}>{this.props.language.nouvelle_photo}</Text>
+      </TouchableOpacity>)
+    }
 }
+
+
+export default withNavigation(withLanguage(AddPictureButton));
 
 const styles = StyleSheet.create({
     actionButtonNew: {

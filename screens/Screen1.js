@@ -3,8 +3,10 @@ import {
     StyleSheet,
     View
 } from 'react-native';
+
 import ActionButton from '@components/button';
 import Logo from '@components/logo';
+
 import {
     ButtonHeight
 } from '../UI';
@@ -35,37 +37,38 @@ export default function Screen1(props) {
 
     const onPressFR = () => {
         props.navigation.navigate(nextScreen, {
-            language: 'fr'
+            country: 'fr'
         });
     };
 
     const onPressPL = () => {
         props.navigation.navigate(nextScreen, {
-            language: 'gb'
+            country: 'gb'
         });
     };
 
     return (
         <View style={styles.container}>
-        <Logo style={styles.logo} language="fr" />
+
+        <Logo style={styles.logo} country="fr" />
         <View style={styles.buttons}>
           <ActionButton
-          style={{
-          width: '45%',
-          }}
-          label="Français"
-          onPress={() => {
-          onPressFR();
-          }}
+            style={{
+                width: '45%',
+            }}
+            label="Français"
+            onPress={() => {
+                onPressFR();
+            }}
           />
           <ActionButton
-          style={{
-          width: '45%',
-          }}
-          label="Polski"
-          onPress={() => {
-          onPressPL();
-          }}
+            style={{
+                width: '45%',
+            }}
+            label="Polski"
+            onPress={() => {
+                onPressPL();
+            }}
           />
         </View>
       </View>

@@ -12,12 +12,14 @@ import {
     TextInput,
     Keyboard,
     ActivityIndicator,
-    ToastAndroid,
+    Alert,
     View
 } from 'react-native';
 
+import {withNavigation} from 'react-navigation';
+
 import {
-    UIStrings,
+    withLanguage,
     ButtonHeight,
     ButtonRadius,
     ButtonElevation,
@@ -30,7 +32,7 @@ import {
     RNCamera
 } from 'react-native-camera';
 
-export default class SparePartSelector extends Component {
+class SparePartSelector extends Component {
 
     constructor(props) {
         super(props);
@@ -49,13 +51,18 @@ export default class SparePartSelector extends Component {
             part: null,
             openbarcode: false
         });
-        const lg = UIStrings[this.props.language];
-        ToastAndroid.showWithGravity(lg.piece_inexistante, ToastAndroid.SHORT, ToastAndroid.CENTER);
+        
+        Alert.alert(AlertTitle, this.props.language.piece_inexistante, [{
+            text: this.props.language.ok,
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel'
+        }], {
+            cancelable: true
+        })
+
     }
 
     searchSparePart = (partId) => {
-        console.warn('searchSparePart:', partId);
-        //TODO : Faire la recherche dela pièce par le code et récupérer les infos de la pièce
         if (partId && partId.length > 0) {
             this.setState({
                 searching: true,
@@ -107,7 +114,6 @@ export default class SparePartSelector extends Component {
     }
 
     onBarcodeRead = (event) => {
-        console.warn(event.data);
         if (event.data !== null) {
             this.setState({
                 openbarcode: false
@@ -118,7 +124,6 @@ export default class SparePartSelector extends Component {
     }
 
     render() {
-        const lg = UIStrings[this.props.language];
         return (<View style={[
         styles.sparepartswrapper,
         (
@@ -138,14 +143,14 @@ export default class SparePartSelector extends Component {
         ]} animating={this.state.searching} size="large" color={ColorOrange}/>
       <Text style={styles.title}>{
           this.state.found
-            ? lg.selectionnez_une_piece_6
+            ? this.props.language.selectionnez_une_piece_6
             : (
               this.state.searching
-              ? lg.selectionnez_une_piece_5
+              ? this.props.language.selectionnez_une_piece_5
               : (
                 this.state.openbarcode
                 ? null
-                : lg.selectionnez_une_piece_1))
+                : this.props.language.selectionnez_une_piece_1))
         }</Text>
       <TextInput editable={!this.state.searching} style={[
           styles.input,
@@ -153,14 +158,14 @@ export default class SparePartSelector extends Component {
             this.state.searching | this.state.found | this.state.openbarcode
             ? styles.hide
             : null)
-        ]} placeholder={lg.selectionnez_une_piece_2} allowFontScaling={true} autoFocus={false} clearTextOnFocus={true} keyboardType='number-pad' returnKeyType='search' underlineColorAndroid={ColorOrange} onSubmitEditing={this.onSubmitEditing}/>
+        ]} placeholder={this.props.language.selectionnez_une_piece_2} allowFontScaling={true} autoFocus={false} clearTextOnFocus={true} keyboardType='number-pad' returnKeyType='search' underlineColorAndroid={ColorOrange} onSubmitEditing={this.onSubmitEditing}/>
       <Text style={[
           styles.label_or,
           (
             this.state.searching | this.state.found | this.state.openbarcode
             ? styles.hide
             : null)
-        ]}>{lg.selectionnez_une_piece_3}</Text>
+        ]}>{this.props.language.selectionnez_une_piece_3}</Text>
 
       <TouchableOpacity disabled={this.state.searching} onPress={this.onPressBarcode} style={[
           styles.codebar,
@@ -176,7 +181,7 @@ export default class SparePartSelector extends Component {
         <Text style={{
             fontSize: ButtonFontSize,
             color: '#000'
-          }}>{lg.code_barres}</Text>
+          }}>{this.props.language.code_barres}</Text>
       </TouchableOpacity>
       <TouchableOpacity disabled={!this.state.found} onPress={this.onPressNextStep} style={[
           styles.nextstep,
@@ -188,7 +193,7 @@ export default class SparePartSelector extends Component {
         <Text style={{
             fontSize: ButtonFontSize,
             color: '#000'
-          }}>{lg.next_step}</Text>
+          }}>{this.props.language.next_step}</Text>
         <Image source={require('../assets/images/camera.png')} style={{
             width: 40,
             height: 40
@@ -203,7 +208,7 @@ export default class SparePartSelector extends Component {
         ]}>
         <RNCamera ref={ref => {
             this.camera = ref;
-          }} style={styles.preview} type={RNCamera.Constants.Type.back} permissionDialogTitle={lg.permission_camera_title} permissionDialogMessage={lg.permission_camera_message} onBarCodeRead={this.onBarcodeRead}>
+          }} style={styles.preview} type={RNCamera.Constants.Type.back} permissionDialogTitle={this.props.language.permission_camera_title} permissionDialogMessage={this.props.language.permission_camera_message} onBarCodeRead={this.onBarcodeRead}>
           <View style={{
               width: '80%',
               height: '60%',
@@ -215,12 +220,14 @@ export default class SparePartSelector extends Component {
           <Text style={{
               fontSize: ButtonFontSize,
               color: '#fff'
-            }}>{lg.annuler}</Text>
+            }}>{this.props.language.annuler}</Text>
         </TouchableOpacity>
       </View>
     </View>)
     }
 }
+
+export default withNavigation(withLanguage(SparePartSelector));
 
 const styles = StyleSheet.create({
     sparepartswrapper: {
