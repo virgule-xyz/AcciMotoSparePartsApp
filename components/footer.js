@@ -4,6 +4,7 @@ import { withNavigation } from 'react-navigation';
 import ButtonEndPictures from '@components/buttonendpictures';
 import HomeButton from '@components/homebutton';
 import { withPictures } from '@components/withpictures';
+import PictureContext from '@components/picturecontext';
 import { ButtonHeight, ButtonFontSize } from '../UI';
 
 const styles = StyleSheet.create({
@@ -35,13 +36,17 @@ const styles = StyleSheet.create({
 });
 
 const AppFooter = ({ home, count, uploaderCount }) => (
-  <View style={styles.footerWrapper}>
-    <HomeButton home={home} />
-    <ButtonEndPictures count={count} />
-    <View style={styles.counter}>
-      <Text style={styles.counterText}>{uploaderCount}</Text>
-    </View>
-  </View>
+  <PictureContext.Consumer>
+    {pictures => (
+      <View style={styles.footerWrapper}>
+        <HomeButton home={home} />
+        <ButtonEndPictures count={pictures.all.length} />
+        <View style={styles.counter}>
+          <Text style={styles.counterText}>{pictures.queue.length}</Text>
+        </View>
+      </View>
+    )}
+  </PictureContext.Consumer>
 );
 
 export default withPictures(withNavigation(AppFooter));

@@ -38,10 +38,14 @@ const styles = StyleSheet.create({
 class Screen3 extends Component {
   constructor(props) {
     super(props);
+    console.warn(props);
+    this.state = {
+      partPictures: props.pictures,
+    };
   }
 
   deletePicture = (index, pname) => {
-    const { language, deletePicture } = this.props;
+    const { language, onDeletePicture } = this.props;
     Alert.alert(
       AlertTitle,
       language.question_effacer_piece,
@@ -53,7 +57,7 @@ class Screen3 extends Component {
         {
           text: language.oui,
           onPress: () => {
-            deletePicture(index, pname);
+            onDeletePicture(index, pname);
           },
         },
       ],
@@ -81,8 +85,8 @@ class Screen3 extends Component {
    * @return {[type]} [description]
    */
   render() {
-    const { language, pictures } = this.props;
-
+    const { language, pictures, onCallTest } = this.props;
+    onCallTest(this.state);
     return (
       <View style={styles.container}>
         <AppHeader />

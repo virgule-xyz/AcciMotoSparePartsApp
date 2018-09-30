@@ -54,16 +54,14 @@ class Screen4 extends Component {
   }
 
   takePicture = async function() {
-    const { navigation, addPicture } = this.props;
+    const { navigation, onAddPicture } = this.props;
     if (this.camera) {
       const options = {
         base64: false,
       };
       const data = await this.camera.takePictureAsync(options);
-      console.warn('********');
-      addPicture(data);
-      console.warn('********');
-      //navigation.navigate('Screen3');
+      onAddPicture(data);
+      navigation.navigate('Screen3');
     }
   };
 

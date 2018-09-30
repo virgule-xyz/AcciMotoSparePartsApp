@@ -4,29 +4,38 @@ export var withPictures = OtherComponent =>
   class extends Component {
     constructor(props) {
       super(props);
+      this.inter = null;
       this.state = {
-        pending: 3,
+        pending: Math.ceil(Math.random() * 19) + 10,
         pictures: [],
       };
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+      console.warn('** MOUNT **');
+      this.inter = setInterval(() => {
+        const p = Math.max(0, this.state.pending - 1);
+        this.setState({
+          pending: p,
+        });
+      }, 2000);
+    }
 
-    componentWillUnmount() {}
+    componentWillUnmount() {
+      clearInterval(this.inter);
+    }
 
     // getPictures = () => this.state.pictures;
 
     // getPicturesCount = () => this.state.pictures.length;
 
     addPicture = ({ uri, width, height }) => {
-      console.log('**ADD');
       this.setState({
         pictures: [...this.state.pictures, uri],
       });
     };
 
     deletePicture = (index, pname) => {
-      console.log('**DELETE', index, pname);
       const new_pictures = this.state.pictures.filter(
         (item, id) => id + item.name !== index + pname,
       );
@@ -35,14 +44,18 @@ export var withPictures = OtherComponent =>
       });
     };
 
-    render = () => (
-      <OtherComponent
-        {...this.props}
-        pictures={this.state.pictures}
-        count={this.state.pictures.length}
-        uploaderCount={this.state.pending}
-        addPicture={this.addPicture}
-        deletePicture={this.deletePicture}
-      />
-    );
+    render = () => {
+      const me = this;
+      return (
+        <OtherComponent
+          {...this.props}
+          pictures={me.state.pictures}
+          count={me.state.pictures.length}
+          uploaderCount={me.state.pending}
+          onAddPicture={data => me.addPicture(data)}
+          onDeletePicture={(index, pname) => me.deletePicture(index, pname)}
+          onCallTest={s => console.warn(s)}
+        />
+      );
+    };
   };

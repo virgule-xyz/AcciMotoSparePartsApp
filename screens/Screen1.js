@@ -1,10 +1,9 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-
 import ActionButton from '@components/button';
 import Logo from '@components/logo';
-
 import { ButtonHeight } from '../UI';
+import { withPictures } from '../components/withpictures';
 
 const styles = StyleSheet.create({
   logo: {
@@ -27,7 +26,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function Screen1({ navigation }) {
+const Screen1 = ({ navigation }) => {
   const nextScreen = 'Screen2';
 
   const onPressFR = () => {
@@ -67,4 +66,6 @@ export default function Screen1({ navigation }) {
       </View>
     </View>
   );
-}
+};
+
+export default withPictures(Screen1);
