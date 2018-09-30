@@ -1,8 +1,10 @@
 import React from 'react';
 
 const PictureContext = React.createContext({
-  all: [],
+  pictures: [],
   queue: [],
+  addPicture: () => {},
+  removePicture: () => {},
 });
 
 export default PictureContext;

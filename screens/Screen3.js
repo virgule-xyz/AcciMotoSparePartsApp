@@ -1,15 +1,14 @@
-import React, { Component } from 'react';
-import { Alert, StyleSheet, ScrollView, View, Dimensions } from 'react-native';
+import React from 'react';
+import { Alert, StyleSheet, ScrollView, View } from 'react-native';
 import { withNavigation } from 'react-navigation';
+import { withBack } from '@components/withback';
 import AppHeader from '@components/header';
 import AppFooter from '@components/footer';
 import SparePartResume from '@components/sparepartresume';
-// import EmptyPicture from '@components/emptypicture';
 import PartPicture from '@components/partpicture';
 import AddPictureButton from '@components/addpicturebutton';
-import { ButtonHeight, AlertTitle } from '../UI';
-import { withBack } from '@components/withback';
-import { withPictures } from '@components/withpictures';
+import PictureContext from '@components/picturecontext';
+import { ButtonHeight, AlertTitle, withLanguage } from '../UI';
 
 const styles = StyleSheet.create({
   container: {
@@ -21,7 +20,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   scrollPictureViewWrapper: {
-    height: 2 * ButtonHeight,
+    height: 3 * ButtonHeight,
     overflow: 'hidden',
   },
   picturesWrapper: {
@@ -35,17 +34,8 @@ const styles = StyleSheet.create({
   },
 });
 
-class Screen3 extends Component {
-  constructor(props) {
-    super(props);
-    console.warn(props);
-    this.state = {
-      partPictures: props.pictures,
-    };
-  }
-
-  deletePicture = (index, pname) => {
-    const { language, onDeletePicture } = this.props;
+const Screen3 = ({ language }) => {
+  const deletePicture = (index, pname, removePicture) => {
     Alert.alert(
       AlertTitle,
       language.question_effacer_piece,
@@ -57,7 +47,7 @@ class Screen3 extends Component {
         {
           text: language.oui,
           onPress: () => {
-            onDeletePicture(index, pname);
+            removePicture(index, pname);
           },
         },
       ],
@@ -67,46 +57,35 @@ class Screen3 extends Component {
     );
   };
 
-  getPicturesList = pictures =>
-    pictures.map((p, index) => (
-      <PartPicture
-        key={index + p.name}
-        file={p.name}
-        onDelete={() => this.deletePicture(index, p.name)}
-      />
-    ));
-
-  // onButtonNewPress = () => {
-  //   this.props.navigation.navigate('Ecran4');
-  // };
-
-  /**
-   * [render description]
-   * @return {[type]} [description]
-   */
-  render() {
-    const { language, pictures, onCallTest } = this.props;
-    onCallTest(this.state);
-    return (
-      <View style={styles.container}>
-        <AppHeader />
-        <View
-          style={{
-            marginTop: 150,
-          }}
-        >
-          <SparePartResume />
-          <View style={styles.scrollPictureViewWrapper}>
-            <ScrollView contentContainerStyle={styles.picturesWrapper}>
-              <AddPictureButton />
-              {this.getPicturesList(pictures)}
-            </ScrollView>
+  return (
+    <PictureContext.Consumer>
+      {({ pictures, removePicture }) => (
+        <View style={styles.container}>
+          <AppHeader />
+          <View
+            style={{
+              marginTop: 150,
+            }}
+          >
+            <SparePartResume />
+            <View style={styles.scrollPictureViewWrapper}>
+              <ScrollView contentContainerStyle={styles.picturesWrapper}>
+                <AddPictureButton />
+                {pictures.map((p, index) => (
+                  <PartPicture
+                    key={index + p}
+                    file={p}
+                    onDelete={() => deletePicture(index, p, removePicture)}
+                  />
+                ))}
+              </ScrollView>
+            </View>
           </View>
+          <AppFooter />
         </View>
-        <AppFooter />
-      </View>
-    );
-  }
-}
+      )}
+    </PictureContext.Consumer>
+  );
+};
 
-export default withPictures(withNavigation(withBack(Screen3)));
+export default withNavigation(withLanguage(withBack(Screen3)));

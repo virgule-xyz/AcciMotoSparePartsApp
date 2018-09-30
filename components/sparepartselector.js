@@ -246,6 +246,7 @@ class SparePartSelector extends Component {
           returnKeyType="search"
           underlineColorAndroid={ColorOrange}
           onSubmitEditing={this.onSubmitEditing}
+          value={this.props.reset ? null : null}
         />
         <Text
           style={[

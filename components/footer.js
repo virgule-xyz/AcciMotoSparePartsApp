@@ -35,18 +35,23 @@ const styles = StyleSheet.create({
   },
 });
 
-const AppFooter = ({ home, count, uploaderCount }) => (
+const AppFooter = ({ home, nobuttons, noback }) => (
   <PictureContext.Consumer>
-    {pictures => (
-      <View style={styles.footerWrapper}>
-        <HomeButton home={home} />
-        <ButtonEndPictures count={pictures.all.length} />
-        <View style={styles.counter}>
-          <Text style={styles.counterText}>{pictures.queue.length}</Text>
-        </View>
-      </View>
+    {({ queue }) => (
+      <>
+        {!nobuttons && (
+          <View style={styles.footerWrapper}>
+            {!noback && <HomeButton home={home} />}
+            {!noback && <ButtonEndPictures />}
+            {noback && <View />}
+            <View style={styles.counter}>
+              <Text style={styles.counterText}>{queue.length}</Text>
+            </View>
+          </View>
+        )}
+      </>
     )}
   </PictureContext.Consumer>
 );
 
-export default withPictures(withNavigation(AppFooter));
+export default withNavigation(AppFooter);

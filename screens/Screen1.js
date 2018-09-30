@@ -3,7 +3,6 @@ import { StyleSheet, View } from 'react-native';
 import ActionButton from '@components/button';
 import Logo from '@components/logo';
 import { ButtonHeight } from '../UI';
-import { withPictures } from '../components/withpictures';
 
 const styles = StyleSheet.create({
   logo: {
@@ -68,4 +67,4 @@ const Screen1 = ({ navigation }) => {
   );
 };
 
-export default withPictures(Screen1);
+export default Screen1;
