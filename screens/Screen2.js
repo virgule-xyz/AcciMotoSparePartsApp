@@ -1,53 +1,34 @@
-import React, {
-    Component
-} from 'react';
-import {
-    StyleSheet,
-    View
-} from 'react-native';
-import {withNavigation} from 'react-navigation';
+import React, { Component } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { withNavigation } from 'react-navigation';
 import SparePartSelector from '@components/sparepartselector';
 import AppHeader from '@components/header';
 import AppFooter from '@components/footer';
-import {withBack} from '@components/withback';
+import { withBack } from '@components/withback';
+import { withPictures } from '@components/withpictures';
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#FFF',
-    },
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#FFF',
+  },
 });
 
-class Screen2 extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            pending: 3,
-        }
-    }
+const Screen2 = ({ navigation }) => {
+  const onSuccess = () => {
+    navigation.navigate('Screen3');
+  };
 
-    onSuccess = () => {
-        const newparams = Object.assign({pending:this.state.pending}, this.props.navigation.state.params);
-        this.props.navigation.navigate('Screen3', newparams);
-    }
+  return (
+    <View style={styles.container}>
+      <AppHeader home />
+      <SparePartSelector style={styles.spareParts} onSuccess={onSuccess} />
+      <AppFooter home />
+    </View>
+  );
+};
 
-    /**
-     * [render description]
-     * @return {[type]} [description]
-     * TODO: Ajouter une props onFound
-     */
-    render() {
-        return (
-          <View style={styles.container}>
-            <AppHeader home />
-            <SparePartSelector style={styles.spareParts} onSuccess={this.onSuccess} />
-            <AppFooter home uploaderCount={this.state.pending} />
-          </View>
-        );
-    }
-}
-
-export default withNavigation(withBack(Screen2));
+export default withPictures(withNavigation(withBack(Screen2)));

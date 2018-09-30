@@ -1,317 +1,340 @@
-import React, {
-    Component
-} from 'react';
-
+import React, { Component } from 'react';
 import {
-    Platform,
-    StyleSheet,
-    PermissionsAndroid,
-    TouchableOpacity,
-    Text,
-    Image,
-    TextInput,
-    Keyboard,
-    ActivityIndicator,
-    Alert,
-    View
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+  Image,
+  TextInput,
+  Keyboard,
+  ActivityIndicator,
+  Alert,
+  View,
 } from 'react-native';
-
-import {withNavigation} from 'react-navigation';
-
+import { withNavigation } from 'react-navigation';
 import {
-    withLanguage,
-    ButtonHeight,
-    ButtonRadius,
-    ButtonElevation,
-    ButtonFontSize,
-    ButtonPadding,
-    ColorOrange
+  withLanguage,
+  ButtonHeight,
+  ButtonRadius,
+  ButtonElevation,
+  ButtonFontSize,
+  ButtonPadding,
+  ColorOrange,
 } from '../UI';
+import { RNCamera } from 'react-native-camera';
 
-import {
-    RNCamera
-} from 'react-native-camera';
+const styles = StyleSheet.create({
+  sparepartswrapper: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#FFF',
+    width: '80%',
+    maxHeight: '60%',
+    paddingTop: 10,
+    paddingBottom: 10,
+  },
+  sparepartswrapper_found: {
+    justifyContent: 'center',
+  },
+  input: {
+    width: '100%',
+    textAlign: 'center',
+    margin: 0,
+  },
+  title: {
+    fontSize: 24,
+    textAlign: 'center',
+    marginBottom: 30,
+  },
+  label: {
+    fontSize: 16,
+    textAlign: 'center',
+    margin: 0,
+  },
+  label_or: {
+    fontSize: 24,
+    textAlign: 'center',
+  },
+  codebar: {
+    backgroundColor: ColorOrange,
+    height: ButtonHeight,
+    borderRadius: ButtonRadius,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    width: '100%',
+    elevation: ButtonElevation,
+  },
+  nextstep: {
+    backgroundColor: ColorOrange,
+    height: ButtonHeight,
+    borderRadius: ButtonRadius,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    width: '100%',
+    elevation: ButtonElevation,
+  },
+  hide: {
+    display: 'none',
+  },
+  show: {
+    display: 'flex',
+  },
+  barcodewrapper: {
+    alignSelf: 'flex-start',
+    width: '100%',
+    height: 220 + ButtonHeight + ButtonElevation,
+  },
+  preview: {
+    flex: 0,
+    flexGrow: 0,
+    width: '100%',
+    height: 200,
+    overflow: 'hidden',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  cancel: {
+    backgroundColor: ColorOrange,
+    height: ButtonHeight,
+    borderRadius: ButtonRadius,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    elevation: ButtonElevation,
+    paddingLeft: ButtonPadding,
+    paddingRight: ButtonPadding,
+  },
+});
 
 class SparePartSelector extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      searching: false,
+      found: false,
+      part: null,
+      openbarcode: false,
+    };
+  }
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            searching: false,
-            found: false,
-            part: null,
-            openbarcode: false
-        }
-    }
+  onError = () => {
+    const { language } = this.props;
+    this.setState({
+      searching: false,
+      found: false,
+      part: null,
+      openbarcode: false,
+    });
 
-    onError = () => {
+    Alert.alert(
+      AlertTitle,
+      language.piece_inexistante,
+      [
+        {
+          text: language.ok,
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+      ],
+      {
+        cancelable: true,
+      },
+    );
+  };
+
+  searchSparePart = partId => {
+    if (partId && partId.length > 0) {
+      this.setState({
+        searching: true,
+        found: false,
+        part: partId,
+        openbarcode: false,
+      });
+      setTimeout(() => {
         this.setState({
-            searching: false,
-            found: false,
-            part: null,
-            openbarcode: false
+          searching: false,
+          found: false,
+          part: null,
+          openbarcode: false,
         });
-        
-        Alert.alert(AlertTitle, this.props.language.piece_inexistante, [{
-            text: this.props.language.ok,
-            onPress: () => console.log('Cancel Pressed'),
-            style: 'cancel'
-        }], {
-            cancelable: true
-        })
-
+        this.props.onSuccess();
+      }, 2000);
+    } else {
+      this.onError();
     }
+  };
 
-    searchSparePart = (partId) => {
-        if (partId && partId.length > 0) {
-            this.setState({
-                searching: true,
-                found: false,
-                part: partId,
-                openbarcode: false
-            });
-            setTimeout(() => {
-                this.setState({
-                    searching: false,
-                    found: false,
-                    part: null,
-                    openbarcode: false
-                });
-                this.props.onSuccess();
-            }, 2000);
-        } else {
-            this.onError();
-        }
+  onSubmitEditing = event => {
+    Keyboard.dismiss;
+    const partId = event.nativeEvent.text;
+    this.setState({
+      searching: true,
+      found: false,
+      part: partId,
+    });
+    this.searchSparePart(partId);
+  };
+
+  onPressBarcode = () => {
+    Keyboard.dismiss;
+    this.setState({
+      searching: false,
+      openbarcode: true,
+      found: false,
+    });
+  };
+
+  onCancelBarcode = () => {
+    Keyboard.dismiss;
+    this.setState({
+      searching: false,
+      found: false,
+      openbarcode: false,
+    });
+  };
+
+  onBarcodeRead = event => {
+    if (event.data !== null) {
+      this.setState({
+        openbarcode: false,
+      });
+      this.searchSparePart(event.data);
     }
+    return;
+  };
 
-    onSubmitEditing = (event) => {
-        Keyboard.dismiss;
-        const partId = event.nativeEvent.text;
-        this.setState({
-            searching: true,
-            found: false,
-            part: partId
-        });
-        this.searchSparePart(partId);
-    }
-
-    onPressBarcode = () => {
-        Keyboard.dismiss;
-        this.setState({
-            searching: false,
-            openbarcode: true,
-            found: false
-        });
-    }
-
-    onCancelBarcode = () => {
-        Keyboard.dismiss;
-        this.setState({
-            searching: false,
-            found: false,
-            openbarcode: false
-        });
-    }
-
-    onBarcodeRead = (event) => {
-        if (event.data !== null) {
-            this.setState({
-                openbarcode: false
-            });
-            this.searchSparePart(event.data);
-        }
-        return;
-    }
-
-    render() {
-        return (<View style={[
-        styles.sparepartswrapper,
-        (
-          this.state.found
-          ? styles.sparepartswrapper_found
-          : null)
-      ]}>
-      <ActivityIndicator style={[
-          {
-            position: 'absolute',
-            top: '50%'
-          },
-          (
-            this.state.searching
-            ? styles.show
-            : styles.hide)
-        ]} animating={this.state.searching} size="large" color={ColorOrange}/>
-      <Text style={styles.title}>{
-          this.state.found
+  render() {
+    return (
+      <View
+        style={[styles.sparepartswrapper, this.state.found ? styles.sparepartswrapper_found : null]}
+      >
+        <ActivityIndicator
+          style={[
+            {
+              position: 'absolute',
+              top: '50%',
+            },
+            this.state.searching ? styles.show : styles.hide,
+          ]}
+          animating={this.state.searching}
+          size="large"
+          color={ColorOrange}
+        />
+        <Text style={styles.title}>
+          {this.state.found
             ? this.props.language.selectionnez_une_piece_6
-            : (
-              this.state.searching
+            : this.state.searching
               ? this.props.language.selectionnez_une_piece_5
-              : (
-                this.state.openbarcode
+              : this.state.openbarcode
                 ? null
-                : this.props.language.selectionnez_une_piece_1))
-        }</Text>
-      <TextInput editable={!this.state.searching} style={[
-          styles.input,
-          (
-            this.state.searching | this.state.found | this.state.openbarcode
-            ? styles.hide
-            : null)
-        ]} placeholder={this.props.language.selectionnez_une_piece_2} allowFontScaling={true} autoFocus={false} clearTextOnFocus={true} keyboardType='number-pad' returnKeyType='search' underlineColorAndroid={ColorOrange} onSubmitEditing={this.onSubmitEditing}/>
-      <Text style={[
-          styles.label_or,
-          (
-            this.state.searching | this.state.found | this.state.openbarcode
-            ? styles.hide
-            : null)
-        ]}>{this.props.language.selectionnez_une_piece_3}</Text>
+                : this.props.language.selectionnez_une_piece_1}
+        </Text>
+        <TextInput
+          editable={!this.state.searching}
+          style={[
+            styles.input,
+            this.state.searching | this.state.found | this.state.openbarcode ? styles.hide : null,
+          ]}
+          placeholder={this.props.language.selectionnez_une_piece_2}
+          allowFontScaling={true}
+          autoFocus={false}
+          clearTextOnFocus={true}
+          keyboardType="number-pad"
+          returnKeyType="search"
+          underlineColorAndroid={ColorOrange}
+          onSubmitEditing={this.onSubmitEditing}
+        />
+        <Text
+          style={[
+            styles.label_or,
+            this.state.searching | this.state.found | this.state.openbarcode ? styles.hide : null,
+          ]}
+        >
+          {this.props.language.selectionnez_une_piece_3}
+        </Text>
 
-      <TouchableOpacity disabled={this.state.searching} onPress={this.onPressBarcode} style={[
-          styles.codebar,
-          (
-            this.state.searching | this.state.found | this.state.openbarcode
-            ? styles.hide
-            : null)
-        ]}>
-        <Image source={require('../assets/images/barcode.png')} style={{
-            width: 40,
-            height: 40
-          }}/>
-        <Text style={{
-            fontSize: ButtonFontSize,
-            color: '#000'
-          }}>{this.props.language.code_barres}</Text>
-      </TouchableOpacity>
-      <TouchableOpacity disabled={!this.state.found} onPress={this.onPressNextStep} style={[
-          styles.nextstep,
-          (
-            this.state.found
-            ? null
-            : styles.hide)
-        ]}>
-        <Text style={{
-            fontSize: ButtonFontSize,
-            color: '#000'
-          }}>{this.props.language.next_step}</Text>
-        <Image source={require('../assets/images/camera.png')} style={{
-            width: 40,
-            height: 40
-          }}/>
-      </TouchableOpacity>
-      <View style={[
-          styles.barcodewrapper,
-          (
-            this.state.openbarcode
-            ? null
-            : styles.hide)
-        ]}>
-        <RNCamera ref={ref => {
-            this.camera = ref;
-          }} style={styles.preview} type={RNCamera.Constants.Type.back} permissionDialogTitle={this.props.language.permission_camera_title} permissionDialogMessage={this.props.language.permission_camera_message} onBarCodeRead={this.onBarcodeRead}>
-          <View style={{
-              width: '80%',
-              height: '60%',
-              borderWidth: 2,
-              borderColor: 'red'
-            }}></View>
-        </RNCamera>
-        <TouchableOpacity style={styles.cancel} onPress={this.onCancelBarcode}>
-          <Text style={{
+        <TouchableOpacity
+          disabled={this.state.searching}
+          onPress={this.onPressBarcode}
+          style={[
+            styles.codebar,
+            this.state.searching | this.state.found | this.state.openbarcode ? styles.hide : null,
+          ]}
+        >
+          <Image
+            source={require('../assets/images/barcode.png')}
+            style={{
+              width: 40,
+              height: 40,
+            }}
+          />
+          <Text
+            style={{
               fontSize: ButtonFontSize,
-              color: '#fff'
-            }}>{this.props.language.annuler}</Text>
+              color: '#000',
+            }}
+          >
+            {this.props.language.code_barres}
+          </Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          disabled={!this.state.found}
+          onPress={this.onPressNextStep}
+          style={[styles.nextstep, this.state.found ? null : styles.hide]}
+        >
+          <Text
+            style={{
+              fontSize: ButtonFontSize,
+              color: '#000',
+            }}
+          >
+            {this.props.language.next_step}
+          </Text>
+          <Image
+            source={require('../assets/images/camera.png')}
+            style={{
+              width: 40,
+              height: 40,
+            }}
+          />
+        </TouchableOpacity>
+        <View style={[styles.barcodewrapper, this.state.openbarcode ? null : styles.hide]}>
+          <RNCamera
+            ref={ref => {
+              this.camera = ref;
+            }}
+            style={styles.preview}
+            type={RNCamera.Constants.Type.back}
+            permissionDialogTitle={this.props.language.permission_camera_title}
+            permissionDialogMessage={this.props.language.permission_camera_message}
+            onBarCodeRead={this.onBarcodeRead}
+          >
+            <View
+              style={{
+                width: '80%',
+                height: '60%',
+                borderWidth: 2,
+                borderColor: 'red',
+              }}
+            />
+          </RNCamera>
+          <TouchableOpacity style={styles.cancel} onPress={this.onCancelBarcode}>
+            <Text
+              style={{
+                fontSize: ButtonFontSize,
+                color: '#fff',
+              }}
+            >
+              {this.props.language.annuler}
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>)
-    }
+    );
+  }
 }
 
 export default withNavigation(withLanguage(SparePartSelector));
-
-const styles = StyleSheet.create({
-    sparepartswrapper: {
-        flex: 1,
-        flexDirection: "column",
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        backgroundColor: '#FFF',
-        width: '80%',
-        maxHeight: '60%',
-        paddingTop: 10,
-        paddingBottom: 10
-    },
-    sparepartswrapper_found: {
-        justifyContent: 'center'
-    },
-    input: {
-        width: '100%',
-        textAlign: 'center',
-        margin: 0
-    },
-    title: {
-        fontSize: 24,
-        textAlign: 'center',
-        marginBottom: 30
-    },
-    label: {
-        fontSize: 16,
-        textAlign: 'center',
-        margin: 0
-    },
-    label_or: {
-        fontSize: 24,
-        textAlign: 'center'
-    },
-    codebar: {
-        backgroundColor: ColorOrange,
-        height: ButtonHeight,
-        borderRadius: ButtonRadius,
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        width: '100%',
-        elevation: ButtonElevation
-    },
-    nextstep: {
-        backgroundColor: ColorOrange,
-        height: ButtonHeight,
-        borderRadius: ButtonRadius,
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        width: '100%',
-        elevation: ButtonElevation
-    },
-    hide: {
-        display: 'none'
-    },
-    show: {
-        display: 'flex'
-    },
-    barcodewrapper: {
-        alignSelf: 'flex-start',
-        width: '100%',
-        height: 220 + ButtonHeight + ButtonElevation
-    },
-    preview: {
-        flex: 0,
-        flexGrow: 0,
-        width: '100%',
-        height: 200,
-        overflow: 'hidden',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 20
-    },
-    cancel: {
-        backgroundColor: ColorOrange,
-        height: ButtonHeight,
-        borderRadius: ButtonRadius,
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        elevation: ButtonElevation,
-        paddingLeft: ButtonPadding,
-        paddingRight: ButtonPadding
-    }
-});

@@ -2787,6 +2787,10 @@ invert-kv@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/invert-kv/-/invert-kv-1.0.0.tgz#104a8e4aaca6d3d8cd157a8ef8bfab2d7a3ffdb6"
 
+ios-deploy@^1.9.3:
+  version "1.9.3"
+  resolved "https://registry.yarnpkg.com/ios-deploy/-/ios-deploy-1.9.3.tgz#f2ad5f974814f3a65c483058587fc573997ae509"
+
 is-accessor-descriptor@^0.1.6:
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/is-accessor-descriptor/-/is-accessor-descriptor-0.1.6.tgz#a9e12cb3ae8d876727eeef3843f8a0897b5c98d6"

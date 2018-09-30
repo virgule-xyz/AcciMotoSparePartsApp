@@ -1,27 +1,21 @@
-import React, {
-    Component
-} from 'react'
-import {withNavigation} from 'react-navigation';
-import {withLanguage} from '../UI';
-import {
-    Image,
-    StyleSheet
-} from 'react-native'
-
-class Logo extends Component {
-render() {
-    const src = (this.props.country === 'fr') ?
-        require('@assets/images/logo_fr.png') :
-        require('@assets/images/logo_gb.png');
-
-    return (<Image resizeMode="contain" source={src} style={[styles.logo, this.props.style]}/>)
-}
-}
+import React from 'react';
+import { withNavigation } from 'react-navigation';
+import { Image, StyleSheet } from 'react-native';
+import { withLanguage } from '../UI';
 
 const styles = StyleSheet.create({
-    logo: {
-        width: "80%"
-    }
+  logo: {
+    width: '80%',
+  },
 });
+
+const frIcon = require('@assets/images/logo_fr.png');
+const gbIcon = require('@assets/images/logo_gb.png');
+
+const Logo = ({ country, style }) => {
+  const src = country === 'fr' ? frIcon : gbIcon;
+
+  return <Image resizeMode="contain" source={src} style={[styles.logo, style]} />;
+};
 
 export default withNavigation(withLanguage(Logo));

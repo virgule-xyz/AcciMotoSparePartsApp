@@ -1,76 +1,70 @@
 import React from 'react';
-import {
-    StyleSheet,
-    View
-} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import ActionButton from '@components/button';
 import Logo from '@components/logo';
 
-import {
-    ButtonHeight
-} from '../UI';
+import { ButtonHeight } from '../UI';
 
 const styles = StyleSheet.create({
-    logo: {
-        width: '90%',
-        marginBottom: '20%',
-    },
-    buttons: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        height: ButtonHeight,
-        width: '90%',
-    },
-    container: {
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'white',
-    },
+  logo: {
+    width: '90%',
+    marginBottom: '20%',
+  },
+  buttons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    height: ButtonHeight,
+    width: '90%',
+  },
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+  },
 });
 
-export default function Screen1(props) {
-    const nextScreen = 'Screen2';
+export default function Screen1({ navigation }) {
+  const nextScreen = 'Screen2';
 
-    const onPressFR = () => {
-        props.navigation.navigate(nextScreen, {
-            country: 'fr'
-        });
-    };
+  const onPressFR = () => {
+    navigation.navigate(nextScreen, {
+      country: 'fr',
+    });
+  };
 
-    const onPressPL = () => {
-        props.navigation.navigate(nextScreen, {
-            country: 'gb'
-        });
-    };
+  const onPressPL = () => {
+    navigation.navigate(nextScreen, {
+      country: 'gb',
+    });
+  };
 
-    return (
-        <View style={styles.container}>
-
-        <Logo style={styles.logo} country="fr" />
-        <View style={styles.buttons}>
-          <ActionButton
-            style={{
-                width: '45%',
-            }}
-            label="Français"
-            onPress={() => {
-                onPressFR();
-            }}
-          />
-          <ActionButton
-            style={{
-                width: '45%',
-            }}
-            label="Polski"
-            onPress={() => {
-                onPressPL();
-            }}
-          />
-        </View>
+  return (
+    <View style={styles.container}>
+      <Logo style={styles.logo} country="fr" />
+      <View style={styles.buttons}>
+        <ActionButton
+          style={{
+            width: '45%',
+          }}
+          label="Français"
+          onPress={() => {
+            onPressFR();
+          }}
+        />
+        <ActionButton
+          style={{
+            width: '45%',
+          }}
+          label="Polski"
+          onPress={() => {
+            onPressPL();
+          }}
+        />
       </View>
-    );
+    </View>
+  );
 }

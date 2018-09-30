@@ -1,12 +1,8 @@
-import React, { Component } from 'react';
-
+import React from 'react';
 import { Text, Alert, TouchableOpacity, StyleSheet } from 'react-native';
-
 import { withNavigation } from 'react-navigation';
-
 import {
   withLanguage,
-  UIStrings,
   ButtonHeight,
   ButtonFontSize,
   ButtonRadius,
@@ -14,85 +10,6 @@ import {
   ButtonElevation,
   AlertTitle,
 } from '../UI';
-
-class HomeButton extends Component {
-  constructor(props) {
-    super(props);
-  }
-  askBeforeGoBackLanguages = () => {
-    Alert.alert(
-      AlertTitle,
-      this.props.language.question_retour_home,
-      [
-        {
-          text: this.props.language.non,
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
-        },
-        {
-          text: this.props.language.oui,
-          onPress: () => {
-            this.props.navigation.navigate('Screen1');
-          },
-        },
-      ],
-      {
-        cancelable: false,
-      },
-    );
-  };
-
-  askBeforeGoBackHome = () => {
-    Alert.alert(
-      AlertTitle,
-      this.props.language.question_retour_piece,
-      [
-        {
-          text: this.props.language.non,
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
-        },
-        {
-          text: this.props.language.oui,
-          onPress: () => {
-            this.props.navigation.navigate('Screen2');
-          },
-        },
-      ],
-      {
-        cancelable: false,
-      },
-    );
-  };
-
-  render() {
-    console.warn(this.props);
-    if (!!this.props.home)
-      return (
-        <TouchableOpacity
-          onPress={() => {
-            this.askBeforeGoBackHome();
-          }}
-        >
-          <Text style={[this.props.style, styles.backHome]}>
-            {this.props.language.changer.toUpperCase()}
-          </Text>
-        </TouchableOpacity>
-      );
-    else
-      return (
-        <TouchableOpacity
-          onPress={() => {
-            this.askBeforeGoBackLanguages();
-          }}
-        >
-          <Text style={styles.backLanguages}>{this.props.language.accueil.toLowerCase()}</Text>
-        </TouchableOpacity>
-      );
-  }
-}
-
-export default withNavigation(withLanguage(HomeButton));
 
 const styles = StyleSheet.create({
   backHome: {
@@ -124,3 +41,73 @@ const styles = StyleSheet.create({
     elevation: ButtonElevation / 2,
   },
 });
+
+const HomeButton = ({ language, navigation, home, style }) => {
+  const askBeforeGoBackLanguages = () => {
+    Alert.alert(
+      AlertTitle,
+      language.question_retour_home,
+      [
+        {
+          text: language.non,
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: language.oui,
+          onPress: () => {
+            navigation.navigate('Screen1');
+          },
+        },
+      ],
+      {
+        cancelable: false,
+      },
+    );
+  };
+
+  const askBeforeGoBackHome = () => {
+    Alert.alert(
+      AlertTitle,
+      language.question_retour_piece,
+      [
+        {
+          text: language.non,
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: language.oui,
+          onPress: () => {
+            navigation.navigate('Screen2', { reset: true });
+          },
+        },
+      ],
+      {
+        cancelable: false,
+      },
+    );
+  };
+
+  if (!home)
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          askBeforeGoBackHome();
+        }}
+      >
+        <Text style={[style, styles.backHome]}>{language.changer.toUpperCase()}</Text>
+      </TouchableOpacity>
+    );
+  return (
+    <TouchableOpacity
+      onPress={() => {
+        askBeforeGoBackLanguages();
+      }}
+    >
+      <Text style={styles.backLanguages}>{language.accueil.toLowerCase()}</Text>
+    </TouchableOpacity>
+  );
+};
+
+export default withNavigation(withLanguage(HomeButton));

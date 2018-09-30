@@ -1,145 +1,102 @@
-import React, {
-    Component
-} from 'react';
-import {
-    StyleSheet,
-    BackHandler,
-    View
-} from 'react-native';
-
-import {
-    RNCamera
-} from 'react-native-camera';
-
+import React, { Component } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { withNavigation } from 'react-navigation';
+import { RNCamera } from 'react-native-camera';
 import AppHeader from '@components/header';
 import AppFooter from '@components/footer';
 import Button from '@components/button';
-
-import {
-    UIStrings,
-    ButtonHeight,
-    ButtonMargins
-} from '../UI';
+import { ButtonHeight, ButtonMargins, withLanguage } from '../UI';
+import { withBack } from '@components/withback';
+import { withPictures } from '@components/withpictures';
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#fff',
-        overflow: 'hidden',
-    },
-    cameraWrapper: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '90%',
-        height: 400,
-    },
-    cameraFooter: {
-        width: '100%',
-        height: ButtonHeight + 10,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        alignContent: 'flex-end',
-    },
-    valider: {
-        marginRight: ButtonMargins,
-    },
-    preview: {
-        flex: 0,
-        flexGrow: 0,
-        width: '100%',
-        height: 300,
-        overflow: 'hidden',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: ButtonMargins,
-    },
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    overflow: 'hidden',
+  },
+  cameraWrapper: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '90%',
+    height: 400,
+  },
+  cameraFooter: {
+    width: '100%',
+    height: ButtonHeight + 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'flex-end',
+  },
+  valider: {
+    marginRight: ButtonMargins,
+  },
+  preview: {
+    flex: 0,
+    flexGrow: 0,
+    width: '100%',
+    height: 300,
+    overflow: 'hidden',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: ButtonMargins,
+  },
 });
 
-export default class Screen4 extends Component {
-    constructor(props) {
-        super(props);
-        this.camera = null;
-        this.state = {
-            pending: 3,
-            pictures: [{
-                name: '@assets/images/test.jpeg',
-            }, {
-                name: '@assets/images/test.jpeg',
-            }, {
-                name: '@assets/images/test.jpeg',
-            }, {
-                name: '@assets/images/test.jpeg',
-            }, {
-                name: '@assets/images/test.jpeg',
-            }, {
-                name: '@assets/images/test.jpeg',
-            }, ],
-        };
+class Screen4 extends Component {
+  constructor(props) {
+    super(props);
+    this.camera = null;
+  }
+
+  takePicture = async function() {
+    const { navigation, addPicture } = this.props;
+    if (this.camera) {
+      const options = {
+        base64: false,
+      };
+      const data = await this.camera.takePictureAsync(options);
+      console.warn('********');
+      addPicture(data);
+      console.warn('********');
+      //navigation.navigate('Screen3');
     }
+  };
 
-    componentDidMount() {
-        this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
-            this.props.navigation.goBack();
-            return true;
-        });
-    }
-
-    componentWillUnmount() {
-        this.backHandler.remove();
-    }
-
-    takePicture = async function() {
-        const language = this.props.navigation.getParam('language', 'fr');
-        if (this.camera) {
-            const options = {
-                base64: false
-            };
-            const data = await this.camera.takePictureAsync(options);
-            this.props.navigation.navigate('Screen3', {
-                language,
-                picture: data.uri
-            });
-        }
-    }
-
-    render() {
-        const language = this.props.navigation.getParam('language', 'fr');
-        const lg = UIStrings[language];
-
-        return (
-            <View style={styles.container}>
-        <AppHeader language={language} />
+  render() {
+    const { language, navigation } = this.props;
+    return (
+      <View style={styles.container}>
+        <AppHeader />
         <View style={styles.cameraWrapper}>
           <RNCamera
-            ref={(ref) => {
+            ref={ref => {
               this.camera = ref;
             }}
             style={styles.preview}
             type={RNCamera.Constants.Type.back}
             flashMode={RNCamera.Constants.FlashMode.auto}
-            permissionDialogTitle={lg.permission_camera_title}
-            permissionDialogMessage={lg.permission_camera_message}
+            permissionDialogTitle={language.permission_camera_title}
+            permissionDialogMessage={language.permission_camera_message}
           />
           <View style={styles.cameraFooter}>
-            <Button
-              style={styles.valider}
-              icon="camera"
-              onPress={() => this.takePicture()}
-            />
+            <Button style={styles.valider} icon="camera" onPress={() => this.takePicture()} />
             <Button
               style={styles.annuler}
               type="cancel"
-              label={lg.annuler}
-              onPress={() => this.props.navigation.navigate('Screen3')}
+              label={language.annuler}
+              onPress={() => navigation.navigate('Screen3')}
             />
           </View>
         </View>
-        <AppFooter navigation={this.props.navigation} language={language} uploaderCount={this.state.pending} />
+        <AppFooter />
       </View>
-        );
-    }
+    );
+  }
 }
+
+export default withPictures(withNavigation(withLanguage(withBack(Screen4))));

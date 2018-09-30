@@ -1,27 +1,10 @@
-import React, { Component } from 'react';
-
+import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-
 import { withNavigation } from 'react-navigation';
-
 import ButtonEndPictures from '@components/buttonendpictures';
 import HomeButton from '@components/homebutton';
-
+import { withPictures } from '@components/withpictures';
 import { ButtonHeight, ButtonFontSize } from '../UI';
-
-class AppFooter extends Component {
-  render = () => (
-    <View style={styles.footerWrapper}>
-      <HomeButton />
-      <ButtonEndPictures count={this.props.count} />
-      <View style={styles.counter}>
-        <Text style={styles.counterText}>{this.props.uploaderCount}</Text>
-      </View>
-    </View>
-  );
-}
-
-export default withNavigation(AppFooter);
 
 const styles = StyleSheet.create({
   footerWrapper: {
@@ -50,3 +33,15 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
 });
+
+const AppFooter = ({ home, count, uploaderCount }) => (
+  <View style={styles.footerWrapper}>
+    <HomeButton home={home} />
+    <ButtonEndPictures count={count} />
+    <View style={styles.counter}>
+      <Text style={styles.counterText}>{uploaderCount}</Text>
+    </View>
+  </View>
+);
+
+export default withPictures(withNavigation(AppFooter));
