@@ -1,99 +1,39 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { withNavigation } from 'react-navigation';
+import { RNCamera } from 'react-native-camera';
+import { withBack } from '@components/withback';
 import AppHeader from '@components/header';
 import AppFooter from '@components/footer';
 import Button from '@components/button';
-import {
-  Platform,
-  PermissionsAndroid,
-  StyleSheet,
-  BackHandler,
-  TouchableOpacity,
-  Image,
-  Text,
-  ScrollView,
-  View
-} from 'react-native';
+import PictureContext from '@components/picturecontext';
+import { ButtonHeight, ButtonMargins, withLanguage } from '../UI';
 
-import {RNCamera} from 'react-native-camera';
-
-import UI, {
-  UIStrings,
-  ButtonHeight,
-  ButtonRadius,
-  ButtonPadding,
-  ButtonElevation,
-  ButtonFontSize,
-  ButtonMargins,
-  ColorOrange,
-  ColorBlack
-} from '../UI';
-
-export default class Screen4 extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  componentDidMount() {
-    this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
-      this.props.navigation.goBack();
-      return true;
-    });
-  }
-
-  componentWillUnmount() {
-    this.backHandler.remove();
-  }
-
-  render() {
-    const language = this.props.navigation.getParam('language', 'fr');
-    const lg = UIStrings[language];
-    const uploaderCount = 0;
-
-    return (<View style={styles.container}>
-      <AppHeader language={language}/>
-      <View style={styles.cameraWrapper}>
-        <RNCamera ref={ref => {
-            this.camera = ref;
-          }} style={styles.preview} type={RNCamera.Constants.Type.back}
-          flashMode={RNCamera.Constants.FlashMode.auto}  permissionDialogTitle={lg.permission_camera_title} permissionDialogMessage={lg.permission_camera_message}></RNCamera>
-        <View style={styles.cameraFooter}>
-          <Button style={styles.valider} icon='camera' onPress={() => {
-              this.props.navigation.navigate("Screen3");
-            }}/>
-          <Button style={styles.annuler} type="cancel" label={lg.annuler} onPress={() => {
-              this.props.navigation.navigate("Screen3");
-            }}/>
-        </View>
-      </View>
-      <AppFooter navigation={this.props.navigation} language={language} uploaderCount={uploaderCount}/>
-    </View>);
-  }
-}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "column",
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   cameraWrapper: {
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     width: '90%',
-    height: 400
+    height: 400,
   },
   cameraFooter: {
     width: '100%',
     height: ButtonHeight + 10,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    alignContent: "flex-end"
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'flex-end',
   },
   valider: {
-    marginRight: ButtonMargins
+    marginRight: ButtonMargins,
   },
   preview: {
     flex: 0,
@@ -103,6 +43,66 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: ButtonMargins
-  }
+    marginBottom: ButtonMargins,
+  },
 });
+
+class Screen4 extends Component {
+  constructor(props) {
+    super(props);
+    this.camera = null;
+  }
+
+  takePicture = async function(addPicture) {
+    const { navigation } = this.props;
+    if (this.camera) {
+      const options = {
+        base64: false,
+      };
+      const data = await this.camera.takePictureAsync(options);
+      addPicture(data);
+      navigation.navigate('Screen3');
+    }
+  };
+
+  render() {
+    const { language, navigation } = this.props;
+    return (
+      <PictureContext.Consumer>
+        {({ pictures, addPicture }) => (
+          <View style={styles.container}>
+            <AppHeader />
+            <View style={styles.cameraWrapper}>
+              <RNCamera
+                ref={ref => {
+                  this.camera = ref;
+                }}
+                style={styles.preview}
+                type={RNCamera.Constants.Type.back}
+                flashMode={RNCamera.Constants.FlashMode.auto}
+                permissionDialogTitle={language.permission_camera_title}
+                permissionDialogMessage={language.permission_camera_message}
+              />
+              <View style={styles.cameraFooter}>
+                <Button
+                  style={styles.valider}
+                  icon="camera"
+                  onPress={() => this.takePicture(addPicture)}
+                />
+                <Button
+                  style={styles.annuler}
+                  type="cancel"
+                  label={language.annuler}
+                  onPress={() => navigation.navigate('Screen3')}
+                />
+              </View>
+            </View>
+            <AppFooter nobuttons />
+          </View>
+        )}
+      </PictureContext.Consumer>
+    );
+  }
+}
+
+export default withNavigation(withLanguage(withBack(Screen4)));

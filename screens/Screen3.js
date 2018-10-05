@@ -1,137 +1,91 @@
-import React, {Component} from 'react';
+import React from 'react';
+import { Alert, StyleSheet, ScrollView, View } from 'react-native';
+import { withNavigation } from 'react-navigation';
+import { withBack } from '@components/withback';
 import AppHeader from '@components/header';
 import AppFooter from '@components/footer';
 import SparePartResume from '@components/sparepartresume';
-import EmptyPicture from '@components/emptypicture';
 import PartPicture from '@components/partpicture';
 import AddPictureButton from '@components/addpicturebutton';
-import {
-  Platform,
-  StyleSheet,
-  BackHandler,
-  TouchableOpacity,
-  Image,
-  Text,
-  ScrollView,
-  View
-} from 'react-native';
+import PictureContext from '@components/picturecontext';
+import { ButtonHeight, AlertTitle, withLanguage } from '../UI';
 
-import UI, {
-  UIStrings,
-  ButtonHeight,
-  ButtonRadius,
-  ButtonPadding,
-  ButtonElevation,
-  ButtonFontSize,
-  ButtonMargins,
-  ColorOrange,
-  ColorBlack
-} from '../UI';
-
-export default class Screen3 extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  componentDidMount() {
-    this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
-      this.props.navigation.goBack();
-      return true;
-    });
-  }
-
-  componentWillUnmount() {
-    this.backHandler.remove();
-  }
-
-  onButtonEndPress = () => {
-    return false;
-  }
-
-  onButtonNewPress = () => {
-    return false;
-  }
-
-  getPictures = () => {
-    const pictures = [
-      {
-        'name': '@assets/images/test.jpeg'
-      }, {
-        'name': '@assets/images/test.jpeg'
-      }, {
-        'name': '@assets/images/test.jpeg'
-      }, {
-        'name': '@assets/images/test.jpeg'
-      }, {
-        'name': '@assets/images/test.jpeg'
-      }, {
-        'name': '@assets/images/test.jpeg'
-      }
-    ];
-    return pictures;
-  }
-
-  getPicturesCount = () => {
-    return this.getPictures().length;
-  }
-
-  getPicturesList = () => {
-    var ret = this.getPictures().map((p) => <PartPicture key={p.name} file={p.name}/>);
-    return ret;
-  }
-
-  onButtonNewPress = () => {
-    this.props.navigation.navigate("Ecran4", {language: 'fr'});
-  }
-
-  /**
-   * [render description]
-   * @return {[type]} [description]
-   */
-  render() {
-    const language = this.props.navigation.getParam('language', 'fr');
-    const lg = UIStrings[language];
-    const uploaderCount = 0;
-
-    return (<View style={styles.container}>
-      <AppHeader language={language}/>
-      <View style={{
-          marginTop: 150
-        }}>
-        <SparePartResume language={language} navigation={this.props.navigation}/>
-        <View style={styles.scrollPictureViewWrapper}>
-          <ScrollView contentContainerStyle={styles.picturesWrapper}>
-            <AddPictureButton language={language} navigation={this.props.navigation} />
-            {this.getPicturesList()}
-            <EmptyPicture count={this.getPicturesCount()}/>
-          </ScrollView>
-        </View>
-      </View>
-      <AppFooter navigation={this.props.navigation} language={language} count={this.getPicturesCount()} uploaderCount={uploaderCount}/>
-    </View>);
-  }
-}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "column",
+    flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: '#fff',
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   scrollPictureViewWrapper: {
-    height: 2 * ButtonHeight + 130,
-    overflow: 'hidden'
+    height: 3 * ButtonHeight,
+    overflow: 'hidden',
   },
   picturesWrapper: {
     marginHorizontal: '10%',
-    marginHorizontal: '10%',
     flexWrap: 'wrap',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   buttonend: {
-    alignSelf: "flex-start",
-    alignContent: "flex-start"
-  }
+    alignSelf: 'flex-start',
+    alignContent: 'flex-start',
+  },
 });
+
+const Screen3 = ({ language }) => {
+  const deletePicture = (index, pname, removePicture) => {
+    Alert.alert(
+      AlertTitle,
+      language.question_effacer_piece,
+      [
+        {
+          text: language.non,
+          style: 'cancel',
+        },
+        {
+          text: language.oui,
+          onPress: () => {
+            removePicture(index, pname);
+          },
+        },
+      ],
+      {
+        cancelable: false,
+      },
+    );
+  };
+
+  return (
+    <PictureContext.Consumer>
+      {({ pictures, removePicture }) => (
+        <View style={styles.container}>
+          <AppHeader />
+          <View
+            style={{
+              marginTop: 150,
+            }}
+          >
+            <SparePartResume />
+            <View style={styles.scrollPictureViewWrapper}>
+              <ScrollView contentContainerStyle={styles.picturesWrapper}>
+                <AddPictureButton />
+                {pictures.map((p, index) => (
+                  <PartPicture
+                    key={index + p}
+                    file={p}
+                    onDelete={() => deletePicture(index, p, removePicture)}
+                  />
+                ))}
+              </ScrollView>
+            </View>
+          </View>
+          <AppFooter />
+        </View>
+      )}
+    </PictureContext.Consumer>
+  );
+};
+
+export default withNavigation(withLanguage(withBack(Screen3)));

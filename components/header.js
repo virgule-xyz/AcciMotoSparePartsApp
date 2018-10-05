@@ -1,14 +1,8 @@
-import React, {Component} from 'react';
-
+import React from 'react';
 import Logo from './logo';
-
-import {View, Text, StyleSheet} from 'react-native';
-
-export default function AppHeader(props) {
-  return (<View style={styles.headerWrapper}>
-    <Logo language={props.language} style={styles.logo}/>
-  </View>)
-}
+import { View, StyleSheet } from 'react-native';
+import { withNavigation } from 'react-navigation';
+import { withLanguage } from '../UI';
 
 const styles = StyleSheet.create({
   headerWrapper: {
@@ -17,10 +11,18 @@ const styles = StyleSheet.create({
     width: '100%',
     top: 10,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   logo: {
     width: '80%',
-    height: 100
-  }
+    height: 100,
+  },
 });
+
+const AppHeader = props => (
+  <View style={styles.headerWrapper}>
+    <Logo {...props} style={styles.logo} />
+  </View>
+);
+
+export default withNavigation(withLanguage(AppHeader));

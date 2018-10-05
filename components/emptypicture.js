@@ -1,15 +1,6 @@
-import React, {Component} from 'react';
-
-import {Platform, StyleSheet, View} from 'react-native';
-
-import {ButtonHeight, ButtonRadius, ColorLightGray, TextFontSize} from '../UI';
-
-export default function EmptyPicture(props) {
-  if (props.count > 0)
-    return null
-  else 
-    return (<View style={styles.emptybutton}/>)
-}
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import { ButtonHeight, ButtonRadius, ColorLightGray } from '../UI';
 
 const styles = StyleSheet.create({
   emptybutton: {
@@ -19,6 +10,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: ButtonHeight + 50,
     height: ButtonHeight + 50,
-    margin: 5
-  }
+    margin: 5,
+  },
 });
+
+export default function EmptyPicture({ count }) {
+  if (count > 0) return null;
+  return <View style={styles.emptybutton} />;
+}
