@@ -19,6 +19,7 @@ import {
   ButtonFontSize,
   ButtonPadding,
   ColorOrange,
+  AlertTitle,
 } from '../UI';
 import { RNCamera } from 'react-native-camera';
 
@@ -243,7 +244,8 @@ class SparePartSelector extends Component {
           autoFocus={false}
           clearTextOnFocus={true}
           keyboardType="number-pad"
-          returnKeyType="search"
+          enablesReturnKeyAutomatically={true}
+          returnKeyType="done"
           underlineColorAndroid={ColorOrange}
           onSubmitEditing={this.onSubmitEditing}
           value={this.props.reset ? null : null}
