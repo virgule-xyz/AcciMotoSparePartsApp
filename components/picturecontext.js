@@ -5,6 +5,7 @@ const PictureContext = React.createContext({
   queue: [],
   addPicture: () => {},
   removePicture: () => {},
+  uploadPictures: () => {},
 });
 
 export default PictureContext;
