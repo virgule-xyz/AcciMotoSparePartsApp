@@ -96,7 +96,7 @@ const HomeButton = ({ language, navigation, home, style }) => {
           askBeforeGoBackHome();
         }}
       >
-        <Text style={[style, styles.backHome]}>{language.changer.toUpperCase()}</Text>
+        <Text style={[style, styles.backHome]}>{language.changer.toLowerCase()}</Text>
       </TouchableOpacity>
     );
   return (

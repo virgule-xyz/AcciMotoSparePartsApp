@@ -19,10 +19,10 @@ export const UIStrings = {
   fr: {
     oui: 'oui',
     non: 'non',
-    changer: '< Changer',
+    changer: 'Changer de pièce',
     changerdepiece: 'Changer de pièce',
     annuler: 'Annuler',
-    accueil: '< LANGUES',
+    accueil: 'Changer de langue',
     selection_de_la_piece: 'Sélection de la pièce',
     indiquer_numero_piece: 'Veuillez indiquer le numéro de la pièce :',
     ok: 'OK',
@@ -46,14 +46,15 @@ export const UIStrings = {
       'Les photos de cette pièce sont en cours de remontée vers les serveurs...',
     le_nombre_de_photos:
       'Le nombre de photos en cours de chargement vers les serveurs est systématiquement indiqué en bas à droite dans le rond bleu.',
+    etesvoussur: 'Êtes-vous sûr ?',
   },
   gb: {
     oui: 'yes',
     non: 'no',
-    changer: '< Switch',
+    changer: 'Switch',
     changerdepiece: 'Change parts',
     annuler: 'Cancel',
-    accueil: '< LANGS',
+    accueil: 'LANGS',
     selection_de_la_piece: 'Parts select',
     indiquer_numero_piece: 'Please provide parts id:',
     ok: 'OK',
@@ -76,6 +77,7 @@ export const UIStrings = {
     les_photos_remontent: 'The photos of this piece are being uploaded to the servers...',
     le_nombre_de_photos:
       'The number of photos being uploaded to the servers is always shown at the bottom right inside the blue circle.',
+    etesvoussur: 'Are you sure?',
   },
 };
 

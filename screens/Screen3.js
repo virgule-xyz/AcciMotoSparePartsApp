@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   scrollPictureViewWrapper: {
-    height: 3 * ButtonHeight,
+    height: 3 * (ButtonHeight + 50) - 25,
     overflow: 'hidden',
   },
   picturesWrapper: {
@@ -31,6 +31,10 @@ const styles = StyleSheet.create({
   buttonend: {
     alignSelf: 'flex-start',
     alignContent: 'flex-start',
+  },
+  pictures: {
+    flex: 1,
+    height: '100%',
   },
 });
 
@@ -69,7 +73,7 @@ const Screen3 = ({ language }) => {
           >
             <SparePartResume />
             <View style={styles.scrollPictureViewWrapper}>
-              <ScrollView contentContainerStyle={styles.picturesWrapper}>
+              <ScrollView style={styles.pictures} contentContainerStyle={styles.picturesWrapper}>
                 <AddPictureButton />
                 {pictures.map((p, index) => (
                   <PartPicture

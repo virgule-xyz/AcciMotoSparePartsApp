@@ -116,7 +116,8 @@ class SparePartSelector extends Component {
     this.state = {
       searching: false,
       found: false,
-      part: null,
+      partnumber: null,
+      kind: 'pie',
       openbarcode: false,
     };
   }
@@ -126,7 +127,8 @@ class SparePartSelector extends Component {
     this.setState({
       searching: false,
       found: false,
-      part: null,
+      partnumber: null,
+      kind: 'pie',
       openbarcode: false,
     });
 
@@ -151,17 +153,23 @@ class SparePartSelector extends Component {
       this.setState({
         searching: true,
         found: false,
-        part: partId,
+        partnumber: partId,
+        kind: 'pie',
         openbarcode: false,
       });
       setTimeout(() => {
         this.setState({
           searching: false,
           found: false,
-          part: null,
+          partnumber: null,
+          kind: 'pie',
           openbarcode: false,
         });
-        this.props.onSuccess();
+        this.props.onSuccess({
+          kind: this.state.kind,
+          partnumber: partId,
+          partdatas: { name: 'abc', description: 'def' },
+        });
       }, 2000);
     } else {
       this.onError();
@@ -174,7 +182,7 @@ class SparePartSelector extends Component {
     this.setState({
       searching: true,
       found: false,
-      part: partId,
+      partnumber: partId,
     });
     this.searchSparePart(partId);
   };

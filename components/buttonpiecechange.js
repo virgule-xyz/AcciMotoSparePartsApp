@@ -27,15 +27,15 @@ const styles = StyleSheet.create({
   },
 });
 
-const ButtonPieceChange =({ language, navigation, style })=> {
-  askBeforeGoBackHome = () => {
+const ButtonPieceChange = ({ language, navigation, style }) => {
+  const askBeforeGoBackHome = () => {
     Alert.alert(
       AlertTitle,
       language.question_retour_piece,
       [
         {
           text: language.non,
-          onPress: () => console.log('Cancel Pressed'),
+          onPress: () => {},
           style: 'cancel',
         },
         {
@@ -51,17 +51,15 @@ const ButtonPieceChange =({ language, navigation, style })=> {
     );
   };
 
-  render() {
-    return (
-      <TouchableOpacity
-        onPress={() => {
-          this.askBeforeGoBackHome();
-        }}
-      >
-        <Text style={[style, styles.backHome]}>{language.changer.toUpperCase()}</Text>
-      </TouchableOpacity>
-    );
-  }
-}
+  const render = () => (
+    <TouchableOpacity
+      onPress={() => {
+        askBeforeGoBackHome();
+      }}
+    >
+      <Text style={[style, styles.backHome]}>{language.changer.toLowerCase()}</Text>
+    </TouchableOpacity>
+  );
+};
 
 export default withNavigation(withLanguage(ButtonPieceChange));

@@ -5,6 +5,7 @@ import SparePartSelector from '@components/sparepartselector';
 import AppHeader from '@components/header';
 import AppFooter from '@components/footer';
 import { withBack } from '@components/withback';
+import PictureContext from '@components/picturecontext';
 
 const styles = StyleSheet.create({
   container: {
@@ -17,18 +18,27 @@ const styles = StyleSheet.create({
 });
 
 const Screen2 = ({ navigation }) => {
-  const onSuccess = () => {
+  const onSuccess = (ret, func) => {
+    func(ret);
     navigation.navigate('Screen3');
   };
 
   const reset = navigation.getParam('reset', false);
 
   return (
-    <View style={styles.container}>
-      <AppHeader home />
-      <SparePartSelector style={styles.spareParts} onSuccess={onSuccess} reset={reset} />
-      <AppFooter home />
-    </View>
+    <PictureContext.Consumer>
+      {({ selectNewItem }) => (
+        <View style={styles.container}>
+          <AppHeader home />
+          <SparePartSelector
+            style={styles.spareParts}
+            onSuccess={ret => onSuccess(ret, selectNewItem)}
+            reset={reset}
+          />
+          <AppFooter home />
+        </View>
+      )}
+    </PictureContext.Consumer>
   );
 };
 

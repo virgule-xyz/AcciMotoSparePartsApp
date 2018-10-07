@@ -4638,6 +4638,10 @@ react-lifecycles-compat@^3, react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
 
+react-native-background-upload@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-background-upload/-/react-native-background-upload-5.0.0.tgz#5bd752a005b0a21b4cdd56aad206dd64889d0145"
+
 "react-native-camera@git+https://git@github.com/react-native-community/react-native-camera.git":
   version "1.2.0"
   resolved "git+https://git@github.com/react-native-community/react-native-camera.git#9615668ae7290bbfab43c0feb26597c9976d533c"
