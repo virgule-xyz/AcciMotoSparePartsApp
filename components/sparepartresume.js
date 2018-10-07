@@ -49,13 +49,15 @@ const styles = StyleSheet.create({
 export default (SparePartResume = () => {
   return (
     <PictureContext.Consumer>
-      {({ partdatas }) => {
+      {({ partnumber, partdatas }) => {
         const { name, trademark, model, type, line1, line2 } = partdatas;
         return (
           <View style={styles.wrapper}>
             <View style={styles.puce} />
             <View style={styles.partwrapper}>
-              <Text style={styles.head1}>{name}</Text>
+              <Text style={styles.head1}>
+                {name} - {partnumber}
+              </Text>
               <Text style={styles.head2}>
                 {trademark.toUpperCase()}/ {model.toUpperCase()}/ {type.toUpperCase()}
               </Text>

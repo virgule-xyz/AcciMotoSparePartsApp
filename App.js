@@ -13,7 +13,6 @@ class App extends React.Component {
    */
   constructor(props) {
     super(props);
-    this.inter = null; // interval de background runner
     this.state = {
       kind: 'pie',
       partnumber: 0,
@@ -42,6 +41,7 @@ class App extends React.Component {
    * change de type de pièce (pie - pièce ou mot - moto) et de numéro
    */
   selectNewItem = ({ kind, partnumber, partdatas }) => {
+    console.warn('selectNewItem', kind, partnumber, partdatas);
     this.setState({ kind: kind, partnumber: partnumber, partdatas: partdatas });
   };
 
@@ -63,20 +63,24 @@ class App extends React.Component {
   /**
    * la tâche de fond pour charger les images
    */
-  backgroundRunner = () => {
-    if (this.inter) {
-      clearInterval(this.inter);
-      this.inter = null;
+  backgroundRunner = (n = 0) => {
+    console.log('backgroundRunner:', n);
+    if (this.state.queue.length > 0) {
+      const toUpload = this.state.queue[n];
+
+      AcciMoto.FTPPicture(
+        toUpload,
+        () => {
+          this.setState(state => ({
+            queue: state.queue.slice(1),
+          }));
+          this.backgroundRunner(n);
+        },
+        () => {
+          this.backgroundRunner(n + 1);
+        },
+      );
     }
-    this.inter = setInterval(() => {
-      if (this.state.queue.length > 0) {
-        const toUpload = this.state.queue[0];
-        this.setState(state => ({
-          queue: state.queue.slice(1),
-        }));
-        AcciMoto.FTPPicture(toUpload);
-      }
-    }, 2000);
   };
 
   /**

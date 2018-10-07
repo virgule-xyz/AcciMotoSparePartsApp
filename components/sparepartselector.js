@@ -153,6 +153,7 @@ class SparePartSelector extends Component {
       searching: true,
       found: false,
       kind: 'pie',
+      partnumber: '',
       openbarcode: false,
     });
   };
@@ -167,11 +168,12 @@ class SparePartSelector extends Component {
     });
   };
 
-  searchSparePart = partid => {
-    if (partid && partid.length > 0) {
+  searchSparePart = partnumber => {
+    if (partnumber && partnumber.length > 0) {
+      console.warn('searchSparePart', this.state);
       AcciMoto.makeSearch({
         kind: this.state.kind,
-        search: partid,
+        partnumber: partnumber,
         onSuccess: this.props.onSuccess,
         onError: this.onError,
         searchOn: this.setSearchModeOn,
@@ -184,13 +186,14 @@ class SparePartSelector extends Component {
 
   onSubmitEditing = event => {
     Keyboard.dismiss;
-    const partid = event.nativeEvent.text;
+    const partnumber = event.nativeEvent.text;
+    console.warn('onSubmitEditing 1', partnumber, event.nativeEvent.text);
     this.setState({
       searching: true,
       found: false,
-      partnumber: partid,
+      partnumber: event.nativeEvent.text,
     });
-    this.searchSparePart(partid);
+    this.searchSparePart(partnumber);
   };
 
   onPressBarcode = () => {
@@ -261,8 +264,7 @@ class SparePartSelector extends Component {
           enablesReturnKeyAutomatically={true}
           returnKeyType="done"
           underlineColorAndroid={ColorOrange}
-          onSubmitEditing={this.onSubmitEditing}
-          value={this.state.partnumber}
+          onSubmitEditing={e => this.onSubmitEditing(e)}
         />
         <Text
           style={[
