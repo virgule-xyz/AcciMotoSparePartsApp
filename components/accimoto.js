@@ -29,15 +29,14 @@ class AcciMoto extends Component {
 
   static FTPPicture = ({ file, name }, onEndUpload, onErrorUpload) => {
     const options = {
-      url: 'ftp://accimoto.netmize.org/',
-      auth: {
-        username: 'api_upload_1.accimoto.com',
-        password: '39Rv*}sBj%Zkx>u',
-      },
+      url: 'http://accimoto.netmize.org/',
       path: file,
-      method: 'GET',
-      /* field: 'uploaded_media',
-      type: 'multipart', */
+      method: 'POST',
+      field: 'uploaded_media',
+      type: 'multipart',
+      parameters: {
+        name: name,
+      },
       notification: {
         enabled: true,
       },
