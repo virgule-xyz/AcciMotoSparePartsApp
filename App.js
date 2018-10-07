@@ -1,65 +1,69 @@
 import React from 'react';
-import { createSwitchNavigator, createStackNavigator } from 'react-navigation';
 import PictureContext from '@components/picturecontext';
+import Navigator from './Navigator';
 
-import Screen1 from '@screens/Screen1';
-import Screen2 from '@screens/Screen2';
-import Screen3 from '@screens/Screen3';
-import Screen4 from '@screens/Screen4';
-import Screen5 from '@screens/Screen5';
-
-const ScreenStacks = createStackNavigator(
-  {
-    Screen2,
-    Screen3,
-    Screen4,
-    Screen5,
-  },
-  {
-    initialRouteName: 'Screen2',
-    navigationOptions: {
-      header: null,
-    },
-  },
-);
-
-const Navigator = createSwitchNavigator(
-  {
-    Screen1,
-    ScreenStacks,
-  },
-  {
-    initialRouteName: 'Screen1',
-    navigationOptions: {
-      header: null,
-    },
-  },
-);
-
+/**
+ * L'application principale
+ */
 class App extends React.Component {
+  /**
+   * Le constructeur avec le state contenant les images
+   * @param {*} props
+   */
   constructor(props) {
     super(props);
-    this.inter = null;
+    this.inter = null; // interval de background runner
     this.state = {
+      kind: 'pie',
+      partnumber: 0,
+      partdatas: null,
       pictures: [],
-      queue: ['abc', 'def', 'ghi', 'jkl', 'mno'],
+      queue: [],
       addPicture: this.addPicture,
       removePicture: this.removePicture,
       uploadPictures: this.uploadPictures,
+      selectNewItem: this.selectNewItem,
     };
   }
+
+  /**
+   * change de type de pièce (pie - pièce ou mot - moto) et de numéro
+   */
+  selectNewItem = ({ kind, partnumber, partdatas }) => {
+    this.setState({ kind, partnumber, partdatas });
+  };
+
+  /**
+   * Nomme une pièce pour l'upload
+   */
+  setNameData = ({ kind, partnumber, index }) => {
+    const sep = '_';
+    const partnumber05 = partnumber.toString().padStart(5, '0');
+    const index05 = index.toString().padStart(2, '0');
+    return kind + sep + partnumber05 + sep + index02;
+  };
+
+  /**
+   * charge les images vers le serveur
+   */
   uploadPictures = () => {
+    const newToUpload = this.state.pictures.map((item, index) => {
+      return { file: item, name: this.setNameData(this.state.kind, this.state.partnumber, index) };
+    });
     this.setState(state => ({
       pictures: [],
-      queue: [...state.queue, state.pictures],
+      queue: [...state.queue, ...newToUpload],
     }));
-    if (!this.inter) {
-      this.backgroundRunner();
-    }
+    this.backgroundRunner();
   };
+
+  /**
+   * la tâche de fond pour charger les images
+   */
   backgroundRunner = () => {
     if (this.inter) {
       clearInterval(this.inter);
+      this.inter = null;
     }
     this.inter = setInterval(() => {
       if (this.state.queue.length > 0) {
@@ -69,26 +73,43 @@ class App extends React.Component {
         }));
         this.FTPPicture(toUpload);
       }
-    }, 4000);
+    }, 2000);
   };
-  FTPPicture = filename => {
-    //console.warn('uploading ', filename);
+
+  // TODO : A REVOIR
+  FTPPicture = ({ file, filename }) => {
+    console.warn('uploading ', filename);
   };
+
+  /**
+   * Ajoute une image au state/array
+   */
   addPicture = data => {
     this.setState(state => ({
       pictures: [...state.pictures, data.uri],
     }));
   };
+
+  /**
+   * supprime une image du tableau
+   */
   removePicture = (index, pname) => {
-    console.warn(index, pname);
     const newPictures = this.state.pictures.filter((item, id) => id + item !== index + pname);
     this.setState(state => ({
       pictures: newPictures,
     }));
   };
+
+  /**
+   * lancement du background-runner au montage
+   */
   componentDidMount = () => {
     this.backgroundRunner();
   };
+
+  /**
+   * le renderer contient le provider de contexte avec les images à gérer
+   */
   render = () => (
     <PictureContext.Provider value={this.state}>
       <Navigator />
