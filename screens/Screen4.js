@@ -2,11 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { RNCamera } from 'react-native-camera';
-import { withBack } from '@components/withback';
-import AppHeader from '@components/header';
-import AppFooter from '@components/footer';
-import Button from '@components/button';
-import PictureContext from '@components/picturecontext';
+import { withBack, AppHeader, AppFooter, Button, PictureContext } from '@components';
 import { ButtonHeight, ButtonMargins, withLanguage } from '../UI';
 
 const styles = StyleSheet.create({

@@ -1,11 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { withNavigation } from 'react-navigation';
-import SparePartSelector from '@components/sparepartselector';
-import AppHeader from '@components/header';
-import AppFooter from '@components/footer';
-import { withBack } from '@components/withback';
-import PictureContext from '@components/picturecontext';
+import { PictureContext, AppHeader, AppFooter, withBack, SparePartSelector } from '@components';
 
 const styles = StyleSheet.create({
   container: {

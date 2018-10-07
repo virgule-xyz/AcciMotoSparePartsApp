@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BackHandler } from 'react-native';
 
-export var withBack = OtherComponent =>
+const withBack = OtherComponent =>
   class extends Component {
     constructor(props) {
       super(props);
@@ -20,3 +20,5 @@ export var withBack = OtherComponent =>
 
     render = () => <OtherComponent {...this.props} />;
   };
+
+export default withBack;

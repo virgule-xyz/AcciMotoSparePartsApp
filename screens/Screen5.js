@@ -1,10 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { withNavigation } from 'react-navigation';
-import AppHeader from '@components/header';
-import AppFooter from '@components/footer';
-import Button from '@components/button';
-import { withBack } from '@components/withback';
+import { AppHeader, AppFooter, Button, withBack } from '@components';
 import { withLanguage } from '../UI';
 
 const styles = StyleSheet.create({

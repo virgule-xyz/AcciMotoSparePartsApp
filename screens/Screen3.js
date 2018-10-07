@@ -1,13 +1,15 @@
 import React from 'react';
 import { Alert, StyleSheet, ScrollView, View } from 'react-native';
 import { withNavigation } from 'react-navigation';
-import { withBack } from '@components/withback';
-import AppHeader from '@components/header';
-import AppFooter from '@components/footer';
-import SparePartResume from '@components/sparepartresume';
-import PartPicture from '@components/partpicture';
-import AddPictureButton from '@components/addpicturebutton';
-import PictureContext from '@components/picturecontext';
+import {
+  withBack,
+  AppHeader,
+  AppFooter,
+  SparePartResume,
+  PartPicture,
+  AddPictureButton,
+  PictureContext,
+} from '@components';
 import { ButtonHeight, AlertTitle, withLanguage } from '../UI';
 
 const styles = StyleSheet.create({
