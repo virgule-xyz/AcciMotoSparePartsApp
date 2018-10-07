@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import PictureContext from '@components/picturecontext';
 import { ButtonMargins, ColorBlack, ColorGray, ColorLightGray, TextFontSize } from '../UI';
 
 const styles = StyleSheet.create({
@@ -46,28 +47,24 @@ const styles = StyleSheet.create({
 });
 
 export default (SparePartResume = () => {
-  const getPartDatas = {
-    name: 'Pierre',
-    trademark: 'Marque',
-    model: 'Modèle',
-    type: 'type de pièce',
-    line1:
-      'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam',
-    line2: 'Excepteur sint occaecat cupidatat',
-  };
-
-  const { name, trademark, model, type, line1, line2 } = getPartDatas;
   return (
-    <View style={styles.wrapper}>
-      <View style={styles.puce} />
-      <View style={styles.partwrapper}>
-        <Text style={styles.head1}>{name}</Text>
-        <Text style={styles.head2}>
-          {trademark.toUpperCase()}/ {model.toUpperCase()}/ {type.toUpperCase()}
-        </Text>
-        <Text style={styles.line1}>{line1.toUpperCase()}</Text>
-        <Text style={styles.line2}>{line2.toUpperCase()}</Text>
-      </View>
-    </View>
+    <PictureContext.Consumer>
+      {({ partdatas }) => {
+        const { name, trademark, model, type, line1, line2 } = partdatas;
+        return (
+          <View style={styles.wrapper}>
+            <View style={styles.puce} />
+            <View style={styles.partwrapper}>
+              <Text style={styles.head1}>{name}</Text>
+              <Text style={styles.head2}>
+                {trademark.toUpperCase()}/ {model.toUpperCase()}/ {type.toUpperCase()}
+              </Text>
+              <Text style={styles.line1}>{line1.toUpperCase()}</Text>
+              <Text style={styles.line2}>{line2.toUpperCase()}</Text>
+            </View>
+          </View>
+        );
+      }}
+    </PictureContext.Consumer>
   );
 });

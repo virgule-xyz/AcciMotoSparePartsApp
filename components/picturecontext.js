@@ -5,7 +5,7 @@ const PictureContext = React.createContext({
   queue: [],
   kind: 'pie',
   partnumber: 0,
-  partdatas: null,
+  partdatas: { name: '', trademark: '', model: '', type: '', line1: '', line2: '' },
   addPicture: () => {},
   removePicture: () => {},
   uploadPictures: () => {},

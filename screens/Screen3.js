@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   picturesWrapper: {
-    marginHorizontal: '10%',
+    marginHorizontal: '8%',
     flexWrap: 'wrap',
     flexDirection: 'row',
   },

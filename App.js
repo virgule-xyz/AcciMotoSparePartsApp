@@ -1,6 +1,7 @@
 import React from 'react';
 import PictureContext from '@components/picturecontext';
 import Navigator from './Navigator';
+import AcciMoto from '@components/accimoto';
 
 /**
  * L'application principale
@@ -16,7 +17,7 @@ class App extends React.Component {
     this.state = {
       kind: 'pie',
       partnumber: 0,
-      partdatas: null,
+      partdatas: { name: '', trademark: '', model: '', type: '', line1: '', line2: '' },
       pictures: [],
       queue: [],
       addPicture: this.addPicture,
@@ -27,28 +28,30 @@ class App extends React.Component {
   }
 
   /**
-   * change de type de pièce (pie - pièce ou mot - moto) et de numéro
+   * Nomme une pièce pour l'upload
    */
-  selectNewItem = ({ kind, partnumber, partdatas }) => {
-    this.setState({ kind, partnumber, partdatas });
+  setNameData = (kind, partnumber, index) => {
+    const sep = '_';
+    const partnumber05 = ('' + partnumber).padStart(5, '0');
+    const index02 = ('' + (index + 1)).padStart(2, '0');
+    const newname = kind + sep + partnumber05 + sep + index02;
+    return newname;
   };
 
   /**
-   * Nomme une pièce pour l'upload
+   * change de type de pièce (pie - pièce ou mot - moto) et de numéro
    */
-  setNameData = ({ kind, partnumber, index }) => {
-    const sep = '_';
-    const partnumber05 = partnumber.toString().padStart(5, '0');
-    const index05 = index.toString().padStart(2, '0');
-    return kind + sep + partnumber05 + sep + index02;
+  selectNewItem = ({ kind, partnumber, partdatas }) => {
+    this.setState({ kind: kind, partnumber: partnumber, partdatas: partdatas });
   };
 
   /**
    * charge les images vers le serveur
    */
   uploadPictures = () => {
-    const newToUpload = this.state.pictures.map((item, index) => {
-      return { file: item, name: this.setNameData(this.state.kind, this.state.partnumber, index) };
+    const me = this;
+    const newToUpload = me.state.pictures.map((item, index) => {
+      return { file: item, name: me.setNameData(me.state.kind, me.state.partnumber, index) };
     });
     this.setState(state => ({
       pictures: [],
@@ -71,14 +74,9 @@ class App extends React.Component {
         this.setState(state => ({
           queue: state.queue.slice(1),
         }));
-        this.FTPPicture(toUpload);
+        AcciMoto.FTPPicture(toUpload);
       }
     }, 2000);
-  };
-
-  // TODO : A REVOIR
-  FTPPicture = ({ file, filename }) => {
-    console.warn('uploading ', filename);
   };
 
   /**

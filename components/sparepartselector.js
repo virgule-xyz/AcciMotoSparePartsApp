@@ -22,6 +22,7 @@ import {
   AlertTitle,
 } from '../UI';
 import { RNCamera } from 'react-native-camera';
+import AcciMoto from '@components/accimoto';
 
 const styles = StyleSheet.create({
   sparepartswrapper: {
@@ -138,7 +139,6 @@ class SparePartSelector extends Component {
       [
         {
           text: language.ok,
-          onPress: () => console.log('Cancel Pressed'),
           style: 'cancel',
         },
       ],
@@ -148,29 +148,35 @@ class SparePartSelector extends Component {
     );
   };
 
-  searchSparePart = partId => {
-    if (partId && partId.length > 0) {
-      this.setState({
-        searching: true,
-        found: false,
-        partnumber: partId,
-        kind: 'pie',
-        openbarcode: false,
+  setSearchModeOn = () => {
+    this.setState({
+      searching: true,
+      found: false,
+      kind: 'pie',
+      openbarcode: false,
+    });
+  };
+
+  setSearchModeOff = () => {
+    this.setState({
+      searching: false,
+      found: false,
+      kind: 'pie',
+      partnumber: '',
+      openbarcode: false,
+    });
+  };
+
+  searchSparePart = partid => {
+    if (partid && partid.length > 0) {
+      AcciMoto.makeSearch({
+        kind: this.state.kind,
+        search: partid,
+        onSuccess: this.props.onSuccess,
+        onError: this.onError,
+        searchOn: this.setSearchModeOn,
+        searchOff: this.setSearchModeOff,
       });
-      setTimeout(() => {
-        this.setState({
-          searching: false,
-          found: false,
-          partnumber: null,
-          kind: 'pie',
-          openbarcode: false,
-        });
-        this.props.onSuccess({
-          kind: this.state.kind,
-          partnumber: partId,
-          partdatas: { name: 'abc', description: 'def' },
-        });
-      }, 2000);
     } else {
       this.onError();
     }
@@ -178,13 +184,13 @@ class SparePartSelector extends Component {
 
   onSubmitEditing = event => {
     Keyboard.dismiss;
-    const partId = event.nativeEvent.text;
+    const partid = event.nativeEvent.text;
     this.setState({
       searching: true,
       found: false,
-      partnumber: partId,
+      partnumber: partid,
     });
-    this.searchSparePart(partId);
+    this.searchSparePart(partid);
   };
 
   onPressBarcode = () => {
@@ -256,7 +262,7 @@ class SparePartSelector extends Component {
           returnKeyType="done"
           underlineColorAndroid={ColorOrange}
           onSubmitEditing={this.onSubmitEditing}
-          value={this.props.reset ? null : null}
+          value={this.state.partnumber}
         />
         <Text
           style={[

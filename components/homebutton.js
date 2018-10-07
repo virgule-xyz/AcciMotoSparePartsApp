@@ -50,7 +50,6 @@ const HomeButton = ({ language, navigation, home, style }) => {
       [
         {
           text: language.non,
-          onPress: () => console.log('Cancel Pressed'),
           style: 'cancel',
         },
         {
@@ -73,7 +72,6 @@ const HomeButton = ({ language, navigation, home, style }) => {
       [
         {
           text: language.non,
-          onPress: () => console.log('Cancel Pressed'),
           style: 'cancel',
         },
         {
