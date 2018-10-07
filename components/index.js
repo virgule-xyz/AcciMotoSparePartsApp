@@ -1,7 +1,12 @@
 export { default as AddPictureButton } from './addpicturebutton';
+export { default as ActionButton } from './button';
 export { default as AppFooter } from './footer';
 export { default as AppHeader } from './header';
 export { default as Button } from './button';
+export { default as ButtonEndPictures } from './buttonendpictures';
+export { default as ButtonPieceChange } from './buttonpiecechange';
+export { default as HomeButton } from './homebutton';
+export { default as Logo } from './logo';
 export { default as MotoSelector } from './motoselector';
 export { default as PartPicture } from './partpicture';
 export { default as PictureContext } from './picturecontext';

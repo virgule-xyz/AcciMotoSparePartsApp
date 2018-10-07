@@ -1,8 +1,9 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, View } from 'react-native';
 import { withNavigation } from 'react-navigation';
-import { AppHeader, AppFooter, Button, withBack } from '@components';
-import { withLanguage } from '../UI';
+import { RNCamera } from 'react-native-camera';
+import { withBack, AppHeader, AppFooter, Button, PictureContext } from '@components';
+import { ButtonHeight, ButtonMargins, withLanguage } from '../UI';
 
 const styles = StyleSheet.create({
   container: {
@@ -13,35 +14,91 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     overflow: 'hidden',
   },
-  body: {
-    flexDirection: 'column',
+  cameraWrapper: {
     justifyContent: 'center',
     alignItems: 'center',
+    width: '90%',
     height: 400,
-    width: '80%',
   },
-  text: {
-    fontSize: 18,
-    marginVertical: 10,
-    textAlign: 'center',
-    color: '#333',
+  cameraFooter: {
+    width: '100%',
+    height: ButtonHeight + 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'flex-end',
+  },
+  valider: {
+    marginRight: ButtonMargins,
+  },
+  preview: {
+    flex: 0,
+    flexGrow: 0,
+    width: '100%',
+    height: 300,
+    overflow: 'hidden',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: ButtonMargins,
   },
 });
-const Screen5 = ({ language, navigation }) => (
-  <View style={styles.container}>
-    <AppHeader />
-    <View style={styles.body}>
-      <Text style={styles.text}>{language.les_photos_remontent}</Text>
-      <Text style={styles.text}>{language.le_nombre_de_photos}</Text>
-      <Button
-        label={language.changerdepiece}
-        onPress={() => {
-          navigation.navigate('Screen2', { reset: true });
-        }}
-      />
-    </View>
-    <AppFooter noback />
-  </View>
-);
+
+class Screen5 extends Component {
+  constructor(props) {
+    super(props);
+    this.camera = null;
+  }
+
+  takePicture = async function(addPicture) {
+    const { navigation } = this.props;
+    if (this.camera) {
+      const options = {
+        base64: false,
+      };
+      const data = await this.camera.takePictureAsync(options);
+      addPicture(data);
+      navigation.navigate('Screen4');
+    }
+  };
+
+  render() {
+    const { language, navigation } = this.props;
+    return (
+      <PictureContext.Consumer>
+        {({ pictures, addPicture }) => (
+          <View style={styles.container}>
+            <AppHeader />
+            <View style={styles.cameraWrapper}>
+              <RNCamera
+                ref={ref => {
+                  this.camera = ref;
+                }}
+                style={styles.preview}
+                type={RNCamera.Constants.Type.back}
+                flashMode={RNCamera.Constants.FlashMode.auto}
+                permissionDialogTitle={language.permission_camera_title}
+                permissionDialogMessage={language.permission_camera_message}
+              />
+              <View style={styles.cameraFooter}>
+                <Button
+                  style={styles.valider}
+                  icon="camera"
+                  onPress={() => this.takePicture(addPicture)}
+                />
+                <Button
+                  style={styles.annuler}
+                  type="cancel"
+                  label={language.annuler}
+                  onPress={() => navigation.navigate('Screen3')}
+                />
+              </View>
+            </View>
+            <AppFooter nobuttons />
+          </View>
+        )}
+      </PictureContext.Consumer>
+    );
+  }
+}
 
 export default withNavigation(withLanguage(withBack(Screen5)));

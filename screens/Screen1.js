@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import ActionButton from '@components/button';
-import Logo from '@components/logo';
+import { ActionButton, Logo } from '@components';
 import { ButtonHeight } from '../UI';
 
 const styles = StyleSheet.create({

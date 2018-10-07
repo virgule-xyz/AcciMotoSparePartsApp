@@ -19,8 +19,8 @@ export const UIStrings = {
   fr: {
     oui: 'oui',
     non: 'non',
-    changer: 'Changer de pièce',
-    changerdepiece: 'Changer de pièce',
+    changer: 'Nouvelle prise',
+    changerdepiece: 'Nouvelle prise',
     annuler: 'Annuler',
     accueil: 'Changer de langue',
     ok: 'OK',

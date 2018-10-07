@@ -44,7 +44,7 @@ class AcciMoto extends Component {
     Upload.getFileInfo(options.path).then(metadata => {
       Upload.startUpload(options)
         .then(uploadId => {
-          console.warn('Upload started');
+          console.warn('Upload started:', name);
           // addListener('progress', uploadId, data => {
           //   console.warn(`Progress: ${data.progress}%`);
           // });

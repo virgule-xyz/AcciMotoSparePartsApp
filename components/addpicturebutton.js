@@ -39,7 +39,7 @@ const AddPictureButton = ({ navigation, language }) => (
   <TouchableOpacity
     style={styles.actionButtonNew}
     onPress={() => {
-      navigation.navigate('Screen4');
+      navigation.navigate('Screen5');
     }}
   >
     <Image source={addIcon} style={styles.icons} />

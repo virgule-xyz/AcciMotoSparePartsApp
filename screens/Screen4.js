@@ -1,104 +1,97 @@
-import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React from 'react';
+import { Alert, StyleSheet, ScrollView, View } from 'react-native';
 import { withNavigation } from 'react-navigation';
-import { RNCamera } from 'react-native-camera';
-import { withBack, AppHeader, AppFooter, Button, PictureContext } from '@components';
-import { ButtonHeight, ButtonMargins, withLanguage } from '../UI';
+import {
+  withBack,
+  AppHeader,
+  AppFooter,
+  SparePartResume,
+  PartPicture,
+  AddPictureButton,
+  PictureContext,
+} from '@components';
+import { ButtonHeight, AlertTitle, withLanguage } from '../UI';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: '#fff',
     overflow: 'hidden',
   },
-  cameraWrapper: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '90%',
-    height: 400,
-  },
-  cameraFooter: {
-    width: '100%',
-    height: ButtonHeight + 10,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignContent: 'flex-end',
-  },
-  valider: {
-    marginRight: ButtonMargins,
-  },
-  preview: {
-    flex: 0,
-    flexGrow: 0,
-    width: '100%',
-    height: 300,
+  scrollPictureViewWrapper: {
+    height: 3 * (ButtonHeight + 50) - 25,
     overflow: 'hidden',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: ButtonMargins,
+  },
+  picturesWrapper: {
+    marginHorizontal: '8%',
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+  },
+  buttonend: {
+    alignSelf: 'flex-start',
+    alignContent: 'flex-start',
+  },
+  pictures: {
+    flex: 1,
+    height: '100%',
   },
 });
 
-class Screen4 extends Component {
-  constructor(props) {
-    super(props);
-    this.camera = null;
-  }
-
-  takePicture = async function(addPicture) {
-    const { navigation } = this.props;
-    if (this.camera) {
-      const options = {
-        base64: false,
-      };
-      const data = await this.camera.takePictureAsync(options);
-      addPicture(data);
-      navigation.navigate('Screen3');
-    }
+const Screen4 = ({ language }) => {
+  const deletePicture = (index, pname, removePicture) => {
+    Alert.alert(
+      AlertTitle,
+      language.question_effacer_piece,
+      [
+        {
+          text: language.non,
+          style: 'cancel',
+        },
+        {
+          text: language.oui,
+          onPress: () => {
+            removePicture(index, pname);
+          },
+        },
+      ],
+      {
+        cancelable: false,
+      },
+    );
   };
 
-  render() {
-    const { language, navigation } = this.props;
-    return (
-      <PictureContext.Consumer>
-        {({ pictures, addPicture }) => (
-          <View style={styles.container}>
-            <AppHeader />
-            <View style={styles.cameraWrapper}>
-              <RNCamera
-                ref={ref => {
-                  this.camera = ref;
-                }}
-                style={styles.preview}
-                type={RNCamera.Constants.Type.back}
-                flashMode={RNCamera.Constants.FlashMode.auto}
-                permissionDialogTitle={language.permission_camera_title}
-                permissionDialogMessage={language.permission_camera_message}
-              />
-              <View style={styles.cameraFooter}>
-                <Button
-                  style={styles.valider}
-                  icon="camera"
-                  onPress={() => this.takePicture(addPicture)}
-                />
-                <Button
-                  style={styles.annuler}
-                  type="cancel"
-                  label={language.annuler}
-                  onPress={() => navigation.navigate('Screen3')}
-                />
-              </View>
+  return (
+    <PictureContext.Consumer>
+      {({ pictures, removePicture }) => (
+        <View style={styles.container}>
+          <AppHeader />
+          <View
+            style={{
+              marginTop: 150,
+            }}
+          >
+            <SparePartResume />
+            <View style={styles.scrollPictureViewWrapper}>
+              <ScrollView style={styles.pictures} contentContainerStyle={styles.picturesWrapper}>
+                <AddPictureButton />
+                {pictures.map((p, index) => (
+                  <PartPicture
+                    key={index + p}
+                    file={p}
+                    onDelete={() => deletePicture(index, p, removePicture)}
+                  />
+                ))}
+              </ScrollView>
             </View>
-            <AppFooter nobuttons />
           </View>
-        )}
-      </PictureContext.Consumer>
-    );
-  }
-}
+          <AppFooter />
+        </View>
+      )}
+    </PictureContext.Consumer>
+  );
+};
 
 export default withNavigation(withLanguage(withBack(Screen4)));
