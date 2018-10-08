@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, KeyboardAvoidingView } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { PictureContext, AppHeader, AppFooter, withBack, SparePartSelector } from '@components';
 
@@ -24,7 +24,7 @@ const Screen3P = ({ navigation }) => {
   return (
     <PictureContext.Consumer>
       {({ selectNewItem }) => (
-        <View style={styles.container}>
+        <KeyboardAvoidingView style={styles.container}>
           <AppHeader home />
           <SparePartSelector
             style={styles.spareParts}
@@ -32,7 +32,7 @@ const Screen3P = ({ navigation }) => {
             reset={reset}
           />
           <AppFooter />
-        </View>
+        </KeyboardAvoidingView>
       )}
     </PictureContext.Consumer>
   );
