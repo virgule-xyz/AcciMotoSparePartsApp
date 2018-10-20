@@ -11,22 +11,29 @@ import {
   PictureContext,
 } from '@components';
 import { ButtonHeight, AlertTitle, withLanguage } from '../UI';
+import { hidden } from 'ansi-colors';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     backgroundColor: '#fff',
     overflow: 'hidden',
   },
+  body: {
+    width: '90%',
+    height: '65%',
+    marginTop: 150,
+    justifyContent: 'flex-start',
+    marginHorizontal: '5%',
+  },
   scrollPictureViewWrapper: {
-    height: 3 * (ButtonHeight + 50) - 25,
+    height: 3.2 * (ButtonHeight + 50),
     overflow: 'hidden',
   },
   picturesWrapper: {
-    marginHorizontal: '8%',
     flexWrap: 'wrap',
     flexDirection: 'row',
   },
@@ -68,11 +75,7 @@ const Screen4 = ({ language }) => {
       {({ pictures, removePicture }) => (
         <View style={styles.container}>
           <AppHeader />
-          <View
-            style={{
-              marginTop: 150,
-            }}
-          >
+          <View style={styles.body}>
             <SparePartResume />
             <View style={styles.scrollPictureViewWrapper}>
               <ScrollView style={styles.pictures} contentContainerStyle={styles.picturesWrapper}>

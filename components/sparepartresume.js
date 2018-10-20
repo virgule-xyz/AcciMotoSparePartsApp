@@ -6,22 +6,26 @@ import { ButtonMargins, ColorBlack, ColorGray, ColorLightGray, TextFontSize } fr
 const styles = StyleSheet.create({
   wrapper: {
     marginBottom: ButtonMargins,
-    width: '80%',
-    marginHorizontal: '10%',
+    width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    textAlign: 'left',
     overflow: 'hidden',
   },
   partwrapper: {
     marginLeft: 5,
     position: 'relative',
+    textAlign: 'left',
+    flex: 1,
+    overflow: 'hidden',
   },
   puce: {
     backgroundColor: ColorLightGray,
     borderRadius: 100,
-    width: 30,
-    height: 30,
+    width: 50,
+    height: 50,
     flex: 0,
+    overflow: 'hidden',
   },
   head1: {
     fontSize: TextFontSize,
@@ -50,19 +54,23 @@ export default (SparePartResume = () => {
   return (
     <PictureContext.Consumer>
       {({ partnumber, partdatas }) => {
-        const { name, trademark, model, type, line1, line2 } = partdatas;
+        const { name, trademark, model, type, couleur, cylindree, periode } = partdatas;
+        const space = periode ? ' / ' : '';
         return (
           <View style={styles.wrapper}>
             <View style={styles.puce} />
             <View style={styles.partwrapper}>
               <Text style={styles.head1}>
-                {name} - {partnumber}
+                {type.toUpperCase()} - {partnumber}
               </Text>
               <Text style={styles.head2}>
-                {trademark.toUpperCase()}/ {model.toUpperCase()}/ {type.toUpperCase()}
+                {trademark.toUpperCase()}/ {model.toUpperCase()}/ {name.toUpperCase()}
               </Text>
-              <Text style={styles.line1}>{line1.toUpperCase()}</Text>
-              <Text style={styles.line2}>{line2.toUpperCase()}</Text>
+              <Text style={styles.line1}>{name.toUpperCase()}</Text>
+              <Text style={styles.line2}>
+                {periode && `${periode.toUpperCase()}`}
+                {couleur && `${space}${couleur.toUpperCase()}`}
+              </Text>
             </View>
           </View>
         );

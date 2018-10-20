@@ -5,7 +5,7 @@ import ButtonEndPictures from '@components/buttonendpictures';
 import HomeButton from '@components/homebutton';
 import { withPictures } from '@components/withpictures';
 import PictureContext from '@components/picturecontext';
-import { ButtonHeight, ButtonFontSize } from '../UI';
+import { ButtonHeight, ButtonFontSize, withLanguage } from '../UI';
 
 const styles = StyleSheet.create({
   footerWrapper: {
@@ -35,13 +35,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const AppFooter = ({ home, nobuttons, noback }) => (
+const AppFooter = ({ home, nobuttons, noback, language }) => (
   <PictureContext.Consumer>
     {({ queue }) => (
       <>
         {!nobuttons && (
           <View style={styles.footerWrapper}>
-            {!noback && <HomeButton home={home} />}
+            {!noback && <HomeButton language={language} home={home} />}
             {!noback && <ButtonEndPictures />}
             {noback && <View />}
             <View style={styles.counter}>
@@ -54,4 +54,4 @@ const AppFooter = ({ home, nobuttons, noback }) => (
   </PictureContext.Consumer>
 );
 
-export default withNavigation(AppFooter);
+export default withNavigation(withLanguage(AppFooter));

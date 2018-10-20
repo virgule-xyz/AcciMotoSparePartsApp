@@ -55,14 +55,17 @@ export const UIStrings = {
     selectionnez_une_moto_5: 'Nous recherchons la moto...',
     selectionnez_une_moto_6: 'La moto a bien été trouvée.',
     moto_inexistante: "Cette moto n'existe pas !",
+
+    piece: 'Pièce',
+    moto: 'Moto',
   },
-  gb: {
+  pl: {
     oui: 'oui',
     non: 'non',
-    changer: 'Changer de pièce',
-    changerdepiece: 'Changer de pièce',
+    changer: 'Zmień Pokój',
+    changerdepiece: 'Zmień Pokój',
     annuler: 'Annuler',
-    accueil: 'Changer de langue',
+    accueil: 'Zmień język',
     ok: 'OK',
     code_barres: 'SCANNER LE CODE BARRE',
     next_step: 'Prendre des photos',
@@ -95,6 +98,8 @@ export const UIStrings = {
     selectionnez_une_moto_5: 'Nous recherchons la moto...',
     selectionnez_une_moto_6: 'La moto a bien été trouvée.',
     moto_inexistante: "Cette moto n'existe pas !",
+    piece: 'Piece',
+    moto: 'Moto',
   },
 };
 

@@ -170,7 +170,6 @@ class SparePartSelector extends Component {
 
   searchSparePart = partnumber => {
     if (partnumber && partnumber.length > 0) {
-      console.warn('searchSparePart', this.state);
       AcciMoto.makeSearch({
         kind: this.state.kind,
         partnumber: partnumber,
@@ -178,6 +177,7 @@ class SparePartSelector extends Component {
         onError: this.onError,
         searchOn: this.setSearchModeOn,
         searchOff: this.setSearchModeOff,
+        country: this.props.country,
       });
     } else {
       this.onError();
@@ -187,7 +187,6 @@ class SparePartSelector extends Component {
   onSubmitEditing = event => {
     Keyboard.dismiss;
     const partnumber = event.nativeEvent.text;
-    console.warn('onSubmitEditing 1', partnumber, event.nativeEvent.text);
     this.setState({
       searching: true,
       found: false,

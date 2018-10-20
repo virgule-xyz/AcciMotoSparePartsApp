@@ -1,8 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { withNavigation } from 'react-navigation';
 import { ActionButton, AppHeader, AppFooter, withBack } from '@components';
-import { ButtonHeight } from '../UI';
+import { ButtonHeight, withLanguage } from '../UI';
 
 const styles = StyleSheet.create({
   container: {
@@ -21,7 +20,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const Screen2 = ({ navigation }) => {
+const Screen2 = ({ navigation, language }) => {
   return (
     <View style={styles.container}>
       <AppHeader home />
@@ -30,7 +29,7 @@ const Screen2 = ({ navigation }) => {
           style={{
             width: '45%',
           }}
-          label="Pièce"
+          label={language.piece}
           onPress={() => {
             navigation.navigate('Screen3P');
           }}
@@ -39,7 +38,7 @@ const Screen2 = ({ navigation }) => {
           style={{
             width: '45%',
           }}
-          label="Moto"
+          label={language.moto}
           onPress={() => {
             navigation.navigate('Screen3M');
           }}
@@ -50,4 +49,4 @@ const Screen2 = ({ navigation }) => {
   );
 };
 
-export default withNavigation(withBack(Screen2));
+export default withBack(withLanguage(Screen2));

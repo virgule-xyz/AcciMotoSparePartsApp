@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyleSheet, View, KeyboardAvoidingView } from 'react-native';
-import { withNavigation } from 'react-navigation';
+import { StyleSheet, KeyboardAvoidingView } from 'react-native';
 import { PictureContext, AppHeader, AppFooter, withBack, MotoSelector } from '@components';
+import { withLanguage } from '../UI';
 
 const styles = StyleSheet.create({
   container: {
@@ -38,4 +38,4 @@ const Screen3M = ({ navigation }) => {
   );
 };
 
-export default withNavigation(withBack(Screen3M));
+export default withBack(withLanguage(Screen3M));

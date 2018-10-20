@@ -35,7 +35,7 @@ const Screen1 = ({ navigation }) => {
 
   const onPressPL = () => {
     navigation.navigate(nextScreen, {
-      country: 'gb',
+      country: 'pl',
     });
   };
 

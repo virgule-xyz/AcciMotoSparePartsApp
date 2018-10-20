@@ -12,6 +12,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "babel-core": "^6.26.3",
     "babel-jest": "23.6.0",
     "babel-plugin-styled-components": "^1.7.1",
