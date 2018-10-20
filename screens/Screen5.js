@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { withNavigation } from 'react-navigation';
 import { RNCamera } from 'react-native-camera';
 import { withBack, AppHeader, AppFooter, Button, PictureContext } from '@components';
-import { ButtonHeight, ButtonMargins, withLanguage } from '../UI';
+import { ButtonHeight, ButtonMargins, langue } from '../UI';
 
 const styles = StyleSheet.create({
   container: {
@@ -62,7 +61,7 @@ class Screen5 extends Component {
   };
 
   render() {
-    const { language, navigation } = this.props;
+    const { navigation } = this.props;
     return (
       <PictureContext.Consumer>
         {({ pictures, addPicture }) => (
@@ -76,8 +75,8 @@ class Screen5 extends Component {
                 style={styles.preview}
                 type={RNCamera.Constants.Type.back}
                 flashMode={RNCamera.Constants.FlashMode.auto}
-                permissionDialogTitle={language.permission_camera_title}
-                permissionDialogMessage={language.permission_camera_message}
+                permissionDialogTitle={langue.sentence('permission_camera_title')}
+                permissionDialogMessage={langue.sentence('permission_camera_message')}
               />
               <View style={styles.cameraFooter}>
                 <Button
@@ -88,7 +87,7 @@ class Screen5 extends Component {
                 <Button
                   style={styles.annuler}
                   type="cancel"
-                  label={language.annuler}
+                  label={langue.sentence('annuler')}
                   onPress={() => navigation.navigate('Screen3')}
                 />
               </View>
@@ -101,4 +100,4 @@ class Screen5 extends Component {
   }
 }
 
-export default withNavigation(withLanguage(withBack(Screen5)));
+export default withBack(Screen5);

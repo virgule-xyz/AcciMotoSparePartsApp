@@ -1,7 +1,7 @@
 import React from 'react';
 import { withNavigation } from 'react-navigation';
 import { Image, StyleSheet } from 'react-native';
-import { withLanguage } from '../UI';
+import { langue } from '../UI';
 
 const styles = StyleSheet.create({
   logo: {
@@ -12,10 +12,10 @@ const styles = StyleSheet.create({
 const frIcon = require('@assets/images/logo_fr.png');
 const gbIcon = require('@assets/images/logo_gb.png');
 
-const Logo = ({ country, style }) => {
-  const src = country === 'fr' ? frIcon : gbIcon;
+const Logo = ({ style }) => {
+  const src = langue.country === 'fr' ? frIcon : gbIcon;
 
   return <Image resizeMode="contain" source={src} style={[styles.logo, style]} />;
 };
 
-export default withNavigation(withLanguage(Logo));
+export default withNavigation(Logo);

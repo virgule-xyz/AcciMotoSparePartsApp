@@ -1,6 +1,5 @@
 import React from 'react';
 import { Alert, StyleSheet, ScrollView, View } from 'react-native';
-import { withNavigation } from 'react-navigation';
 import {
   withBack,
   AppHeader,
@@ -10,8 +9,7 @@ import {
   AddPictureButton,
   PictureContext,
 } from '@components';
-import { ButtonHeight, AlertTitle, withLanguage } from '../UI';
-import { hidden } from 'ansi-colors';
+import { ButtonHeight, AlertTitle, langue } from '../UI';
 
 const styles = StyleSheet.create({
   container: {
@@ -47,18 +45,18 @@ const styles = StyleSheet.create({
   },
 });
 
-const Screen4 = ({ language }) => {
+const Screen4 = () => {
   const deletePicture = (index, pname, removePicture) => {
     Alert.alert(
       AlertTitle,
-      language.question_effacer_piece,
+      langue.sentence('question_effacer_piece'),
       [
         {
-          text: language.non,
+          text: langue.sentence('non'),
           style: 'cancel',
         },
         {
-          text: language.oui,
+          text: langue.sentence('oui'),
           onPress: () => {
             removePicture(index, pname);
           },
@@ -97,4 +95,4 @@ const Screen4 = ({ language }) => {
   );
 };
 
-export default withNavigation(withLanguage(withBack(Screen4)));
+export default withBack(Screen4);

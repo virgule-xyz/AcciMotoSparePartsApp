@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, KeyboardAvoidingView } from 'react-native';
 import { PictureContext, AppHeader, AppFooter, withBack, MotoSelector } from '@components';
-import { withLanguage } from '../UI';
 
 const styles = StyleSheet.create({
   container: {
@@ -17,7 +16,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const Screen3M = ({ navigation, country }) => {
+const Screen3M = ({ navigation }) => {
   const onSuccess = (ret, func) => {
     func(ret);
     navigation.navigate('Screen4');
@@ -34,7 +33,6 @@ const Screen3M = ({ navigation, country }) => {
             style={styles.spareParts}
             onSuccess={ret => onSuccess(ret, selectNewItem)}
             reset={reset}
-            country={country}
           />
           <AppFooter />
         </KeyboardAvoidingView>
@@ -43,4 +41,4 @@ const Screen3M = ({ navigation, country }) => {
   );
 };
 
-export default withBack(withLanguage(Screen3M));
+export default withBack(Screen3M);

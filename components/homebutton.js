@@ -2,13 +2,13 @@ import React from 'react';
 import { Text, Alert, TouchableOpacity, StyleSheet } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import {
-  withLanguage,
   ButtonHeight,
   ButtonFontSize,
   ButtonRadius,
   ButtonPadding,
   ButtonElevation,
   AlertTitle,
+  langue,
 } from '../UI';
 
 const styles = StyleSheet.create({
@@ -42,18 +42,18 @@ const styles = StyleSheet.create({
   },
 });
 
-const HomeButton = ({ language, navigation, home, style }) => {
+const HomeButton = ({ navigation, home, style }) => {
   const askBeforeGoBackLanguages = () => {
     Alert.alert(
       AlertTitle,
-      language.question_retour_home,
+      langue.sentence('question_retour_home'),
       [
         {
-          text: language.non,
+          text: langue.sentence('non'),
           style: 'cancel',
         },
         {
-          text: language.oui,
+          text: langue.sentence('oui'),
           onPress: () => {
             navigation.navigate('Screen1');
           },
@@ -68,14 +68,14 @@ const HomeButton = ({ language, navigation, home, style }) => {
   const askBeforeGoBackHome = () => {
     Alert.alert(
       AlertTitle,
-      language.question_retour_piece,
+      langue.sentence('question_retour_piece'),
       [
         {
-          text: language.non,
+          text: langue.sentence('non'),
           style: 'cancel',
         },
         {
-          text: language.oui,
+          text: langue.sentence('oui'),
           onPress: () => {
             navigation.navigate('Screen2', { reset: true });
           },
@@ -94,7 +94,7 @@ const HomeButton = ({ language, navigation, home, style }) => {
           askBeforeGoBackHome();
         }}
       >
-        <Text style={[style, styles.backHome]}>{language.changer.toLowerCase()}</Text>
+        <Text style={[style, styles.backHome]}>{langue.sentence('changer').toLowerCase()}</Text>
       </TouchableOpacity>
     );
   return (
@@ -103,9 +103,9 @@ const HomeButton = ({ language, navigation, home, style }) => {
         askBeforeGoBackLanguages();
       }}
     >
-      <Text style={styles.backLanguages}>{language.accueil.toLowerCase()}</Text>
+      <Text style={styles.backLanguages}>{langue.sentence('accueil').toLowerCase()}</Text>
     </TouchableOpacity>
   );
 };
 
-export default withNavigation(withLanguage(HomeButton));
+export default withNavigation(HomeButton);

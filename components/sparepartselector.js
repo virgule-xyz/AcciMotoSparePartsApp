@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import {
-  withLanguage,
+  langue,
   ButtonHeight,
   ButtonRadius,
   ButtonElevation,
@@ -123,7 +123,6 @@ class SparePartSelector extends Component {
   }
 
   onError = () => {
-    const { language } = this.props;
     this.setState({
       searching: false,
       found: false,
@@ -133,10 +132,10 @@ class SparePartSelector extends Component {
 
     Alert.alert(
       AlertTitle,
-      language.piece_inexistante,
+      langue.sentence('piece_inexistante'),
       [
         {
-          text: language.ok,
+          text: langue.sentence('ok'),
           style: 'cancel',
         },
       ],
@@ -238,12 +237,12 @@ class SparePartSelector extends Component {
         />
         <Text style={styles.title}>
           {this.state.found
-            ? this.props.language.selectionnez_une_piece_6
+            ? langue.sentence('selectionnez_une_piece_6')
             : this.state.searching
-              ? this.props.language.selectionnez_une_piece_5
+              ? langue.sentence('selectionnez_une_piece_5')
               : this.state.openbarcode
                 ? null
-                : this.props.language.selectionnez_une_piece_1}
+                : langue.sentence('selectionnez_une_piece_1')}
         </Text>
         <TextInput
           editable={!this.state.searching}
@@ -251,7 +250,7 @@ class SparePartSelector extends Component {
             styles.input,
             this.state.searching | this.state.found | this.state.openbarcode ? styles.hide : null,
           ]}
-          placeholder={this.props.language.selectionnez_une_piece_2}
+          placeholder={langue.sentence('selectionnez_une_piece_2')}
           allowFontScaling={true}
           autoFocus={false}
           clearTextOnFocus={true}
@@ -267,7 +266,7 @@ class SparePartSelector extends Component {
             this.state.searching | this.state.found | this.state.openbarcode ? styles.hide : null,
           ]}
         >
-          {this.props.language.selectionnez_une_piece_3}
+          {langue.sentence('selectionnez_une_piece_3')}
         </Text>
 
         <TouchableOpacity
@@ -291,7 +290,7 @@ class SparePartSelector extends Component {
               color: '#000',
             }}
           >
-            {this.props.language.code_barres}
+            {langue.sentence('code_barres')}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -305,7 +304,7 @@ class SparePartSelector extends Component {
               color: '#000',
             }}
           >
-            {this.props.language.next_step}
+            {langue.sentence('next_step')}
           </Text>
           <Image
             source={require('../assets/images/camera.png')}
@@ -322,8 +321,8 @@ class SparePartSelector extends Component {
             }}
             style={styles.preview}
             type={RNCamera.Constants.Type.back}
-            permissionDialogTitle={this.props.language.permission_camera_title}
-            permissionDialogMessage={this.props.language.permission_camera_message}
+            permissionDialogTitle={langue.sentence('permission_camera_title')}
+            permissionDialogMessage={langue.sentence('permission_camera_message')}
             onBarCodeRead={this.onBarcodeRead}
           >
             <View
@@ -342,7 +341,7 @@ class SparePartSelector extends Component {
                 color: '#fff',
               }}
             >
-              {this.props.language.annuler}
+              {langue.sentence('annuler')}
             </Text>
           </TouchableOpacity>
         </View>
@@ -351,4 +350,4 @@ class SparePartSelector extends Component {
   }
 }
 
-export default withNavigation(withLanguage(SparePartSelector));
+export default withNavigation(SparePartSelector);

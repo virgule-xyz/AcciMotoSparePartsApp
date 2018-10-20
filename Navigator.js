@@ -34,12 +34,10 @@ const ScreenStacks = createStackNavigator(
 const Navigator = createSwitchNavigator(
   {
     Screen1,
-    Screen3M,
-    Screen4,
     ScreenStacks,
   },
   {
-    initialRouteName: 'Screen3M',
+    initialRouteName: 'Screen1',
     navigationOptions: {
       header: null,
     },

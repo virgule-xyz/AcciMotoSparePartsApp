@@ -19,8 +19,8 @@ export const UIStrings = {
   fr: {
     oui: 'oui',
     non: 'non',
-    changer: 'Nouvelle prise',
-    changerdepiece: 'Nouvelle prise',
+    changer: 'Nouvelle pièce',
+    changerdepiece: 'Nouvelle pièce',
     annuler: 'Annuler',
     accueil: 'Changer de langue',
     ok: 'OK',
@@ -103,25 +103,22 @@ export const UIStrings = {
   },
 };
 
-export var withLanguage = OtherComponent =>
-  class extends Component {
-    constructor(props) {
-      super(props);
-      this.country = 'fr';
-      this.language = UIStrings['fr'];
-    }
+class Language {
+  constructor() {
+    this.countryCode = 'fr';
+    this.table = UIStrings['fr'];
+  }
 
-    componentWillMount = () => {
-      this.country =
-        this.props.navigation && this.props.navigation.state && this.props.navigation.state.params
-          ? this.props.navigation.state.params.country
-          : this.props.country
-            ? this.props.country
-            : 'fr';
-      this.language = UIStrings[this.country];
-    };
+  set country(code) {
+    this.countryCode = code;
+    this.table = UIStrings[code];
+  }
 
-    render = () => (
-      <OtherComponent {...this.props} language={this.language} country={this.country} />
-    );
-  };
+  get country() {
+    return this.countryCode;
+  }
+
+  sentence = code => this.table[code];
+}
+
+export const langue = new Language();

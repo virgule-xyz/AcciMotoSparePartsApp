@@ -2,7 +2,7 @@ import React from 'react';
 import { Alert, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import {
-  withLanguage,
+  langue,
   ButtonHeight,
   ButtonFontSize,
   ButtonRadius,
@@ -27,19 +27,19 @@ const styles = StyleSheet.create({
   },
 });
 
-const ButtonPieceChange = ({ language, navigation, style }) => {
+const ButtonPieceChange = ({ navigation, style }) => {
   const askBeforeGoBackHome = () => {
     Alert.alert(
       AlertTitle,
-      language.question_retour_piece,
+      langue.sentence('question_retour_piece'),
       [
         {
-          text: language.non,
+          text: langue.sentence('non'),
           onPress: () => {},
           style: 'cancel',
         },
         {
-          text: language.oui,
+          text: langue.sentence('oui'),
           onPress: () => {
             navigation.navigate('Screen2');
           },
@@ -51,15 +51,15 @@ const ButtonPieceChange = ({ language, navigation, style }) => {
     );
   };
 
-  const render = () => (
+  return (
     <TouchableOpacity
       onPress={() => {
         askBeforeGoBackHome();
       }}
     >
-      <Text style={[style, styles.backHome]}>{language.changer.toLowerCase()}</Text>
+      <Text style={[style, styles.backHome]}>{langue.sentence('changer').toLowerCase()}</Text>
     </TouchableOpacity>
   );
 };
 
-export default withNavigation(withLanguage(ButtonPieceChange));
+export default withNavigation(ButtonPieceChange);

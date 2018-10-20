@@ -1,8 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { withNavigation } from 'react-navigation';
 import { AppHeader, AppFooter, Button, withBack } from '@components';
-import { withLanguage } from '../UI';
+import { langue } from '../UI';
 
 const styles = StyleSheet.create({
   container: {
@@ -27,14 +26,14 @@ const styles = StyleSheet.create({
     color: '#333',
   },
 });
-const Screen5 = ({ language, navigation }) => (
+const Screen5 = ({ navigation }) => (
   <View style={styles.container}>
     <AppHeader />
     <View style={styles.body}>
-      <Text style={styles.text}>{language.les_photos_remontent}</Text>
-      <Text style={styles.text}>{language.le_nombre_de_photos}</Text>
+      <Text style={styles.text}>{langue.sentence('les_photos_remontent')}</Text>
+      <Text style={styles.text}>{langue.sentence('le_nombre_de_photos')}</Text>
       <Button
-        label={language.changerdepiece}
+        label={langue.sentence('changerdepiece')}
         onPress={() => {
           navigation.navigate('Screen2', { reset: true });
         }}
@@ -44,4 +43,4 @@ const Screen5 = ({ language, navigation }) => (
   </View>
 );
 
-export default withNavigation(withLanguage(withBack(Screen5)));
+export default withBack(Screen5);

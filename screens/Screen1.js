@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ActionButton, Logo } from '@components';
-import { ButtonHeight } from '../UI';
+import { ButtonHeight, langue } from '../UI';
 
 const styles = StyleSheet.create({
   logo: {
@@ -28,16 +28,20 @@ const Screen1 = ({ navigation }) => {
   const nextScreen = 'Screen2';
 
   const onPressFR = () => {
+    langue.country = 'fr';
     navigation.navigate(nextScreen, {
       country: 'fr',
     });
   };
 
   const onPressPL = () => {
+    langue.country = 'pl';
     navigation.navigate(nextScreen, {
       country: 'pl',
     });
   };
+
+  langue.country = 'fr';
 
   return (
     <View style={styles.container}>

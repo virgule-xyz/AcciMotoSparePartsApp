@@ -1,14 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import PictureContext from '@components/picturecontext';
-import {
-  ButtonMargins,
-  ColorBlack,
-  ColorGray,
-  ColorLightGray,
-  TextFontSize,
-  withLanguage,
-} from '../UI';
+import { ButtonMargins, ColorBlack, ColorGray, ColorLightGray, TextFontSize, langue } from '../UI';
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -57,7 +50,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const SparePartResume = ({ language }) => {
+const SparePartResume = () => {
   return (
     <PictureContext.Consumer>
       {({ partnumber, partdatas, motdatas }) => {
@@ -91,7 +84,7 @@ const SparePartResume = ({ language }) => {
             <View style={styles.puce} />
             <View style={styles.partwrapper}>
               <Text style={styles.head1}>
-                {language.moto} - {partnumber}
+                {langue.sentence('moto')} - {partnumber}
               </Text>
               <Text style={styles.head2}>
                 {marque.toUpperCase()}/ {modele.toUpperCase()}
@@ -110,4 +103,4 @@ const SparePartResume = ({ language }) => {
   );
 };
 
-export default withLanguage(SparePartResume);
+export default SparePartResume;

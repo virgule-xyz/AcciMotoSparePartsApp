@@ -2,13 +2,13 @@ import React from 'react';
 import { StyleSheet, TouchableOpacity, Text, Image } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import {
-  withLanguage,
   ButtonHeight,
   ButtonRadius,
   ButtonElevation,
   ButtonFontSize,
   ColorOrange,
   ColorBlack,
+  langue,
 } from '../UI';
 
 const styles = StyleSheet.create({
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
 
 const addIcon = require('../assets/images/add.png');
 
-const AddPictureButton = ({ navigation, language }) => (
+const AddPictureButton = ({ navigation }) => (
   <TouchableOpacity
     style={styles.actionButtonNew}
     onPress={() => {
@@ -43,8 +43,8 @@ const AddPictureButton = ({ navigation, language }) => (
     }}
   >
     <Image source={addIcon} style={styles.icons} />
-    <Text style={styles.buttonText}>{language.nouvelle_photo}</Text>
+    <Text style={styles.buttonText}>{langue.sentence('nouvelle_photo')}</Text>
   </TouchableOpacity>
 );
 
-export default withNavigation(withLanguage(AddPictureButton));
+export default withNavigation(AddPictureButton);

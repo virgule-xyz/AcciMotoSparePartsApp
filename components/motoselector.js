@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
-  TouchableOpacity,
   Text,
-  Image,
   TextInput,
   Keyboard,
   ActivityIndicator,
@@ -12,12 +10,10 @@ import {
 } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import {
-  withLanguage,
+  langue,
   ButtonHeight,
   ButtonRadius,
   ButtonElevation,
-  ButtonFontSize,
-  ButtonPadding,
   ColorOrange,
   AlertTitle,
 } from '../UI';
@@ -87,7 +83,6 @@ class MotoSelector extends Component {
   }
 
   onError = () => {
-    const { language } = this.props;
     this.setState({
       searching: false,
       found: false,
@@ -96,10 +91,10 @@ class MotoSelector extends Component {
 
     Alert.alert(
       AlertTitle,
-      language.moto_inexistante,
+      langue.sentence('moto_inexistante'),
       [
         {
-          text: language.ok,
+          text: langue.sentence('ok'),
           style: 'cancel',
         },
       ],
@@ -170,21 +165,21 @@ class MotoSelector extends Component {
         <Text
           style={[styles.label_or, this.state.searching | this.state.found ? styles.hide : null]}
         >
-          {this.props.language.selectionnez_une_moto_3}
+          {langue.sentence('selectionnez_une_moto_3')}
         </Text>
         <Text style={styles.title}>
           {this.state.found
-            ? this.props.language.selectionnez_une_moto_6
+            ? langue.sentence('selectionnez_une_moto_6')
             : this.state.searching
-              ? this.props.language.selectionnez_une_moto_5
+              ? langue.sentence('selectionnez_une_moto_5')
               : this.state.openbarcode
                 ? null
-                : this.props.language.selectionnez_une_moto_1}
+                : langue.sentence('selectionnez_une_moto_1')}
         </Text>
         <TextInput
           editable={!this.state.searching}
           style={[styles.input, this.state.searching | this.state.found ? styles.hide : null]}
-          placeholder={this.props.language.selectionnez_une_moto_2}
+          placeholder={langue.sentence('selectionnez_une_moto_2')}
           allowFontScaling={true}
           keyboardType="number-pad"
           autoFocus={false}
@@ -198,4 +193,4 @@ class MotoSelector extends Component {
   }
 }
 
-export default withNavigation(withLanguage(MotoSelector));
+export default withNavigation(MotoSelector);

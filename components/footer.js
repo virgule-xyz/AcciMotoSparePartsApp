@@ -2,10 +2,8 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import ButtonEndPictures from '@components/buttonendpictures';
-import HomeButton from '@components/homebutton';
-import { withPictures } from '@components/withpictures';
-import PictureContext from '@components/picturecontext';
-import { ButtonHeight, ButtonFontSize, withLanguage } from '../UI';
+import { PictureContext, HomeButton } from '@components';
+import { ButtonHeight, ButtonFontSize } from '../UI';
 
 const styles = StyleSheet.create({
   footerWrapper: {
@@ -35,13 +33,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const AppFooter = ({ home, nobuttons, noback, language }) => (
+const AppFooter = ({ home, nobuttons, noback }) => (
   <PictureContext.Consumer>
     {({ queue }) => (
       <>
         {!nobuttons && (
           <View style={styles.footerWrapper}>
-            {!noback && <HomeButton language={language} home={home} />}
+            {!noback && <HomeButton home={home} />}
             {!noback && <ButtonEndPictures />}
             {noback && <View />}
             <View style={styles.counter}>
@@ -54,4 +52,4 @@ const AppFooter = ({ home, nobuttons, noback, language }) => (
   </PictureContext.Consumer>
 );
 
-export default withNavigation(withLanguage(AppFooter));
+export default withNavigation(AppFooter);

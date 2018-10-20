@@ -1,8 +1,6 @@
 import React from 'react';
 import Logo from './logo';
 import { View, StyleSheet } from 'react-native';
-import { withNavigation } from 'react-navigation';
-import { withLanguage } from '../UI';
 
 const styles = StyleSheet.create({
   headerWrapper: {
@@ -25,4 +23,4 @@ const AppHeader = props => (
   </View>
 );
 
-export default withNavigation(withLanguage(AppHeader));
+export default AppHeader;

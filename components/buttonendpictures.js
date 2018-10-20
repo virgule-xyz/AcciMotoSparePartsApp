@@ -3,7 +3,7 @@ import { View, Image, Text, StyleSheet, TouchableOpacity, Alert } from 'react-na
 import { withNavigation } from 'react-navigation';
 import PictureContext from '@components/picturecontext';
 import {
-  withLanguage,
+  langue,
   ButtonHeight,
   ButtonFontSize,
   ButtonRadius,
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
 
 const checkMark = require('@assets/images/check_mark.png');
 
-const ButtonEndPictures = ({ navigation, style, language }) => (
+const ButtonEndPictures = ({ navigation, style }) => (
   <PictureContext.Consumer>
     {({ pictures, uploadPictures }) =>
       pictures.length > 0 && (
@@ -46,15 +46,15 @@ const ButtonEndPictures = ({ navigation, style, language }) => (
           onPress={() => {
             Alert.alert(
               AlertTitle,
-              language.etesvoussur,
+              langue.sentence('etesvoussur'),
               [
                 {
-                  text: language.non,
+                  text: langue.sentence('non'),
                   onPress: () => {},
                   style: 'cancel',
                 },
                 {
-                  text: language.oui,
+                  text: langue.sentence('oui'),
                   onPress: () => {
                     uploadPictures();
                     navigation.navigate('Screen6');
@@ -69,7 +69,7 @@ const ButtonEndPictures = ({ navigation, style, language }) => (
         >
           <View style={[styles.button, style]}>
             <Image style={styles.icons} source={checkMark} />
-            <Text style={styles.text}>{language.terminer.toUpperCase()}</Text>
+            <Text style={styles.text}>{langue.sentence('terminer').toUpperCase()}</Text>
           </View>
         </TouchableOpacity>
       )
@@ -77,4 +77,4 @@ const ButtonEndPictures = ({ navigation, style, language }) => (
   </PictureContext.Consumer>
 );
 
-export default withNavigation(withLanguage(ButtonEndPictures));
+export default withNavigation(ButtonEndPictures);
