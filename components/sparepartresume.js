@@ -54,7 +54,7 @@ const SparePartResume = () => {
   return (
     <PictureContext.Consumer>
       {({ partnumber, partdatas, motdatas }) => {
-        if (type === 'pie') {
+        if (partdatas && partdatas.type === 'pie') {
           const { name, trademark, model, type, couleur, cylindree, periode } = partdatas;
           const space = periode ? ' / ' : '';
           return (
@@ -76,28 +76,28 @@ const SparePartResume = () => {
             </View>
           );
         }
-        // if (type === 'mot') {
-        const { type, num, marque, modele, immat, kms, couleur } = motdatas;
-        const space = kms ? ' / ' : '';
-        return (
-          <View style={styles.wrapper}>
-            <View style={styles.puce} />
-            <View style={styles.partwrapper}>
-              <Text style={styles.head1}>
-                {langue.sentence('moto')} - {partnumber}
-              </Text>
-              <Text style={styles.head2}>
-                {marque.toUpperCase()}/ {modele.toUpperCase()}
-              </Text>
-              <Text style={styles.line1}>{immat.toUpperCase()}</Text>
-              <Text style={styles.line2}>
-                {kms && `${kms.toUpperCase()}`}
-                {couleur && `${space}${couleur.toUpperCase()}`}
-              </Text>
+        if (motdatas && motdatas.type === 'mot') {
+          const { type, num, marque, modele, immat, kms, couleur } = motdatas;
+          const space = kms ? ' / ' : '';
+          return (
+            <View style={styles.wrapper}>
+              <View style={styles.puce} />
+              <View style={styles.partwrapper}>
+                <Text style={styles.head1}>
+                  {langue.sentence('moto')} - {partnumber}
+                </Text>
+                <Text style={styles.head2}>
+                  {marque.toUpperCase()}/ {modele.toUpperCase()}
+                </Text>
+                <Text style={styles.line1}>{immat.toUpperCase()}</Text>
+                <Text style={styles.line2}>
+                  {kms && `${kms.toUpperCase()}`}
+                  {couleur && `${space}${couleur.toUpperCase()}`}
+                </Text>
+              </View>
             </View>
-          </View>
-        );
-        // }
+          );
+        }
       }}
     </PictureContext.Consumer>
   );

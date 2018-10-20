@@ -88,7 +88,7 @@ class Screen5 extends Component {
                   style={styles.annuler}
                   type="cancel"
                   label={langue.sentence('annuler')}
-                  onPress={() => navigation.navigate('Screen3')}
+                  onPress={() => navigation.navigate('Screen4')}
                 />
               </View>
             </View>

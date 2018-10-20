@@ -172,7 +172,7 @@ class SparePartSelector extends Component {
         onError: this.onError,
         searchOn: this.setSearchModeOn,
         searchOff: this.setSearchModeOff,
-        country: this.props.country,
+        country: langue.country,
       });
     } else {
       this.onError();
