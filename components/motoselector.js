@@ -31,7 +31,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#FFF',
     width: '80%',
-    maxHeight: '60%',
+    height: '30%',
+    maxHeight: 7 * 24,
     paddingTop: 10,
     paddingBottom: 10,
   },
@@ -82,7 +83,6 @@ class MotoSelector extends Component {
       searching: false,
       found: false,
       partnumber: null,
-      kind: 'mot',
     };
   }
 
@@ -92,7 +92,6 @@ class MotoSelector extends Component {
       searching: false,
       found: false,
       partnumber: null,
-      kind: 'mot',
     });
 
     Alert.alert(
@@ -114,9 +113,7 @@ class MotoSelector extends Component {
     this.setState({
       searching: true,
       found: false,
-      kind: 'mot',
       partnumber: '',
-      openbarcode: false,
     });
   };
 
@@ -124,15 +121,12 @@ class MotoSelector extends Component {
     this.setState({
       searching: false,
       found: false,
-      kind: 'mot',
       partnumber: '',
-      openbarcode: false,
     });
   };
 
   searchMotoId = partnumber => {
     if (partnumber && partnumber.length > 0) {
-      console.warn('searchMotoId', this.state);
       AcciMoto.makeSearch({
         kind: 'mot',
         partnumber: partnumber,
@@ -140,6 +134,7 @@ class MotoSelector extends Component {
         onError: this.onError,
         searchOn: this.setSearchModeOn,
         searchOff: this.setSearchModeOff,
+        country: this.props.country,
       });
     } else {
       this.onError();
@@ -149,7 +144,6 @@ class MotoSelector extends Component {
   onSubmitEditing = event => {
     Keyboard.dismiss;
     const partnumber = event.nativeEvent.text;
-    console.warn('onSubmitEditing 1', partnumber, event.nativeEvent.text);
     this.setState({
       searching: true,
       found: false,
@@ -192,8 +186,8 @@ class MotoSelector extends Component {
           style={[styles.input, this.state.searching | this.state.found ? styles.hide : null]}
           placeholder={this.props.language.selectionnez_une_moto_2}
           allowFontScaling={true}
+          keyboardType="number-pad"
           autoFocus={false}
-          clearTextOnFocus={true}
           enablesReturnKeyAutomatically={true}
           returnKeyType="done"
           underlineColorAndroid={ColorOrange}

@@ -118,7 +118,6 @@ class SparePartSelector extends Component {
       searching: false,
       found: false,
       partnumber: null,
-      kind: 'pie',
       openbarcode: false,
     };
   }
@@ -129,7 +128,6 @@ class SparePartSelector extends Component {
       searching: false,
       found: false,
       partnumber: null,
-      kind: 'pie',
       openbarcode: false,
     });
 
@@ -152,7 +150,6 @@ class SparePartSelector extends Component {
     this.setState({
       searching: true,
       found: false,
-      kind: 'pie',
       partnumber: '',
       openbarcode: false,
     });
@@ -162,7 +159,6 @@ class SparePartSelector extends Component {
     this.setState({
       searching: false,
       found: false,
-      kind: 'pie',
       partnumber: '',
       openbarcode: false,
     });
@@ -171,7 +167,7 @@ class SparePartSelector extends Component {
   searchSparePart = partnumber => {
     if (partnumber && partnumber.length > 0) {
       AcciMoto.makeSearch({
-        kind: this.state.kind,
+        kind: 'pie',
         partnumber: partnumber,
         onSuccess: this.props.onSuccess,
         onError: this.onError,

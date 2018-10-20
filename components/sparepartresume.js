@@ -1,7 +1,14 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import PictureContext from '@components/picturecontext';
-import { ButtonMargins, ColorBlack, ColorGray, ColorLightGray, TextFontSize } from '../UI';
+import {
+  ButtonMargins,
+  ColorBlack,
+  ColorGray,
+  ColorLightGray,
+  TextFontSize,
+  withLanguage,
+} from '../UI';
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -50,31 +57,57 @@ const styles = StyleSheet.create({
   },
 });
 
-export default (SparePartResume = () => {
+const SparePartResume = ({ language }) => {
   return (
     <PictureContext.Consumer>
-      {({ partnumber, partdatas }) => {
-        const { name, trademark, model, type, couleur, cylindree, periode } = partdatas;
-        const space = periode ? ' / ' : '';
+      {({ partnumber, partdatas, motdatas }) => {
+        if (type === 'pie') {
+          const { name, trademark, model, type, couleur, cylindree, periode } = partdatas;
+          const space = periode ? ' / ' : '';
+          return (
+            <View style={styles.wrapper}>
+              <View style={styles.puce} />
+              <View style={styles.partwrapper}>
+                <Text style={styles.head1}>
+                  {type.toUpperCase()} - {partnumber}
+                </Text>
+                <Text style={styles.head2}>
+                  {trademark.toUpperCase()}/ {model.toUpperCase()}/ {name.toUpperCase()}
+                </Text>
+                <Text style={styles.line1}>{name.toUpperCase()}</Text>
+                <Text style={styles.line2}>
+                  {periode && `${periode.toUpperCase()}`}
+                  {couleur && `${space}${couleur.toUpperCase()}`}
+                </Text>
+              </View>
+            </View>
+          );
+        }
+        // if (type === 'mot') {
+        const { type, num, marque, modele, immat, kms, couleur } = motdatas;
+        const space = kms ? ' / ' : '';
         return (
           <View style={styles.wrapper}>
             <View style={styles.puce} />
             <View style={styles.partwrapper}>
               <Text style={styles.head1}>
-                {type.toUpperCase()} - {partnumber}
+                {language.moto} - {partnumber}
               </Text>
               <Text style={styles.head2}>
-                {trademark.toUpperCase()}/ {model.toUpperCase()}/ {name.toUpperCase()}
+                {marque.toUpperCase()}/ {modele.toUpperCase()}
               </Text>
-              <Text style={styles.line1}>{name.toUpperCase()}</Text>
+              <Text style={styles.line1}>{immat.toUpperCase()}</Text>
               <Text style={styles.line2}>
-                {periode && `${periode.toUpperCase()}`}
+                {kms && `${kms.toUpperCase()}`}
                 {couleur && `${space}${couleur.toUpperCase()}`}
               </Text>
             </View>
           </View>
         );
+        // }
       }}
     </PictureContext.Consumer>
   );
-});
+};
+
+export default withLanguage(SparePartResume);

@@ -17,6 +17,15 @@ class App extends React.Component {
       kind: 'pie',
       partnumber: 0,
       partdatas: { name: '', trademark: '', model: '', type: '', line1: '', line2: '' },
+      motdatas: {
+        type: '',
+        num: '',
+        marque: '',
+        modele: '',
+        immat: '',
+        kms: '',
+        couleur: '',
+      },
       pictures: [],
       queue: [],
       addPicture: this.addPicture,
@@ -41,8 +50,9 @@ class App extends React.Component {
    * change de type de pièce (pie - pièce ou mot - moto) et de numéro
    */
   selectNewItem = ({ kind, partnumber, partdatas }) => {
-    console.warn('selectNewItem', kind, partnumber, partdatas);
-    this.setState({ kind: kind, partnumber: partnumber, partdatas: partdatas });
+    kind === 'pie'
+      ? this.setState({ kind: kind, partnumber: partnumber, partdatas: partdatas })
+      : this.setState({ kind: kind, partnumber: partnumber, motdatas: partdatas });
   };
 
   /**

@@ -11,9 +11,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#FFF',
   },
+  spareParts: {
+    height: 100,
+    backgroundColor: 'red',
+  },
 });
 
-const Screen3M = ({ navigation }) => {
+const Screen3M = ({ navigation, country }) => {
   const onSuccess = (ret, func) => {
     func(ret);
     navigation.navigate('Screen4');
@@ -30,6 +34,7 @@ const Screen3M = ({ navigation }) => {
             style={styles.spareParts}
             onSuccess={ret => onSuccess(ret, selectNewItem)}
             reset={reset}
+            country={country}
           />
           <AppFooter />
         </KeyboardAvoidingView>

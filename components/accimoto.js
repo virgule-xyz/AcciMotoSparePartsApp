@@ -26,19 +26,34 @@ class AcciMoto extends Component {
         } else {
           const { items } = data;
           console.warn(items);
-          const ret = {
-            kind: kind,
-            partnumber: partnumber,
-            partdatas: {
-              name: items.piece,
-              trademark: items.marque,
-              model: items.modele,
-              type: items.type,
-              periode: items.periode,
-              couleur: items.couleur,
-              cylindree: items.cylindree,
-            },
-          };
+          const ret =
+            kind === 'pie'
+              ? {
+                  kind: kind,
+                  partnumber: partnumber,
+                  partdatas: {
+                    name: items.piece,
+                    trademark: items.marque,
+                    model: items.modele,
+                    type: items.type,
+                    periode: items.periode,
+                    couleur: items.couleur,
+                    cylindree: items.cylindree,
+                  },
+                }
+              : {
+                  kind: kind,
+                  partnumber: partnumber,
+                  partdatas: {
+                    type: items.type,
+                    num: items.num,
+                    marque: items.marque,
+                    modele: items.modele,
+                    immat: items.immat,
+                    kms: items.kms,
+                    couleur: items.couleur,
+                  },
+                };
           onSuccess && onSuccess(ret);
         }
       })
