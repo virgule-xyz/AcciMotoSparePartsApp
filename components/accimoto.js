@@ -12,7 +12,6 @@ class AcciMoto extends Component {
     searchOn && searchOn();
 
     const theurl = `${API.url}/get?key=${API.key}&lang=${country}&type=${kind}&num=${partnumber}`;
-    console.warn(theurl);
 
     axios({
       url: theurl,
@@ -25,7 +24,6 @@ class AcciMoto extends Component {
           onError && onError(data.text);
         } else {
           const { items } = data;
-          console.warn(items);
           const ret =
             kind === 'pie'
               ? {
@@ -84,24 +82,20 @@ class AcciMoto extends Component {
     Upload.getFileInfo(options.path).then(metadata => {
       Upload.startUpload(options)
         .then(uploadId => {
-          console.warn('Upload started:', name);
           // addListener('progress', uploadId, data => {
           //   console.warn(`Progress: ${data.progress}%`);
           // });
           addListener('error', uploadId, data => {
-            console.warn(`Error: ${data.error}%`);
             onErrorUpload();
           });
           // addListener('cancelled', uploadId, data => {
           //   console.warn(`Cancelled!`);
           // });
           addListener('completed', uploadId, data => {
-            console.warn('Completed!');
             onEndUpload();
           });
         })
         .catch(err => {
-          console.warn('Upload error!', err);
           onErrorUpload();
         });
     });

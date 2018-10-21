@@ -74,7 +74,6 @@ class App extends React.Component {
    * la tâche de fond pour charger les images
    */
   backgroundRunner = (n = 0) => {
-    console.log('backgroundRunner:', n);
     if (this.state.queue.length > 0) {
       const toUpload = this.state.queue[n];
 
