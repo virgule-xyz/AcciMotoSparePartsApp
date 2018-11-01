@@ -35,12 +35,12 @@
 		2D16E6881FA4F8E400B85C8A /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D16E6891FA4F8E400B85C8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* AcciMotoSparePartsAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* AcciMotoSparePartsAppTests.m */; };
 		2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
+		741F02700DB9433DA4DB8A77 /* libVydiaRNFileUploader.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 422B2A44B92B44D9A844DCF1 /* libVydiaRNFileUploader.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		C8ECFA134AE9479CA04D3781 /* libRNCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA12092573AC42359E4821D3 /* libRNCamera.a */; };
 		D7094968216A61C00063AFAB /* ios in Resources */ = {isa = PBXBuildFile; fileRef = D7094967216A61C00063AFAB /* ios */; };
 		D772A3FB21581FF900F7330E /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
-		EC33FE418F8941D3AB8E2ABE /* libVydiaRNFileUploader.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CBA310BF2CB45D495157A27 /* libVydiaRNFileUploader.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -338,9 +338,9 @@
 			remoteGlobalIDString = 7E8E3A8F1C45D5380017F6C1;
 			remoteInfo = "ios-deploy-lib";
 		};
-		D7094965216A5D0C0063AFAB /* PBXContainerItemProxy */ = {
+		D75720D82187B3A7001D0F67 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = AFC18C88706441499E939AC4 /* VydiaRNFileUploader.xcodeproj */;
+			containerPortal = 515E2A657627447295384104 /* VydiaRNFileUploader.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 014A3B5C1C6CF33500B6D375;
 			remoteInfo = VydiaRNFileUploader;
@@ -378,14 +378,14 @@
 		2D02E4901E0B4A5D006451C7 /* AcciMotoSparePartsApp-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AcciMotoSparePartsApp-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FD8B0E0C16048CFBC2DCBEE /* libios-deploy.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = "libios-deploy.a"; sourceTree = "<group>"; };
+		422B2A44B92B44D9A844DCF1 /* libVydiaRNFileUploader.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libVydiaRNFileUploader.a; sourceTree = "<group>"; };
 		489683DA8A1B48508F41EACF /* ios-deploy */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; path = "ios-deploy"; sourceTree = "<group>"; };
+		515E2A657627447295384104 /* VydiaRNFileUploader.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = VydiaRNFileUploader.xcodeproj; path = "../node_modules/react-native-background-upload/ios/VydiaRNFileUploader.xcodeproj"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		7CB29DEC8B4441A08C83EDB7 /* ios-deploy.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = "ios-deploy.xcodeproj"; path = "../node_modules/ios-deploy/ios-deploy.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
-		8CBA310BF2CB45D495157A27 /* libVydiaRNFileUploader.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libVydiaRNFileUploader.a; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
-		AFC18C88706441499E939AC4 /* VydiaRNFileUploader.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = VydiaRNFileUploader.xcodeproj; path = "../node_modules/react-native-background-upload/ios/VydiaRNFileUploader.xcodeproj"; sourceTree = "<group>"; };
 		BA12092573AC42359E4821D3 /* libRNCamera.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNCamera.a; sourceTree = "<group>"; };
 		CD5C25A85CD143BE8DD65FDB /* ios-deploy-tests.xctest */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = "ios-deploy-tests.xctest"; sourceTree = "<group>"; };
 		D7094967216A61C00063AFAB /* ios */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ios; path = "../node_modules/react-native-background-upload/ios"; sourceTree = "<group>"; };
@@ -418,7 +418,7 @@
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				C8ECFA134AE9479CA04D3781 /* libRNCamera.a in Frameworks */,
-				EC33FE418F8941D3AB8E2ABE /* libVydiaRNFileUploader.a in Frameworks */,
+				741F02700DB9433DA4DB8A77 /* libVydiaRNFileUploader.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -607,7 +607,7 @@
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				E8461D8BD9B74C28AB90AE04 /* RNCamera.xcodeproj */,
 				7CB29DEC8B4441A08C83EDB7 /* ios-deploy.xcodeproj */,
-				AFC18C88706441499E939AC4 /* VydiaRNFileUploader.xcodeproj */,
+				515E2A657627447295384104 /* VydiaRNFileUploader.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -667,10 +667,10 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		D7094962216A5D0C0063AFAB /* Products */ = {
+		D75720D52187B3A6001D0F67 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D7094966216A5D0C0063AFAB /* libVydiaRNFileUploader.a */,
+				D75720D92187B3A7001D0F67 /* libVydiaRNFileUploader.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -682,7 +682,7 @@
 				489683DA8A1B48508F41EACF /* ios-deploy */,
 				CD5C25A85CD143BE8DD65FDB /* ios-deploy-tests.xctest */,
 				3FD8B0E0C16048CFBC2DCBEE /* libios-deploy.a */,
-				8CBA310BF2CB45D495157A27 /* libVydiaRNFileUploader.a */,
+				422B2A44B92B44D9A844DCF1 /* libVydiaRNFileUploader.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -869,8 +869,8 @@
 					ProjectRef = E8461D8BD9B74C28AB90AE04 /* RNCamera.xcodeproj */;
 				},
 				{
-					ProductGroup = D7094962216A5D0C0063AFAB /* Products */;
-					ProjectRef = AFC18C88706441499E939AC4 /* VydiaRNFileUploader.xcodeproj */;
+					ProductGroup = D75720D52187B3A6001D0F67 /* Products */;
+					ProjectRef = 515E2A657627447295384104 /* VydiaRNFileUploader.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -1164,11 +1164,11 @@
 			remoteRef = D7094960216A5D0C0063AFAB /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		D7094966216A5D0C0063AFAB /* libVydiaRNFileUploader.a */ = {
+		D75720D92187B3A7001D0F67 /* libVydiaRNFileUploader.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libVydiaRNFileUploader.a;
-			remoteRef = D7094965216A5D0C0063AFAB /* PBXContainerItemProxy */;
+			remoteRef = D75720D82187B3A7001D0F67 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		D772A3FA21581F0700F7330E /* libRNCamera.a */ = {
@@ -1321,16 +1321,13 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 					"$(SRCROOT)/../node_modules/ios-deploy/src/**",
+					"$(SRCROOT)/../node_modules/react-native-ftp/ios",
 				);
 				INFOPLIST_FILE = AcciMotoSparePartsAppTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
@@ -1352,16 +1349,13 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 					"$(SRCROOT)/../node_modules/ios-deploy/src/**",
+					"$(SRCROOT)/../node_modules/react-native-ftp/ios",
 				);
 				INFOPLIST_FILE = AcciMotoSparePartsAppTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
@@ -1386,6 +1380,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 					"$(SRCROOT)/../node_modules/ios-deploy/src/**",
+					"$(SRCROOT)/../node_modules/react-native-ftp/ios",
 				);
 				INFOPLIST_FILE = AcciMotoSparePartsApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1411,6 +1406,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 					"$(SRCROOT)/../node_modules/ios-deploy/src/**",
+					"$(SRCROOT)/../node_modules/react-native-ftp/ios",
 				);
 				INFOPLIST_FILE = AcciMotoSparePartsApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1441,15 +1437,12 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 					"$(SRCROOT)/../node_modules/ios-deploy/src/**",
+					"$(SRCROOT)/../node_modules/react-native-ftp/ios",
 				);
 				INFOPLIST_FILE = "AcciMotoSparePartsApp-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
@@ -1480,15 +1473,12 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 					"$(SRCROOT)/../node_modules/ios-deploy/src/**",
+					"$(SRCROOT)/../node_modules/react-native-ftp/ios",
 				);
 				INFOPLIST_FILE = "AcciMotoSparePartsApp-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
@@ -1518,15 +1508,12 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 					"$(SRCROOT)/../node_modules/ios-deploy/src/**",
+					"$(SRCROOT)/../node_modules/react-native-ftp/ios",
 				);
 				INFOPLIST_FILE = "AcciMotoSparePartsApp-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
@@ -1556,15 +1543,12 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 					"$(SRCROOT)/../node_modules/ios-deploy/src/**",
+					"$(SRCROOT)/../node_modules/react-native-ftp/ios",
 				);
 				INFOPLIST_FILE = "AcciMotoSparePartsApp-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (

@@ -1,4 +1,5 @@
 export { default as AddPictureButton } from './addpicturebutton';
+export { default as AcciMoto } from './accimoto';
 export { default as ActionButton } from './button';
 export { default as AppFooter } from './footer';
 export { default as AppHeader } from './header';

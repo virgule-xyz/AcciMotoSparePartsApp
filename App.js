@@ -1,12 +1,14 @@
 import React from 'react';
-import PictureContext from '@components/picturecontext';
+import { AsyncStorage, NetInfo } from 'react-native';
+import { PictureContext, AcciMoto } from '@components';
 import Navigator from './Navigator';
-import AcciMoto from '@components/accimoto';
 
 /**
  * L'application principale
  */
 class App extends React.Component {
+  toupload = [];
+
   /**
    * Le constructeur avec le state contenant les images
    * @param {*} props
@@ -56,48 +58,11 @@ class App extends React.Component {
   };
 
   /**
-   * charge les images vers le serveur
-   */
-  uploadPictures = () => {
-    const me = this;
-    const newToUpload = me.state.pictures.map((item, index) => {
-      return { file: item, name: me.setNameData(me.state.kind, me.state.partnumber, index) };
-    });
-    this.setState(state => ({
-      pictures: [],
-      queue: [...state.queue, ...newToUpload],
-    }));
-    this.backgroundRunner();
-  };
-
-  /**
-   * la tâche de fond pour charger les images
-   */
-  backgroundRunner = (n = 0) => {
-    if (this.state.queue.length > 0) {
-      const toUpload = this.state.queue[n];
-
-      AcciMoto.FTPPicture(
-        toUpload,
-        () => {
-          this.setState(state => ({
-            queue: state.queue.slice(1),
-          }));
-          this.backgroundRunner(n);
-        },
-        () => {
-          this.backgroundRunner(n + 1);
-        },
-      );
-    }
-  };
-
-  /**
    * Ajoute une image au state/array
    */
   addPicture = data => {
     this.setState(state => ({
-      pictures: [...state.pictures, data.uri],
+      pictures: [...state.pictures, data.base64],
     }));
   };
 
@@ -106,16 +71,113 @@ class App extends React.Component {
    */
   removePicture = (index, pname) => {
     const newPictures = this.state.pictures.filter((item, id) => id + item !== index + pname);
-    this.setState(state => ({
-      pictures: newPictures,
-    }));
+    this.setState({ pictures: newPictures });
   };
 
   /**
    * lancement du background-runner au montage
    */
-  componentDidMount = () => {
-    this.backgroundRunner();
+  componentDidMount = async () => {
+    // this.backgroundRunner();
+  };
+
+  /**
+   * demande le chargement des images vers le serveur en remplissant la queue de chargement
+   */
+  uploadPictures = () => {
+    const me = this;
+    const newToUpload = me.state.pictures.map((item, index) => {
+      return {
+        file: 'data:image/jpeg;base64,' + item,
+        name: me.setNameData(me.state.kind, me.state.partnumber, index),
+      };
+    });
+    this.topupload = [...me.state.queue, ...newToUpload];
+    this.setState(state => ({
+      pictures: [],
+      queue: this.topupload,
+    }));
+    // this.backgroundRunner();
+  };
+
+  /**
+   * la tâche de fond pour charger les images, avec vérification de l'état du réseau
+   *
+   * @param {int} n le numéro de l'image
+   */
+  backgroundRunner = (n = 0) => {
+    storeKey = '@AcciMotoStore:pictures';
+
+    hasPicturesToUpload = () => this.topupload.length > 0;
+
+    savePicturesToStore = async () => {
+      valueAppToStore = value => value;
+      try {
+        const transformedValue = valueAppToStore(this.topupload);
+        await AsyncStorage.setItem(this.storeKey, transformedValue);
+      } catch (error) {}
+    };
+
+    loadPicturesFromStore = async () => {
+      valueStoreToApp = value => value;
+      try {
+        const value = await AsyncStorage.getItem(this.storeKey);
+        if (value !== null) {
+          const transformedValue = valueStoreToApp(value);
+          this.toupload = [...this.state.queue, ...transformedValue];
+          this.setState(state => ({
+            queue: this.topupload,
+          }));
+        }
+      } catch (error) {}
+    };
+
+    sendPictureAway = () => {
+      const pictureToUpload = this.topupload[0];
+      console.warn('TO UPLOAD:pictureToUpload:', pictureToUpload);
+      AcciMoto.SendPicturesOnServer(
+        pictureToUpload,
+        () => {
+          const queue = Object.assign(this.topupload, this.state.queue);
+          const newQueue = queue.filter(item => {
+            item.file !== pictureToUpload.file;
+          });
+          this.setState(state => ({
+            queue: newQueue,
+          }));
+          savePicturesToStore();
+          // console.warn('UPLOAD OK');
+          // this.backgroundRunner(n + 1);
+        },
+        () => {
+          console.warn('UPLOAD KO');
+          this.backgroundRunner(n + 1);
+        },
+      );
+    };
+
+    // NetInfo.isConnected.fetch().then(isConnected => {
+    //   if (true) {
+    //     debugger;
+    //     !hasPicturesToUpload() &&
+    //       loadPicturesFromStore() &&
+    //       setTimeout(() => {
+    //         debugger;
+    //         this.backgroundRunner();
+    //       }, 10000);
+    //     hasPicturesToUpload() && sendPictureAway();
+    //   } else {
+    //     if (hasPicturesToUpload()) {
+    //       savePicturesToStore();
+    //       setTimeout(() => {
+    //         debugger;
+    //         this.backgroundRunner();
+    //       }, 10000);
+    //     }
+    //   }
+    // });
+
+    sendPictureAway();
   };
 
   /**

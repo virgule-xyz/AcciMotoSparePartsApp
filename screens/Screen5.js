@@ -52,7 +52,7 @@ class Screen5 extends Component {
     const { navigation } = this.props;
     if (this.camera) {
       const options = {
-        base64: false,
+        base64: true,
       };
       const data = await this.camera.takePictureAsync(options);
       addPicture(data);

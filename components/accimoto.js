@@ -65,7 +65,7 @@ class AcciMoto extends Component {
   // api_upload_1.accimoto.com
   // 39Rv*}sBj%Zkx>u
 
-  static FTPPicture = ({ file, name }, onEndUpload, onErrorUpload) => {
+  static SendPicturesOnServer = ({ file, name }, onEndUpload, onErrorUpload) => {
     const options = {
       url: 'http://accimoto.netmize.org/',
       path: file,
