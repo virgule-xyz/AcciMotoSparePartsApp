@@ -78,6 +78,7 @@ class App extends React.Component {
    * lancement du background-runner au montage
    */
   componentDidMount = async () => {
+    const pictures = await this.unpersistPictures();
     // this.backgroundRunner();
   };
 
@@ -97,7 +98,27 @@ class App extends React.Component {
       pictures: [],
       queue: this.topupload,
     }));
+    return this.persistPictures(this.topupload);
     // this.backgroundRunner();
+  };
+
+  /**
+   * Recover pictures from persistent storage
+   *
+   * @returns {Array} toutes les images
+   */
+  unpersistPictures = async () => {
+    const jspictures = await AsyncStorage.getItem('pictures');
+    return JSON.parse(jspictures);
+  };
+
+  /**
+   * Save all pictures to persistent storage
+   *
+   * @param {Array} pictures All pictures array to presist
+   */
+  persistPictures = pictures => {
+    return AsyncStorage.setItem('pictures', JSON.stringify(pictures));
   };
 
   /**
