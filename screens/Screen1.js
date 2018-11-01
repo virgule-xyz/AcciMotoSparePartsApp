@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { ActionButton, Logo } from '@components';
+import { StyleSheet, View, Text } from 'react-native';
+import { PictureContext, ActionButton, Logo } from '@components';
 import { ButtonHeight, langue } from '../UI';
 
 const styles = StyleSheet.create({
@@ -41,32 +41,55 @@ const Screen1 = ({ navigation }) => {
     });
   };
 
+  const onTestConnection = () => {
+    navigation.goBack();
+  };
+
   langue.country = 'fr';
 
   return (
-    <View style={styles.container}>
-      <Logo style={styles.logo} country="fr" />
-      <View style={styles.buttons}>
-        <ActionButton
-          style={{
-            width: '45%',
-          }}
-          label="Français"
-          onPress={() => {
-            onPressFR();
-          }}
-        />
-        <ActionButton
-          style={{
-            width: '45%',
-          }}
-          label="Polski"
-          onPress={() => {
-            onPressPL();
-          }}
-        />
-      </View>
-    </View>
+    <PictureContext.Consumer>
+      {({ connected }) => (
+        <View style={styles.container}>
+          <Logo style={styles.logo} country="fr" />
+          <View style={styles.buttons}>
+            {!connected && (
+              <ActionButton
+                style={{
+                  width: '100%',
+                }}
+                label="⚡︎ Connect"
+                onPress={() => {
+                  onTestConnection();
+                }}
+              />
+            )}
+            {connected && (
+              <>
+                <ActionButton
+                  style={{
+                    width: '45%',
+                  }}
+                  label="Français"
+                  onPress={() => {
+                    onPressFR();
+                  }}
+                />
+                <ActionButton
+                  style={{
+                    width: '45%',
+                  }}
+                  label="Polski"
+                  onPress={() => {
+                    onPressPL();
+                  }}
+                />
+              </>
+            )}
+          </View>
+        </View>
+      )}
+    </PictureContext.Consumer>
   );
 };
 

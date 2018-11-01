@@ -56,9 +56,8 @@ const ButtonEndPictures = ({ navigation, style }) => (
                 {
                   text: langue.sentence('oui'),
                   onPress: () => {
-                    uploadPictures().then(() => {
-                      navigation.navigate('Screen6');
-                    });
+                    uploadPictures();
+                    navigation.navigate('Screen6');
                   },
                 },
               ],

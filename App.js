@@ -1,5 +1,5 @@
 import React from 'react';
-import { AsyncStorage, NetInfo } from 'react-native';
+import { AsyncStorage, NetInfo, Alert } from 'react-native';
 import { PictureContext, AcciMoto } from '@components';
 import Navigator from './Navigator';
 
@@ -30,6 +30,7 @@ class App extends React.Component {
       },
       pictures: [],
       queue: [],
+      connected: false,
       addPicture: this.addPicture,
       removePicture: this.removePicture,
       uploadPictures: this.uploadPictures,
@@ -79,7 +80,12 @@ class App extends React.Component {
    */
   componentDidMount = async () => {
     const pictures = await this.unpersistPictures();
-    // this.backgroundRunner();
+    console.warn(pictures);
+    this.setState(state => ({
+      pictures: [],
+      queue: pictures,
+    }));
+    this.backgroundRunner(pictures);
   };
 
   /**
@@ -98,8 +104,9 @@ class App extends React.Component {
       pictures: [],
       queue: this.topupload,
     }));
-    return this.persistPictures(this.topupload);
-    // this.backgroundRunner();
+    this.persistPictures(this.topupload).then(() => {
+      this.backgroundRunner(this.topupload);
+    });
   };
 
   /**
@@ -124,81 +131,66 @@ class App extends React.Component {
   /**
    * la tâche de fond pour charger les images, avec vérification de l'état du réseau
    *
-   * @param {int} n le numéro de l'image
+   * @param {Array} pictures toutes les images
+   * @param {bool} withAlert afficher l'alerte de non connection ?
    */
-  backgroundRunner = (n = 0) => {
-    storeKey = '@AcciMotoStore:pictures';
-
-    hasPicturesToUpload = () => this.topupload.length > 0;
-
-    savePicturesToStore = async () => {
-      valueAppToStore = value => value;
-      try {
-        const transformedValue = valueAppToStore(this.topupload);
-        await AsyncStorage.setItem(this.storeKey, transformedValue);
-      } catch (error) {}
+  backgroundRunner = (pictures, withAlert = true) => {
+    testConnection = () => {
+      return new Promise((resolve, reject) => {
+        NetInfo.getConnectionInfo().then(connectionInfo => {
+          isConnected = connectionInfo.type !== 'none';
+          const state = Object.assign({}, this.state);
+          state.connected = isConnected;
+          this.setState(state);
+          if (isConnected) resolve();
+          else {
+            setTimeout(() => {
+              this.backgroundRunner(pictures, false);
+            }, 5000);
+            if (withAlert) reject();
+          }
+        });
+      });
+    };
+    putThisPictureOnServer = picture => {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve();
+        }, 1000 + Math.random() * 10000);
+      });
     };
 
-    loadPicturesFromStore = async () => {
-      valueStoreToApp = value => value;
-      try {
-        const value = await AsyncStorage.getItem(this.storeKey);
-        if (value !== null) {
-          const transformedValue = valueStoreToApp(value);
-          this.toupload = [...this.state.queue, ...transformedValue];
-          this.setState(state => ({
-            queue: this.topupload,
-          }));
+    const state = Object.assign({}, this.state);
+    state.queue = pictures;
+    this.setState(state);
+
+    testConnection()
+      .then(() => {
+        if (pictures.length >= 1) {
+          const copyPictures = pictures.concat([]);
+          const toUpload = copyPictures.shift();
+          putThisPictureOnServer(toUpload)
+            .then(() => {
+              const state = Object.assign({}, this.state);
+              state.queue = copyPictures;
+              this.setState(state);
+              console.warn(toUpload.name + ' is uploaded');
+              if (copyPictures.length > 0) {
+                this.persistPictures(copyPictures).then(() => {
+                  this.backgroundRunner(copyPictures);
+                });
+              } else {
+                this.persistPictures([]);
+              }
+            })
+            .catch(() => {
+              Alert.alert("Erreur à l'upload");
+            });
         }
-      } catch (error) {}
-    };
-
-    sendPictureAway = () => {
-      const pictureToUpload = this.topupload[0];
-      console.warn('TO UPLOAD:pictureToUpload:', pictureToUpload);
-      AcciMoto.SendPicturesOnServer(
-        pictureToUpload,
-        () => {
-          const queue = Object.assign(this.topupload, this.state.queue);
-          const newQueue = queue.filter(item => {
-            item.file !== pictureToUpload.file;
-          });
-          this.setState(state => ({
-            queue: newQueue,
-          }));
-          savePicturesToStore();
-          // console.warn('UPLOAD OK');
-          // this.backgroundRunner(n + 1);
-        },
-        () => {
-          console.warn('UPLOAD KO');
-          this.backgroundRunner(n + 1);
-        },
-      );
-    };
-
-    // NetInfo.isConnected.fetch().then(isConnected => {
-    //   if (true) {
-    //     debugger;
-    //     !hasPicturesToUpload() &&
-    //       loadPicturesFromStore() &&
-    //       setTimeout(() => {
-    //         debugger;
-    //         this.backgroundRunner();
-    //       }, 10000);
-    //     hasPicturesToUpload() && sendPictureAway();
-    //   } else {
-    //     if (hasPicturesToUpload()) {
-    //       savePicturesToStore();
-    //       setTimeout(() => {
-    //         debugger;
-    //         this.backgroundRunner();
-    //       }, 10000);
-    //     }
-    //   }
-    // });
-
-    sendPictureAway();
+      })
+      .catch(() => {
+        Alert.alert('Vous devez vous connecter');
+      });
   };
 
   /**
