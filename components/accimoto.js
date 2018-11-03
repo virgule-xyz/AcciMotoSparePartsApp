@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Upload from 'react-native-background-upload';
+import RNFetchBlob from 'rn-fetch-blob';
 
 const API = {
   key: 'XIfjzqGLGEPZ01D7Qm2r6fvA2MznhIHh',
@@ -64,42 +64,6 @@ class AcciMoto extends Component {
   // accimoto.netmize.org
   // api_upload_1.accimoto.com
   // 39Rv*}sBj%Zkx>u
-
-  static SendPicturesOnServer = ({ file, name }, onEndUpload, onErrorUpload) => {
-    const options = {
-      url: 'http://accimoto.netmize.org/',
-      path: file,
-      method: 'POST',
-      field: 'uploaded_media',
-      type: 'multipart',
-      parameters: {
-        name: name,
-      },
-      notification: {
-        enabled: true,
-      },
-    };
-    Upload.getFileInfo(options.path).then(metadata => {
-      Upload.startUpload(options)
-        .then(uploadId => {
-          // addListener('progress', uploadId, data => {
-          //   console.warn(`Progress: ${data.progress}%`);
-          // });
-          addListener('error', uploadId, data => {
-            onErrorUpload();
-          });
-          // addListener('cancelled', uploadId, data => {
-          //   console.warn(`Cancelled!`);
-          // });
-          addListener('completed', uploadId, data => {
-            onEndUpload();
-          });
-        })
-        .catch(err => {
-          onErrorUpload();
-        });
-    });
-  };
 }
 
 export default AcciMoto;
