@@ -2,6 +2,7 @@ import React from 'react';
 import { AsyncStorage, NetInfo, Alert } from 'react-native';
 import { PictureContext, AcciMoto } from '@components';
 import Navigator from './Navigator';
+import RNFetchBlob from 'rn-fetch-blob';
 
 /**
  * L'application principale
@@ -95,7 +96,7 @@ class App extends React.Component {
     const me = this;
     const newToUpload = me.state.pictures.map((item, index) => {
       return {
-        file: 'data:image/jpeg;base64,' + item,
+        file: item,
         name: me.setNameData(me.state.kind, me.state.partnumber, index),
       };
     });
@@ -153,10 +154,32 @@ class App extends React.Component {
       });
     };
     putThisPictureOnServer = picture => {
+      const me = this;
       return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          resolve();
-        }, 1000 + Math.random() * 10000);
+        // accimoto.netmize.org
+        // api_upload_1.accimoto.com
+        // 39Rv*}sBj%Zkx>u
+        debugger;
+        RNFetchBlob.fetch(
+          'POST',
+          AcciMoto.URL.upload,
+          {
+            'Content-Type': 'multipart/form-data',
+          },
+          [{ name: 'name', data: picture.name + '.jpg' }, { name: 'file', data: picture.file }],
+        )
+          /*.uploadProgress((written, total) => {
+            console.warn(`uploaded ${Math.ceil((written / total) * 100)}%`);
+            const state = Object.assign({}, me.state);
+            state.upload = { written, total };
+            me.setState(state);
+          })*/
+          .then(resp => {
+            resolve();
+          })
+          .catch(err => {
+            reject();
+          });
       });
     };
 
@@ -174,7 +197,6 @@ class App extends React.Component {
               const state = Object.assign({}, this.state);
               state.queue = copyPictures;
               this.setState(state);
-              console.warn(toUpload.name + ' is uploaded');
               if (copyPictures.length > 0) {
                 this.persistPictures(copyPictures).then(() => {
                   this.backgroundRunner(copyPictures);
@@ -183,7 +205,7 @@ class App extends React.Component {
                 this.persistPictures([]);
               }
             })
-            .catch(() => {
+            .catch(err => {
               Alert.alert("Erreur à l'upload");
             });
         }

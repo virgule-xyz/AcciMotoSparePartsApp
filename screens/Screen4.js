@@ -79,11 +79,7 @@ const Screen4 = () => {
               <ScrollView style={styles.pictures} contentContainerStyle={styles.picturesWrapper}>
                 <AddPictureButton />
                 {pictures.map((p, index) => (
-                  <PartPicture
-                    key={index + p}
-                    file={p}
-                    onDelete={() => deletePicture(index, p, removePicture)}
-                  />
+                  <PartPicture file={p} onDelete={() => deletePicture(index, p, removePicture)} />
                 ))}
               </ScrollView>
             </View>

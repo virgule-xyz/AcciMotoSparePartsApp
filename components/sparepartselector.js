@@ -22,7 +22,75 @@ import {
   AlertTitle,
 } from '../UI';
 import { RNCamera } from 'react-native-camera';
+import axios from 'axios';
 import AcciMoto from '@components/accimoto';
+
+/**
+ * Get data from server
+ *
+ * @param {string} kind pie or mot
+ * @param {number} partnumber number of the moto or piece
+ * @param {func} onSuccess
+ * @param {func} onError
+ * @param {func} searchOn
+ * @param {func} searchOff
+ * @param {string} country fr or pl
+ * @memberof AcciMoto
+ */
+makeSearch = ({ kind, partnumber, onSuccess, onError, searchOn, searchOff, country }) => {
+  searchOn && searchOn();
+
+  const theurl = `${AcciMoto.API.url}/get?key=${
+    AcciMoto.API.key
+  }&lang=${country}&type=${kind}&num=${partnumber}`;
+
+  axios({
+    url: theurl,
+    method: 'GET',
+  })
+    .then(response => {
+      const { data, status } = response;
+      searchOff && searchOff();
+      if (data.result === 'KO' || status !== 200) {
+        onError && onError(data.text);
+      } else {
+        const { items } = data;
+        const ret =
+          kind === 'pie'
+            ? {
+                kind: kind,
+                partnumber: partnumber,
+                partdatas: {
+                  name: items.piece,
+                  trademark: items.marque,
+                  model: items.modele,
+                  type: items.type,
+                  periode: items.periode,
+                  couleur: items.couleur,
+                  cylindree: items.cylindree,
+                },
+              }
+            : {
+                kind: kind,
+                partnumber: partnumber,
+                partdatas: {
+                  type: items.type,
+                  num: items.num,
+                  marque: items.marque,
+                  modele: items.modele,
+                  immat: items.immat,
+                  kms: items.kms,
+                  couleur: items.couleur,
+                },
+              };
+        onSuccess && onSuccess(ret);
+      }
+    })
+    .catch(error => {
+      searchOff && searchOff();
+      onError && onError(error);
+    });
+};
 
 const styles = StyleSheet.create({
   sparepartswrapper: {
@@ -165,7 +233,7 @@ class SparePartSelector extends Component {
 
   searchSparePart = partnumber => {
     if (partnumber && partnumber.length > 0) {
-      AcciMoto.makeSearch({
+      makeSearch({
         kind: 'pie',
         partnumber: partnumber,
         onSuccess: this.props.onSuccess,

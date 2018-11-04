@@ -42,9 +42,11 @@ const AppFooter = ({ home, nobuttons, noback }) => (
             {!noback && <HomeButton home={home} />}
             {!noback && <ButtonEndPictures />}
             {noback && <View />}
-            <View style={styles.counter}>
-              <Text style={styles.counterText}>{queue.length}</Text>
-            </View>
+            {queue && (
+              <View style={styles.counter}>
+                <Text style={styles.counterText}>{queue.length}</Text>
+              </View>
+            )}
           </View>
         )}
       </>

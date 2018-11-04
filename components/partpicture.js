@@ -40,7 +40,7 @@ export default function PartPicture({ file, onDelete }) {
   };
   return (
     <View style={styles.pictureWrapper}>
-      <Image source={filesource} style={styles.inPicture} />
+      <Image source={{ uri: 'data:image/jpeg;base64,' + filesource }} style={styles.inPicture} />
       <TouchableOpacity onPress={onDelete} style={styles.iconsWrapper}>
         <Image source={trashIcon} style={styles.icons} />
       </TouchableOpacity>

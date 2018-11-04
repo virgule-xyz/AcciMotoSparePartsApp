@@ -122,7 +122,7 @@ class MotoSelector extends Component {
 
   searchMotoId = partnumber => {
     if (partnumber && partnumber.length > 0) {
-      AcciMoto.makeSearch({
+      App.makeSearch({
         kind: 'mot',
         partnumber: partnumber,
         onSuccess: this.props.onSuccess,
