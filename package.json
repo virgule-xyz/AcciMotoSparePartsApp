@@ -30,7 +30,7 @@
     "react": "16.5.0",
     "react-dom": "16.5.0",
     "react-native": "0.57.0",
-    "react-native-camera": "git+https://git@github.com/react-native-community/react-native-camera.git",
+    "react-native-camera": "git+https://git@github.com/react-native-community/react-native-camera",
     "react-navigation": "^2.14.0",
     "rn-fetch-blob": "^0.10.13",
     "styled-components": "^3.4.8"

@@ -73,6 +73,8 @@ class Screen5 extends Component {
                   this.camera = ref;
                 }}
                 style={styles.preview}
+                ratio="1:1"
+                pictureSize="Photo"
                 type={RNCamera.Constants.Type.back}
                 flashMode={RNCamera.Constants.FlashMode.auto}
                 permissionDialogTitle={langue.sentence('permission_camera_title')}
