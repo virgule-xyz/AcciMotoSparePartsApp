@@ -36,11 +36,11 @@ const trashIcon = require('@assets/images/trash.png');
 
 export default function PartPicture({ file, onDelete }) {
   let filesource = {
-    uri: file,
+    uri: 'data:image/jpeg;base64,' + file,
   };
   return (
     <View style={styles.pictureWrapper}>
-      <Image source={{ uri: 'data:image/jpeg;base64,' + filesource }} style={styles.inPicture} />
+      <Image source={filesource} style={styles.inPicture} />
       <TouchableOpacity onPress={onDelete} style={styles.iconsWrapper}>
         <Image source={trashIcon} style={styles.icons} />
       </TouchableOpacity>

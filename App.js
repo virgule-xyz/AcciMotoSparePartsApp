@@ -100,7 +100,11 @@ class App extends React.Component {
         name: me.setNameData(me.state.kind, me.state.partnumber, index),
       };
     });
-    this.topupload = [...me.state.queue, ...newToUpload];
+    if (me.state.queue && me.state.queue.length > 0) {
+      this.topupload = [...me.state.queue, ...newToUpload];
+    } else {
+      this.topupload = [...newToUpload];
+    }
     this.setState(state => ({
       pictures: [],
       queue: this.topupload,
@@ -159,7 +163,6 @@ class App extends React.Component {
         // accimoto.netmize.org
         // api_upload_1.accimoto.com
         // 39Rv*}sBj%Zkx>u
-        debugger;
         RNFetchBlob.fetch(
           'POST',
           AcciMoto.URL.upload,
@@ -170,9 +173,9 @@ class App extends React.Component {
         )
           /*.uploadProgress((written, total) => {
             console.warn(`uploaded ${Math.ceil((written / total) * 100)}%`);
-            const state = Object.assign({}, me.state);
-            state.upload = { written, total };
-            me.setState(state);
+            // const state = Object.assign({}, me.state);
+            // state.upload = { written, total };
+            // me.setState(state);
           })*/
           .then(resp => {
             resolve();

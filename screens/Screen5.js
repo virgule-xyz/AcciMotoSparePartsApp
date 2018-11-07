@@ -48,17 +48,18 @@ class Screen5 extends Component {
     this.camera = null;
   }
 
-  takePicture = async function(addPicture) {
+  async takePicture(addPicture) {
     const { navigation } = this.props;
     if (this.camera) {
       const options = {
+        fixOrientation: true,
         base64: true,
       };
       const data = await this.camera.takePictureAsync(options);
       addPicture(data);
       navigation.navigate('Screen4');
     }
-  };
+  }
 
   render() {
     const { navigation } = this.props;
@@ -73,10 +74,10 @@ class Screen5 extends Component {
                   this.camera = ref;
                 }}
                 style={styles.preview}
-                ratio="1:1"
-                pictureSize="Photo"
                 type={RNCamera.Constants.Type.back}
                 flashMode={RNCamera.Constants.FlashMode.auto}
+                ratio="1:1"
+                aspect="fit"
                 permissionDialogTitle={langue.sentence('permission_camera_title')}
                 permissionDialogMessage={langue.sentence('permission_camera_message')}
               />

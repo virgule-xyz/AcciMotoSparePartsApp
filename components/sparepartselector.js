@@ -21,7 +21,7 @@ import {
   ColorOrange,
   AlertTitle,
 } from '../UI';
-// import { RNCamera } from 'react-native-camera';
+import { RNCamera } from 'react-native-camera';
 import axios from 'axios';
 import AcciMoto from '@components/accimoto';
 
@@ -383,7 +383,7 @@ class SparePartSelector extends Component {
           />
         </TouchableOpacity>
         <View style={[styles.barcodewrapper, this.state.openbarcode ? null : styles.hide]}>
-          {/* <RNCamera
+          <RNCamera
             ref={ref => {
               this.camera = ref;
             }}
@@ -391,7 +391,7 @@ class SparePartSelector extends Component {
             type={RNCamera.Constants.Type.back}
             permissionDialogTitle={langue.sentence('permission_camera_title')}
             permissionDialogMessage={langue.sentence('permission_camera_message')}
-            onBarCodeRead={this.onBarcodeRead}
+            onBarCodeRead={() => this.onBarcodeRead()}
           >
             <View
               style={{
@@ -401,7 +401,7 @@ class SparePartSelector extends Component {
                 borderColor: 'red',
               }}
             />
-          </RNCamera> */}
+          </RNCamera>
           <TouchableOpacity style={styles.cancel} onPress={this.onCancelBarcode}>
             <Text
               style={{
