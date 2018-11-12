@@ -17,7 +17,8 @@ import {
   ColorOrange,
   AlertTitle,
 } from '../UI';
-import AcciMoto from '@components/accimoto';
+//import AcciMoto from '@components/accimoto';
+import App from '../App';
 
 const styles = StyleSheet.create({
   motowrapper: {

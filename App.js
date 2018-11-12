@@ -3,6 +3,7 @@ import { AsyncStorage, NetInfo, Alert } from 'react-native';
 import { PictureContext, AcciMoto } from '@components';
 import Navigator from './Navigator';
 import RNFetchBlob from 'rn-fetch-blob';
+import axios from 'axios';
 
 /**
  * L'application principale
@@ -143,6 +144,7 @@ class App extends React.Component {
     testConnection = () => {
       return new Promise((resolve, reject) => {
         NetInfo.getConnectionInfo().then(connectionInfo => {
+          console.warn('connectionInfo', connectionInfo);
           isConnected = connectionInfo.type !== 'none';
           const state = Object.assign({}, this.state);
           state.connected = isConnected;
@@ -215,6 +217,76 @@ class App extends React.Component {
       })
       .catch(() => {
         Alert.alert('Vous devez vous connecter');
+      });
+  };
+
+  /**
+   * Get data from server
+   *
+   * @param {string} kind pie or mot
+   * @param {number} partnumber number of the moto or piece
+   * @param {func} onSuccess
+   * @param {func} onError
+   * @param {func} searchOn
+   * @param {func} searchOff
+   * @param {string} country fr or pl
+   * @memberof AcciMoto
+   */
+  static makeSearch = ({ kind, partnumber, onSuccess, onError, searchOn, searchOff, country }) => {
+    searchOn && searchOn();
+
+    const theurl = `${AcciMoto.API.url}/get?key=${
+      AcciMoto.API.key
+    }&lang=${country}&type=${kind}&num=${partnumber}`;
+    debugger;
+    console.warn('the url', theurl);
+
+    axios({
+      url: theurl,
+      method: 'GET',
+    })
+      .then(response => {
+        const { data, status } = response;
+        console.warn('data, status', data, status);
+        searchOff && searchOff();
+        if (data.result === 'KO' || status !== 200) {
+          onError && onError(data.text);
+        } else {
+          const { items } = data;
+          const ret =
+            kind === 'pie'
+              ? {
+                  kind: kind,
+                  partnumber: partnumber,
+                  partdatas: {
+                    name: items.piece,
+                    trademark: items.marque,
+                    model: items.modele,
+                    type: items.type,
+                    periode: items.periode,
+                    couleur: items.couleur,
+                    cylindree: items.cylindree,
+                  },
+                }
+              : {
+                  kind: kind,
+                  partnumber: partnumber,
+                  partdatas: {
+                    type: items.type,
+                    num: items.num,
+                    marque: items.marque,
+                    modele: items.modele,
+                    immat: items.immat,
+                    kms: items.kms,
+                    couleur: items.couleur,
+                  },
+                };
+          onSuccess && onSuccess(ret);
+        }
+      })
+      .catch(error => {
+        searchOff && searchOff();
+        onError && onError(error);
       });
   };
 
