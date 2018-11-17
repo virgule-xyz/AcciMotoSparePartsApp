@@ -1,18 +1,93 @@
 # accimoto-pieces-manager
 
-echo "# Test" >> README.md
-git init
-git add README.md
-git commit -m "first commit"
-git remote add origin https://github.com/onzedix/AcciMotoSparePartsApp.git
-git push -u origin master
+## Getting Started
 
-# API
+The project is based on bee2link ReactNativeInit.
 
-https://www.accimoto.com/api/doc/stock.php
-Key : XIfjzqGLGEPZ01D7Qm2r6fvA2MznhIHh
+### Prerequisites
 
-# Pièces
+NPM, Yarn, XCode and Android Studio should be installed.
+
+### Installing
+
+A step by step series of examples that tell you how to get a development env running
+
+Say what the step will be
+
+```
+Give the example
+```
+
+And repeat
+
+```
+until finished
+```
+
+End with an example of getting some data out of the system or using it for a little demo
+
+## Coding, Running the tests
+
+Coding is done in ReactNative and use this yarn commands :
+
+Give an example
+```
+```
+
+Explain how to run the automated tests for this system
+
+### Break down into end to end tests
+
+Explain what these tests test and why
+
+```
+Give an example
+```
+
+### And coding style tests
+
+Explain what these tests test and why
+
+```
+Give an example
+```
+
+## Deployment
+
+Add additional notes about how to deploy this on a live system
+
+## Built With
+
+- [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
+- [Maven](https://maven.apache.org/) - Dependency Management
+- [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+
+## Contributing
+
+Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+
+## Versioning
+
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags).
+
+## Authors
+- **Billie Thompson** - _Initial work_ - [PurpleBooth](https://github.com/PurpleBooth)
+
+See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
+## Acknowledgments
+
+- Hat tip to anyone whose code was used
+- Inspiration
+- etc
+
+## Accimoto
+
+# pièces auto
 
 32209, 32710, 32708, 32699
 

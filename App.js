@@ -141,15 +141,13 @@ class App extends React.Component {
    * @param {bool} withAlert afficher l'alerte de non connection ?
    */
   backgroundRunner = (pictures, withAlert = true) => {
-    testConnection = () => {
+    const testConnection = () => {
       return new Promise((resolve, reject) => {
         NetInfo.getConnectionInfo().then(connectionInfo => {
-          console.warn('connectionInfo', connectionInfo);
-          isConnected = connectionInfo.type !== 'none';
           const state = Object.assign({}, this.state);
-          state.connected = isConnected;
+          state.connected = connectionInfo.type !== 'none';
           this.setState(state);
-          if (isConnected) resolve();
+          if (state.connected) resolve();
           else {
             setTimeout(() => {
               this.backgroundRunner(pictures, false);
@@ -159,8 +157,8 @@ class App extends React.Component {
         });
       });
     };
-    putThisPictureOnServer = picture => {
-      const me = this;
+
+    const putThisPictureOnServer = picture => {
       return new Promise((resolve, reject) => {
         // accimoto.netmize.org
         // api_upload_1.accimoto.com
@@ -173,16 +171,10 @@ class App extends React.Component {
           },
           [{ name: 'name', data: picture.name + '.jpg' }, { name: 'file', data: picture.file }],
         )
-          /*.uploadProgress((written, total) => {
-            console.warn(`uploaded ${Math.ceil((written / total) * 100)}%`);
-            // const state = Object.assign({}, me.state);
-            // state.upload = { written, total };
-            // me.setState(state);
-          })*/
-          .then(resp => {
+          .then(() => {
             resolve();
           })
-          .catch(err => {
+          .catch(() => {
             reject();
           });
       });
@@ -194,14 +186,14 @@ class App extends React.Component {
 
     testConnection()
       .then(() => {
-        if (pictures.length >= 1) {
+        if (pictures && pictures.length >= 1) {
           const copyPictures = pictures.concat([]);
           const toUpload = copyPictures.shift();
           putThisPictureOnServer(toUpload)
             .then(() => {
-              const state = Object.assign({}, this.state);
-              state.queue = copyPictures;
-              this.setState(state);
+              const state2 = Object.assign({}, this.state);
+              state2.queue = copyPictures;
+              this.setState(state2);
               if (copyPictures.length > 0) {
                 this.persistPictures(copyPictures).then(() => {
                   this.backgroundRunner(copyPictures);
@@ -210,13 +202,13 @@ class App extends React.Component {
                 this.persistPictures([]);
               }
             })
-            .catch(err => {
+            .catch(() => {
               Alert.alert("Erreur à l'upload");
             });
         }
       })
-      .catch(() => {
-        Alert.alert('Vous devez vous connecter');
+      .catch(err => {
+        Alert.alert('Vous devez vous connecter:' + err);
       });
   };
 
