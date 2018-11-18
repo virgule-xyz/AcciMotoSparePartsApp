@@ -195,6 +195,7 @@ class SparePartSelector extends Component {
 
   onPressBarcode = () => {
     Keyboard.dismiss();
+    this.canReadBarCode = true;
     this.setState({
       searching: false,
       openbarcode: true,
@@ -209,15 +210,19 @@ class SparePartSelector extends Component {
       found: false,
       openbarcode: false,
     });
+    this.canReadBarCode = false;
   };
 
   onBarcodeRead = event => {
-    debugger;
-    if (event && event.data) {
-      this.setState({
-        openbarcode: false,
-      });
-      this.searchSparePart(event.data);
+    if (this.canReadBarCode) {
+      this.canReadBarCode = false;
+      if (event && event.data) {
+        this.setState({
+          openbarcode: false,
+        });
+        this.searchSparePart(event.data);
+      }
+    } else {
     }
   };
 
@@ -319,7 +324,8 @@ class SparePartSelector extends Component {
             type={RNCamera.Constants.Type.back}
             permissionDialogTitle={langue.sentence('permission_camera_title')}
             permissionDialogMessage={langue.sentence('permission_camera_message')}
-            onBarCodeRead={() => this.onBarcodeRead()}
+            onBarCodeRead={event => this.onBarcodeRead(event)}
+            onXXXGoogleVisionBarcodesDetected={event => this.onBarcodeRead(event)}
           >
             <View
               style={{

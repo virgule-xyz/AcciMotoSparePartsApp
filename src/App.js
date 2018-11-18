@@ -15,8 +15,6 @@ class App extends React.Component {
     const theurl = `${AcciMoto.API.url}/get?key=${
       AcciMoto.API.key
     }&lang=${country}&type=${kind}&num=${partnumber}`;
-    // debugger;
-    // console.warn('the url', theurl);
 
     axios({
       url: theurl,
@@ -24,7 +22,6 @@ class App extends React.Component {
     })
       .then(response => {
         const { data, status } = response;
-        // console.warn('data, status', data, status);
         if (searchOff) searchOff();
         if (data.result === 'KO' || status !== 200) {
           if (onError) onError(data.text);

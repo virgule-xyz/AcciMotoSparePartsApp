@@ -18,7 +18,7 @@
     "setup": "yarn install; react-native link",
     "clean": "jest --clearCache; watchman watch-del-all && yarn --reset-cache; rm -rf .cache/* cache/* coverage/*",
     "cleanall": "yarn clean; rm -rf node_modules",
-    "pretty": "eslint components --fix; prettier --write \"components/**/*.js\"; eslint screens --fix; prettier --write \"screens/**/*.js\"",
+    "pretty": "eslint components --fix; prettier --write \"src/**/*.js\"",
     "storybook": "open 'http://localhost:7007' && storybook start"
   },
   "dependencies": {
@@ -28,7 +28,7 @@
     "global": "^4.3.2",
     "react": "16.6.0-alpha.8af6728",
     "react-native": "0.57.4",
-    "react-native-camera": "git+https://git@github.com/react-native-community/react-native-camera#v1.2.0-7",
+    "react-native-camera": "git+https://git@github.com/react-native-community/react-native-camera",
     "react-native-keyboard-aware-scroll-view": "^0.7.4",
     "react-native-keyboard-spacer": "^0.4.1",
     "react-navigation": "^2.14.0",

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, ActivityIndicator } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import { withBack, AppHeader, AppFooter, Button, PictureContext } from '@components';
 import { ButtonHeight, ButtonMargins, langue } from '../UI';
@@ -70,41 +70,58 @@ class Screen5 extends Component {
     return (
       <PictureContext.Consumer>
         {({ addPicture }) => (
-          <React.StrictMode>
-            <View style={styles.container}>
-              <AppHeader />
-              <View style={styles.cameraWrapper}>
-                <RNCamera
-                  ref={ref => {
-                    this.camera = ref;
-                  }}
-                  style={styles.preview}
-                  type={RNCamera.Constants.Type.back}
-                  flashMode={RNCamera.Constants.FlashMode.auto}
-                  ratio="1:1"
-                  aspect="fit"
-                  permissionDialogTitle={langue.sentence('permission_camera_title')}
-                  permissionDialogMessage={langue.sentence('permission_camera_message')}
-                />
-                <View style={styles.cameraFooter}>
-                  <Button
-                    disabled={takingPicture}
-                    style={styles.valider}
-                    icon="camera"
-                    onPress={() => this.takePicture(addPicture)}
-                  />
-                  <Button
-                    disabled={takingPicture}
-                    style={styles.annuler}
-                    type="cancel"
-                    label={langue.sentence('annuler')}
-                    onPress={() => navigation.navigate('Screen4')}
-                  />
-                </View>
-              </View>
-              <AppFooter nobuttons />
+          <View style={styles.container}>
+            <AppHeader />
+            <View
+              style={{
+                backgroundColor: '#333',
+                opacity: 0.7,
+                zIndex: 1,
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                display: takingPicture ? 'flex' : 'none',
+              }}
+            >
+              <ActivityIndicator size="large" color="#fff" />
             </View>
-          </React.StrictMode>
+            <View style={styles.cameraWrapper}>
+              <RNCamera
+                ref={ref => {
+                  this.camera = ref;
+                }}
+                style={styles.preview}
+                type={RNCamera.Constants.Type.back}
+                flashMode={RNCamera.Constants.FlashMode.auto}
+                ratio="1:1"
+                aspect="fit"
+                disabled={takingPicture}
+                permissionDialogTitle={langue.sentence('permission_camera_title')}
+                permissionDialogMessage={langue.sentence('permission_camera_message')}
+              />
+              <View style={styles.cameraFooter}>
+                <Button
+                  disabled={takingPicture}
+                  style={styles.valider}
+                  icon="camera"
+                  onPress={() => this.takePicture(addPicture)}
+                />
+                <Button
+                  disabled={takingPicture}
+                  style={styles.annuler}
+                  type="cancel"
+                  label={langue.sentence('annuler')}
+                  onPress={() => navigation.navigate('Screen4')}
+                />
+              </View>
+            </View>
+            <AppFooter nobuttons />
+          </View>
         )}
       </PictureContext.Consumer>
     );

@@ -9492,12 +9492,12 @@ react-native-animatable@^1.2.4:
   dependencies:
     prop-types "^15.5.10"
 
-"react-native-camera@git+https://git@github.com/react-native-community/react-native-camera#v1.2.0-7":
-  version "1.1.5"
-  resolved "git+https://git@github.com/react-native-community/react-native-camera#851e6dc57b2bbf5839ed50eabe5e3f557ce20b76"
+"react-native-camera@git+https://git@github.com/react-native-community/react-native-camera":
+  version "1.4.1"
+  resolved "git+https://git@github.com/react-native-community/react-native-camera#2baee2bb67459c0184eb83043eeb2d3822a6b31f"
   dependencies:
-    lodash "^4.17.4"
-    prop-types "^15.5.10"
+    lodash "^4.17.10"
+    prop-types "^15.6.2"
 
 react-native-color-picker@^0.4.0:
   version "0.4.0"
