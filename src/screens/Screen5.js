@@ -54,7 +54,11 @@ class Screen5 extends Component {
     if (this.camera) {
       const options = {
         fixOrientation: true,
+        pauseAfterCapture: true,
+        doNotSave: true,
         base64: true,
+        quality: 0.8,
+        width: 800,
       };
       this.setState({ takingPicture: true });
       const data = await this.camera.takePictureAsync(options);
@@ -100,6 +104,7 @@ class Screen5 extends Component {
                 flashMode={RNCamera.Constants.FlashMode.auto}
                 ratio="1:1"
                 aspect="fit"
+                defaultVideoQuality={RNCamera.Constants.VideoQuality['480p']}
                 disabled={takingPicture}
                 permissionDialogTitle={langue.sentence('permission_camera_title')}
                 permissionDialogMessage={langue.sentence('permission_camera_message')}
