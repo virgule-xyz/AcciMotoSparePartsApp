@@ -110,7 +110,6 @@ class MotoSelector extends Component {
     this.setState({
       searching: true,
       found: false,
-      partnumber: '',
     });
   };
 
@@ -118,7 +117,6 @@ class MotoSelector extends Component {
     this.setState({
       searching: false,
       found: false,
-      partnumber: '',
     });
   };
 
@@ -145,17 +143,20 @@ class MotoSelector extends Component {
     this.setState({
       searching: true,
       found: false,
-      partnumber: event.nativeEvent.text,
+      partnumber,
     });
     this.searchMotoId(partnumber);
   };
 
   render() {
-    const { openbarcode, found, searching } = this.state;
+    const { found, searching } = this.state;
     const message = () => {
-      if (found) return langue.sentence('selectionnez_une_moto_6');
-      if (searching) return langue.sentence('selectionnez_une_moto_5');
-      if (openbarcode) return null;
+      if (found) {
+        return langue.sentence('selectionnez_une_moto_6');
+      }
+      if (searching) {
+        return langue.sentence('selectionnez_une_moto_5');
+      }
       return langue.sentence('selectionnez_une_moto_1');
     };
     return (

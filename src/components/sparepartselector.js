@@ -353,11 +353,7 @@ class SparePartSelector extends Component {
 }
 
 SparePartSelector.propTypes = {
-  onSuccess: PropTypes.func,
-};
-
-SparePartSelector.defaultProps = {
-  onSuccess: null,
+  onSuccess: PropTypes.func.isRequired,
 };
 
 export default withNavigation(SparePartSelector);

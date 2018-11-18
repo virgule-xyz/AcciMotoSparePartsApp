@@ -16,45 +16,50 @@ class App extends React.Component {
       AcciMoto.API.key
     }&lang=${country}&type=${kind}&num=${partnumber}`;
 
+    console.warn(theurl);
+
     axios({
       url: theurl,
       method: 'GET',
     })
       .then(response => {
+        console.warn(response);
         const { data, status } = response;
         if (searchOff) searchOff();
         if (data.result === 'KO' || status !== 200) {
           if (onError) onError(data.text);
         } else {
           const { items } = data;
-          const ret =
-            kind === 'pie'
-              ? {
-                  kind,
-                  partnumber,
-                  partdatas: {
-                    name: items.piece,
-                    trademark: items.marque,
-                    model: items.modele,
-                    type: items.type,
-                    periode: items.periode,
-                    couleur: items.couleur,
-                    cylindree: items.cylindree,
-                  },
-                }
-              : {
-                  kind,
-                  partnumber,
-                  partdatas: {
-                    type: items.type,
-                    num: items.num,
-                    marque: items.marque,
-                    modele: items.modele,
-                    immat: items.immat,
-                    kms: items.kms,
-                    couleur: items.couleur,
-                  },
-                };
+          let ret = null;
+          if (kind === 'pie')
+            ret = {
+              kind,
+              partnumber,
+              partdatas: {
+                name: items.piece,
+                trademark: items.marque,
+                model: items.modele,
+                type: items.type,
+                periode: items.periode,
+                couleur: items.couleur,
+                cylindree: items.cylindree,
+              },
+            };
+          if (kind === 'mot')
+            ret = {
+              kind,
+              partnumber,
+              partdatas: {
+                type: items.type,
+                num: items.num,
+                marque: items.marque,
+                modele: items.modele,
+                immat: items.immat,
+                kms: items.kms,
+                couleur: items.couleur,
+              },
+            };
+          console.warn(ret);
           if (onSuccess) onSuccess(ret);
         }
       })
@@ -110,11 +115,13 @@ class App extends React.Component {
    * change de type de pièce (pie - pièce ou mot - moto) et de numéro
    */
   selectNewItem = ({ kind, partnumber, partdatas }) => {
-    if (kind === 'pie') {
-      this.setState({ kind, partnumber, partdatas });
-    } else {
-      this.setState({ kind, partnumber, partdatas });
-    }
+    const state = Object.assign({}, this.state);
+    state.kind = kind;
+    state.partnumber = partnumber;
+    if (kind === 'pie') state.partdatas = partdatas;
+    if (kind === 'mot') state.motdatas = partdatas;
+    console.warn(state);
+    this.setState(state);
   };
 
   /**
