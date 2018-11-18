@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
   StyleSheet,
   TouchableOpacity,
@@ -11,6 +12,7 @@ import {
   View,
 } from 'react-native';
 import { withNavigation } from 'react-navigation';
+import { RNCamera } from 'react-native-camera';
 import {
   langue,
   ButtonHeight,
@@ -21,7 +23,6 @@ import {
   ColorOrange,
   AlertTitle,
 } from '../UI';
-import { RNCamera } from 'react-native-camera';
 import App from '../App';
 
 const styles = StyleSheet.create({
@@ -111,14 +112,17 @@ const styles = StyleSheet.create({
   },
 });
 
+const barcodeimg = require('../assets/images/barcode.png');
+const cameraimg = require('../assets/images/camera.png');
+
 class SparePartSelector extends Component {
   constructor(props) {
     super(props);
     this.state = {
       searching: false,
       found: false,
-      partnumber: null,
       openbarcode: false,
+      partnumber: null,
     };
   }
 
@@ -126,8 +130,8 @@ class SparePartSelector extends Component {
     this.setState({
       searching: false,
       found: false,
-      partnumber: null,
       openbarcode: false,
+      partnumber: null,
     });
 
     Alert.alert(
@@ -149,7 +153,6 @@ class SparePartSelector extends Component {
     this.setState({
       searching: true,
       found: false,
-      partnumber: '',
       openbarcode: false,
     });
   };
@@ -158,17 +161,17 @@ class SparePartSelector extends Component {
     this.setState({
       searching: false,
       found: false,
-      partnumber: '',
       openbarcode: false,
     });
   };
 
   searchSparePart = partnumber => {
+    const { onSuccess } = this.props;
     if (partnumber && partnumber.length > 0) {
       App.makeSearch({
         kind: 'pie',
-        partnumber: partnumber,
-        onSuccess: this.props.onSuccess,
+        partnumber,
+        onSuccess,
         onError: this.onError,
         searchOn: this.setSearchModeOn,
         searchOff: this.setSearchModeOff,
@@ -180,18 +183,18 @@ class SparePartSelector extends Component {
   };
 
   onSubmitEditing = event => {
-    Keyboard.dismiss;
+    Keyboard.dismiss();
     const partnumber = event.nativeEvent.text;
     this.setState({
       searching: true,
       found: false,
-      partnumber: event.nativeEvent.text,
+      partnumber,
     });
     this.searchSparePart(partnumber);
   };
 
   onPressBarcode = () => {
-    Keyboard.dismiss;
+    Keyboard.dismiss();
     this.setState({
       searching: false,
       openbarcode: true,
@@ -200,7 +203,7 @@ class SparePartSelector extends Component {
   };
 
   onCancelBarcode = () => {
-    Keyboard.dismiss;
+    Keyboard.dismiss();
     this.setState({
       searching: false,
       found: false,
@@ -209,76 +212,69 @@ class SparePartSelector extends Component {
   };
 
   onBarcodeRead = event => {
+    debugger;
     if (event && event.data) {
       this.setState({
         openbarcode: false,
       });
       this.searchSparePart(event.data);
     }
-    return;
   };
 
   render() {
+    const { found, searching, openbarcode } = this.state;
+    const message = () => {
+      if (found) {
+        return langue.sentence('selectionnez_une_piece_6');
+      }
+      if (searching) {
+        return langue.sentence('selectionnez_une_piece_5');
+      }
+      if (openbarcode) {
+        return null;
+      }
+      return langue.sentence('selectionnez_une_piece_1');
+    };
+
     return (
-      <View
-        style={[styles.sparepartswrapper, this.state.found ? styles.sparepartswrapper_found : null]}
-      >
+      <View style={[styles.sparepartswrapper, found ? styles.sparepartswrapper_found : null]}>
         <ActivityIndicator
           style={[
             {
               position: 'absolute',
               top: '50%',
             },
-            this.state.searching ? styles.show : styles.hide,
+            searching ? styles.show : styles.hide,
           ]}
-          animating={this.state.searching}
+          animating={searching}
           size="large"
           color={ColorOrange}
         />
-        <Text style={styles.title}>
-          {this.state.found
-            ? langue.sentence('selectionnez_une_piece_6')
-            : this.state.searching
-              ? langue.sentence('selectionnez_une_piece_5')
-              : this.state.openbarcode
-                ? null
-                : langue.sentence('selectionnez_une_piece_1')}
-        </Text>
+        <Text style={styles.title}>{message}</Text>
         <TextInput
-          editable={!this.state.searching}
-          style={[
-            styles.input,
-            this.state.searching | this.state.found | this.state.openbarcode ? styles.hide : null,
-          ]}
+          editable={!searching}
+          style={[styles.input, searching || found || openbarcode ? styles.hide : null]}
           placeholder={langue.sentence('selectionnez_une_piece_2')}
-          allowFontScaling={true}
+          allowFontScaling
           autoFocus={false}
-          clearTextOnFocus={true}
+          clearTextOnFocus
           keyboardType="number-pad"
-          enablesReturnKeyAutomatically={true}
+          enablesReturnKeyAutomatically
           returnKeyType="done"
           underlineColorAndroid={ColorOrange}
           onSubmitEditing={e => this.onSubmitEditing(e)}
         />
-        <Text
-          style={[
-            styles.label_or,
-            this.state.searching | this.state.found | this.state.openbarcode ? styles.hide : null,
-          ]}
-        >
+        <Text style={[styles.label_or, searching || found || openbarcode ? styles.hide : null]}>
           {langue.sentence('selectionnez_une_piece_3')}
         </Text>
 
         <TouchableOpacity
-          disabled={this.state.searching}
+          disabled={searching}
           onPress={this.onPressBarcode}
-          style={[
-            styles.codebar,
-            this.state.searching | this.state.found | this.state.openbarcode ? styles.hide : null,
-          ]}
+          style={[styles.codebar, searching || found || openbarcode ? styles.hide : null]}
         >
           <Image
-            source={require('../assets/images/barcode.png')}
+            source={barcodeimg}
             style={{
               width: 40,
               height: 40,
@@ -294,9 +290,9 @@ class SparePartSelector extends Component {
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          disabled={!this.state.found}
+          disabled={!found}
           onPress={this.onPressNextStep}
-          style={[styles.nextstep, this.state.found ? null : styles.hide]}
+          style={[styles.nextstep, found ? null : styles.hide]}
         >
           <Text
             style={{
@@ -307,14 +303,14 @@ class SparePartSelector extends Component {
             {langue.sentence('next_step')}
           </Text>
           <Image
-            source={require('../assets/images/camera.png')}
+            source={cameraimg}
             style={{
               width: 40,
               height: 40,
             }}
           />
         </TouchableOpacity>
-        <View style={[styles.barcodewrapper, this.state.openbarcode ? null : styles.hide]}>
+        <View style={[styles.barcodewrapper, openbarcode ? null : styles.hide]}>
           <RNCamera
             ref={ref => {
               this.camera = ref;
@@ -349,5 +345,13 @@ class SparePartSelector extends Component {
     );
   }
 }
+
+SparePartSelector.propTypes = {
+  onSuccess: PropTypes.func,
+};
+
+SparePartSelector.defaultProps = {
+  onSuccess: null,
+};
 
 export default withNavigation(SparePartSelector);

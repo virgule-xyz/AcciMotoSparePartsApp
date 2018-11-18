@@ -1,9 +1,7 @@
-import React, { Component } from 'react';
-
-const API = {
-  key: 'XIfjzqGLGEPZ01D7Qm2r6fvA2MznhIHh',
-  url: 'https://www.accimoto.com/api/stock',
-};
+// const API = {
+//   key: 'XIfjzqGLGEPZ01D7Qm2r6fvA2MznhIHh',
+//   url: 'https://www.accimoto.com/api/stock',
+// };
 
 class AcciMoto {
   /**

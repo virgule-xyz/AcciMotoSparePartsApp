@@ -9,6 +9,7 @@ import {
   View,
 } from 'react-native';
 import { withNavigation } from 'react-navigation';
+import PropTypes from 'prop-types';
 import {
   langue,
   ButtonHeight,
@@ -17,7 +18,7 @@ import {
   ColorOrange,
   AlertTitle,
 } from '../UI';
-//import AcciMoto from '@components/accimoto';
+// import AcciMoto from '@components/accimoto';
 import App from '../App';
 
 const styles = StyleSheet.create({
@@ -122,11 +123,12 @@ class MotoSelector extends Component {
   };
 
   searchMotoId = partnumber => {
+    const { onSuccess } = this.props;
     if (partnumber && partnumber.length > 0) {
       App.makeSearch({
         kind: 'mot',
-        partnumber: partnumber,
-        onSuccess: this.props.onSuccess,
+        partnumber,
+        onSuccess,
         onError: this.onError,
         searchOn: this.setSearchModeOn,
         searchOff: this.setSearchModeOff,
@@ -138,7 +140,7 @@ class MotoSelector extends Component {
   };
 
   onSubmitEditing = event => {
-    Keyboard.dismiss;
+    Keyboard.dismiss();
     const partnumber = event.nativeEvent.text;
     this.setState({
       searching: true,
@@ -149,42 +151,39 @@ class MotoSelector extends Component {
   };
 
   render() {
+    const { openbarcode, found, searching } = this.state;
+    const message = () => {
+      if (found) return langue.sentence('selectionnez_une_moto_6');
+      if (searching) return langue.sentence('selectionnez_une_moto_5');
+      if (openbarcode) return null;
+      return langue.sentence('selectionnez_une_moto_1');
+    };
     return (
-      <View style={[styles.motowrapper, this.state.found ? styles.motowrapper_found : null]}>
+      <View style={[styles.motowrapper, found ? styles.motowrapper_found : null]}>
         <ActivityIndicator
           style={[
             {
               position: 'absolute',
               top: '50%',
             },
-            this.state.searching ? styles.show : styles.hide,
+            searching ? styles.show : styles.hide,
           ]}
-          animating={this.state.searching}
+          animating={searching}
           size="large"
           color={ColorOrange}
         />
-        <Text
-          style={[styles.label_or, this.state.searching | this.state.found ? styles.hide : null]}
-        >
+        <Text style={[styles.label_or, searching || found ? styles.hide : null]}>
           {langue.sentence('selectionnez_une_moto_3')}
         </Text>
-        <Text style={styles.title}>
-          {this.state.found
-            ? langue.sentence('selectionnez_une_moto_6')
-            : this.state.searching
-              ? langue.sentence('selectionnez_une_moto_5')
-              : this.state.openbarcode
-                ? null
-                : langue.sentence('selectionnez_une_moto_1')}
-        </Text>
+        <Text style={styles.title}>{message}</Text>
         <TextInput
-          editable={!this.state.searching}
-          style={[styles.input, this.state.searching | this.state.found ? styles.hide : null]}
+          editable={!searching}
+          style={[styles.input, searching || found ? styles.hide : null]}
           placeholder={langue.sentence('selectionnez_une_moto_2')}
-          allowFontScaling={true}
+          allowFontScaling
           keyboardType="number-pad"
           autoFocus={false}
-          enablesReturnKeyAutomatically={true}
+          enablesReturnKeyAutomatically
           returnKeyType="done"
           underlineColorAndroid={ColorOrange}
           onSubmitEditing={e => this.onSubmitEditing(e)}
@@ -193,5 +192,9 @@ class MotoSelector extends Component {
     );
   }
 }
+
+MotoSelector.propTypes = {
+  onSuccess: PropTypes.func.isRequired,
+};
 
 export default withNavigation(MotoSelector);

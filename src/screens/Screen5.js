@@ -46,6 +46,7 @@ class Screen5 extends Component {
   constructor(props) {
     super(props);
     this.camera = null;
+    this.state = { takingPicture: false };
   }
 
   async takePicture(addPicture) {
@@ -55,48 +56,55 @@ class Screen5 extends Component {
         fixOrientation: true,
         base64: true,
       };
+      this.setState({ takingPicture: true });
       const data = await this.camera.takePictureAsync(options);
       addPicture(data);
+      this.setState({ takingPicture: false });
       navigation.navigate('Screen4');
     }
   }
 
   render() {
     const { navigation } = this.props;
+    const { takingPicture } = this.state;
     return (
       <PictureContext.Consumer>
-        {({ pictures, addPicture }) => (
-          <View style={styles.container}>
-            <AppHeader />
-            <View style={styles.cameraWrapper}>
-              <RNCamera
-                ref={ref => {
-                  this.camera = ref;
-                }}
-                style={styles.preview}
-                type={RNCamera.Constants.Type.back}
-                flashMode={RNCamera.Constants.FlashMode.auto}
-                ratio="1:1"
-                aspect="fit"
-                permissionDialogTitle={langue.sentence('permission_camera_title')}
-                permissionDialogMessage={langue.sentence('permission_camera_message')}
-              />
-              <View style={styles.cameraFooter}>
-                <Button
-                  style={styles.valider}
-                  icon="camera"
-                  onPress={() => this.takePicture(addPicture)}
+        {({ addPicture }) => (
+          <React.StrictMode>
+            <View style={styles.container}>
+              <AppHeader />
+              <View style={styles.cameraWrapper}>
+                <RNCamera
+                  ref={ref => {
+                    this.camera = ref;
+                  }}
+                  style={styles.preview}
+                  type={RNCamera.Constants.Type.back}
+                  flashMode={RNCamera.Constants.FlashMode.auto}
+                  ratio="1:1"
+                  aspect="fit"
+                  permissionDialogTitle={langue.sentence('permission_camera_title')}
+                  permissionDialogMessage={langue.sentence('permission_camera_message')}
                 />
-                <Button
-                  style={styles.annuler}
-                  type="cancel"
-                  label={langue.sentence('annuler')}
-                  onPress={() => navigation.navigate('Screen4')}
-                />
+                <View style={styles.cameraFooter}>
+                  <Button
+                    disabled={takingPicture}
+                    style={styles.valider}
+                    icon="camera"
+                    onPress={() => this.takePicture(addPicture)}
+                  />
+                  <Button
+                    disabled={takingPicture}
+                    style={styles.annuler}
+                    type="cancel"
+                    label={langue.sentence('annuler')}
+                    onPress={() => navigation.navigate('Screen4')}
+                  />
+                </View>
               </View>
+              <AppFooter nobuttons />
             </View>
-            <AppFooter nobuttons />
-          </View>
+          </React.StrictMode>
         )}
       </PictureContext.Consumer>
     );

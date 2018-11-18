@@ -1,6 +1,6 @@
 import React from 'react';
-import Logo from './logo';
 import { View, StyleSheet } from 'react-native';
+import Logo from './logo';
 
 const styles = StyleSheet.create({
   headerWrapper: {

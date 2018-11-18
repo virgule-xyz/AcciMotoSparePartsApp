@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { withNavigation } from 'react-navigation';
+import PropTypes from 'prop-types';
+
 import ButtonEndPictures from '@components/buttonendpictures';
 import { PictureContext, HomeButton } from '@components';
 import { ButtonHeight, ButtonFontSize } from '../UI';
@@ -53,5 +55,17 @@ const AppFooter = ({ home, nobuttons, noback }) => (
     )}
   </PictureContext.Consumer>
 );
+
+AppFooter.propTypes = {
+  home: PropTypes.bool,
+  nobuttons: PropTypes.bool,
+  noback: PropTypes.bool,
+};
+
+AppFooter.defaultProps = {
+  home: false,
+  nobuttons: false,
+  noback: false,
+};
 
 export default withNavigation(AppFooter);

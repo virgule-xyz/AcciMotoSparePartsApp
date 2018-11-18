@@ -1,11 +1,11 @@
 import { AppRegistry } from 'react-native';
 import { getStorybookUI, configure } from '@storybook/react-native';
-// import './storybook/rn-addons';
-import App from './App';
-import BackgroundTask from './BackgroundTask';
-import { story, version, name as appName } from './package.json';
+import App from './src/App';
+import BackgroundTask from './src/BackgroundTask';
+import { story, version, name as appName } from './package';
 
 console.warn(`** ${appName} version ${version}`);
+
 AppRegistry.registerHeadlessTask('BackgroundTask', BackgroundTask);
 let TheApp = null;
 if (story) {

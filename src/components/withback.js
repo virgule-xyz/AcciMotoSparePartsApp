@@ -3,13 +3,10 @@ import { BackHandler } from 'react-native';
 
 const withBack = OtherComponent =>
   class extends Component {
-    constructor(props) {
-      super(props);
-    }
-
     componentDidMount() {
+      const { navigation } = this.props;
       this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
-        this.props.navigation.goBack();
+        navigation.goBack();
         return true;
       });
     }

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import PropTypes from 'prop-types';
 import { ButtonHeight, ButtonElevation, ButtonRadius, ColorGray } from '../UI';
 
 const styles = StyleSheet.create({
@@ -35,8 +36,8 @@ const styles = StyleSheet.create({
 const trashIcon = require('@assets/images/trash.png');
 
 export default function PartPicture({ file, onDelete }) {
-  let filesource = {
-    uri: 'data:image/jpeg;base64,' + file,
+  const filesource = {
+    uri: `data:image/jpeg;base64,${file}`,
   };
   return (
     <View style={styles.pictureWrapper}>
@@ -47,3 +48,8 @@ export default function PartPicture({ file, onDelete }) {
     </View>
   );
 }
+
+PartPicture.propTypes = {
+  file: PropTypes.string.isRequired,
+  onDelete: PropTypes.func.isRequired,
+};

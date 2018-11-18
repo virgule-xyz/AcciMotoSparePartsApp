@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import PropTypes from 'prop-types';
 import {
   ColorOrange,
   ColorLightGray,
@@ -66,6 +67,19 @@ const ActionButton = ({ type, icon, label, onPress, style }) => {
       {content}
     </TouchableOpacity>
   );
+};
+
+ActionButton.propTypes = {
+  type: PropTypes.string,
+  icon: PropTypes.string,
+  label: PropTypes.string,
+  onPress: PropTypes.func.isRequired,
+};
+
+ActionButton.defaultProps = {
+  type: null,
+  icon: null,
+  label: null,
 };
 
 export default ActionButton;

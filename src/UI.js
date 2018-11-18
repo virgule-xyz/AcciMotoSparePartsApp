@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
 export const ColorOrange = '#ff9800';
 export const ColorBlack = '#333';
 export const ColorGray = '#878787';
@@ -106,7 +105,7 @@ export const UIStrings = {
 class Language {
   constructor() {
     this.countryCode = 'fr';
-    this.table = UIStrings['fr'];
+    this.table = UIStrings.fr;
   }
 
   set country(code) {

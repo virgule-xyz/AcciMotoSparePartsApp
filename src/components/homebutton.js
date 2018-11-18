@@ -1,6 +1,8 @@
 import React from 'react';
 import { Text, Alert, TouchableOpacity, StyleSheet } from 'react-native';
 import { withNavigation } from 'react-navigation';
+import PropTypes from 'prop-types';
+
 import {
   ButtonHeight,
   ButtonFontSize,
@@ -106,6 +108,14 @@ const HomeButton = ({ navigation, home, style }) => {
       <Text style={styles.backLanguages}>{langue.sentence('accueil').toLowerCase()}</Text>
     </TouchableOpacity>
   );
+};
+
+HomeButton.propTypes = {
+  home: PropTypes.bool,
+};
+
+HomeButton.defaultProps = {
+  home: false,
 };
 
 export default withNavigation(HomeButton);

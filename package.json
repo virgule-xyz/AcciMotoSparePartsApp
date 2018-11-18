@@ -1,7 +1,7 @@
 {
   "name": "AcciMotoSparePartsApp",
   "bundleID": "fr.accimoto.app",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "private": true,
   "story": false,
   "scripts": {
@@ -18,7 +18,7 @@
     "setup": "yarn install; react-native link",
     "clean": "jest --clearCache; watchman watch-del-all && yarn --reset-cache; rm -rf .cache/* cache/* coverage/*",
     "cleanall": "yarn clean; rm -rf node_modules",
-    "pretty": "eslint src --fix; prettier --write \"src/**/*.js\"",
+    "pretty": "eslint components --fix; prettier --write \"components/**/*.js\"; eslint screens --fix; prettier --write \"screens/**/*.js\"",
     "storybook": "open 'http://localhost:7007' && storybook start"
   },
   "dependencies": {
