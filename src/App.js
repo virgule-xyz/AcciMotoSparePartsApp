@@ -16,57 +16,62 @@ class App extends React.Component {
       AcciMoto.API.key
     }&lang=${country}&type=${kind}&num=${partnumber}`;
 
-    console.warn(theurl);
-
-    axios({
-      url: theurl,
-      method: 'GET',
-    })
-      .then(response => {
-        console.warn(response);
-        const { data, status } = response;
-        if (searchOff) searchOff();
-        if (data.result === 'KO' || status !== 200) {
-          if (onError) onError(data.text);
-        } else {
-          const { items } = data;
-          let ret = null;
-          if (kind === 'pie')
-            ret = {
-              kind,
-              partnumber,
-              partdatas: {
-                name: items.piece,
-                trademark: items.marque,
-                model: items.modele,
-                type: items.type,
-                periode: items.periode,
-                couleur: items.couleur,
-                cylindree: items.cylindree,
-              },
-            };
-          if (kind === 'mot')
-            ret = {
-              kind,
-              partnumber,
-              partdatas: {
-                type: items.type,
-                num: items.num,
-                marque: items.marque,
-                modele: items.modele,
-                immat: items.immat,
-                kms: items.kms,
-                couleur: items.couleur,
-              },
-            };
-          console.warn(ret);
-          if (onSuccess) onSuccess(ret);
-        }
+    try {
+      axios({
+        url: theurl,
+        method: 'GET',
+        timeout: 5000,
+        withCredentials: true,
+        maxContentLength: 4096,
       })
-      .catch(error => {
-        if (searchOff) searchOff();
-        if (onError) onError(error);
-      });
+        .then(response => {
+          const { data, status } = response;
+          if (searchOff) searchOff();
+          if (data.result === 'KO' || status !== 200) {
+            if (onError) onError(data.text);
+          } else {
+            const { items } = data;
+            let ret = null;
+            if (kind === 'pie')
+              ret = {
+                kind,
+                partnumber,
+                partdatas: {
+                  name: items.piece,
+                  trademark: items.marque,
+                  model: items.modele,
+                  type: items.type,
+                  periode: items.periode,
+                  couleur: items.couleur,
+                  cylindree: items.cylindree,
+                },
+              };
+            if (kind === 'mot')
+              ret = {
+                kind,
+                partnumber,
+                partdatas: {
+                  type: items.type,
+                  num: items.num,
+                  marque: items.marque,
+                  modele: items.modele,
+                  immat: items.immat,
+                  kms: items.kms,
+                  couleur: items.couleur,
+                },
+              };
+            console.warn(ret);
+            if (onSuccess) onSuccess(ret);
+          }
+        })
+        .catch(error => {
+          console.warn(error);
+          if (searchOff) searchOff();
+          if (onError) onError(error);
+        });
+    } catch (e) {
+      console.warn(e);
+    }
   };
 
   toupload = [];
@@ -207,7 +212,7 @@ class App extends React.Component {
         // api_upload_1.accimoto.com
         // 39Rv*}sBj%Zkx>u
         RNFetchBlob.fetch(
-          'POST',
+          'PUT',
           AcciMoto.URL.upload,
           {
             'Content-Type': 'multipart/form-data',

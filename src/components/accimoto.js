@@ -8,7 +8,9 @@ class AcciMoto {
    * Distants URL : upload de fichier
    */
   static URL = {
-    upload: 'https://client1.onzedix.fr/upload.php',
+    key: 'XIfjzqGLGEPZ01D7Qm2r6fvA2MznhIHh',
+    upload: 'http://api.accimoto.com/upload',
+    url: 'http://api.accimoto.com/stock',
   };
 
   /**
@@ -16,7 +18,7 @@ class AcciMoto {
    */
   static API = {
     key: 'XIfjzqGLGEPZ01D7Qm2r6fvA2MznhIHh',
-    url: 'https://www.accimoto.com/api/stock',
+    url: 'http://api.accimoto.com/stock',
   };
 }
 

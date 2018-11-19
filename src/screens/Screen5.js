@@ -80,7 +80,7 @@ class Screen5 extends Component {
               style={{
                 backgroundColor: '#333',
                 opacity: 0.7,
-                zIndex: 1,
+                zIndex: takingPicture === true ? 1 : -1,
                 flex: 1,
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -89,7 +89,7 @@ class Screen5 extends Component {
                 left: 0,
                 width: '100%',
                 height: '100%',
-                display: takingPicture ? 'flex' : 'none',
+                display: takingPicture === true ? 'flex' : 'none',
               }}
             >
               <ActivityIndicator size="large" color="#fff" />
