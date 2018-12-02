@@ -9,7 +9,7 @@ class AcciMoto {
    */
   static URL = {
     key: 'XIfjzqGLGEPZ01D7Qm2r6fvA2MznhIHh',
-    upload: 'http://api.accimoto.com/upload',
+    upload: 'http://api.accimoto.com/upload/put',
     url: 'http://api.accimoto.com/stock',
   };
 

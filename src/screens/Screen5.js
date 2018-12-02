@@ -78,8 +78,7 @@ class Screen5 extends Component {
             <AppHeader />
             <View
               style={{
-                backgroundColor: '#333',
-                opacity: 0.7,
+                backgroundColor: '#fff',
                 zIndex: takingPicture === true ? 1 : -1,
                 flex: 1,
                 justifyContent: 'center',

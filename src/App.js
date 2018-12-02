@@ -208,21 +208,25 @@ class App extends React.Component {
   backgroundRunner = pictures => {
     const putThisPictureOnServer = picture =>
       new Promise((resolve, reject) => {
-        // accimoto.netmize.org
-        // api_upload_1.accimoto.com
-        // 39Rv*}sBj%Zkx>u
         RNFetchBlob.fetch(
           'PUT',
           AcciMoto.URL.upload,
           {
             'Content-Type': 'multipart/form-data',
           },
-          [{ name: 'name', data: `${picture.name}.jpg` }, { name: 'file', data: picture.file }],
+          [
+            { name: 'key', data: AcciMoto.API.key },
+            { name: 'type', data: picture.name.substr(0, 3) },
+            { name: 'name', data: `${picture.name}.jpg` },
+            { name: 'file', data: picture.file },
+          ],
         )
-          .then(() => {
+          .then(d => {
+            console.warn('THEN', d);
             resolve();
           })
-          .catch(() => {
+          .catch(e => {
+            console.warn('CATCH', e);
             reject();
           });
       });
