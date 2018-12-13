@@ -208,8 +208,9 @@ class App extends React.Component {
   backgroundRunner = pictures => {
     const putThisPictureOnServer = picture =>
       new Promise((resolve, reject) => {
+        debugger;
         RNFetchBlob.fetch(
-          'PUT',
+          'POST',
           AcciMoto.URL.upload,
           {
             'Content-Type': 'multipart/form-data',
