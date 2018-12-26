@@ -35,12 +35,11 @@ local.properties
 node_modules/
 npm-debug.log
 yarn-error.log
-yarn.lock
 
 # BUCK
 buck-out/
 \.buckd/
-
+*.keystore
 
 # fastlane
 #
@@ -55,7 +54,3 @@ buck-out/
 
 # Bundle artifact
 *.jsbundle
-
-.cache/
-cache/
-coverage/

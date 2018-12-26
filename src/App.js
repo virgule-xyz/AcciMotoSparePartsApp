@@ -134,7 +134,7 @@ class App extends React.Component {
    */
   addPicture = data => {
     this.setState(state => ({
-      pictures: [...state.pictures, data.base64],
+      pictures: [...state.pictures, data],
     }));
   };
 

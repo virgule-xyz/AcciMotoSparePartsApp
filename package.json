@@ -1,87 +1,52 @@
 {
   "name": "AcciMotoSparePartsApp",
   "bundleID": "fr.accimoto.app",
-  "version": "0.9.0",
+  "version": "1.0.0",
   "private": true,
   "story": false,
   "scripts": {
-    "start": "yarn clean; node node_modules/react-native/local-cli/cli.js start; yarn pretty && jest --verbose --updateSnapshot --coverage --collectCoverageFrom=src/**/*.js",
-    "test": "detox test; jest --clearCache; yarn pretty && jest --verbose --updateSnapshot --coverage --collectCoverageFrom=src/**/*.js",
-    "e2e": "detox test;",
-    "unit": "jest --clearCache; yarn pretty && jest --verbose --watch",
-    "unitdebug": "jest --clearCache; yarn pretty;node --inspect node_modules/.bin/jest --runInBand --verbose --watch",
-    "coverage": "jest --verbose --coverage --collectCoverageFrom=src/**/*.js && open ./coverage/lcov-report/index.html",
-    "iphone7": "react-native run-ios --simulator='iPhone 7'",
-    "iphone8": "react-native run-ios --simulator='iPhone 8 Plus'",
-    "ipad": "react-native run-ios --simulator='iPad Air 2'",
-    "tocommit": "jest --clearCache; watchman watch-del-all; yarn --reset-cache; rm -rf .cache/* cache/* coverage/*; lint-staged",
-    "setup": "yarn install; react-native link",
-    "clean": "jest --clearCache; watchman watch-del-all && yarn --reset-cache; rm -rf .cache/* cache/* coverage/*",
-    "cleanall": "yarn clean; rm -rf node_modules",
-    "pretty": "eslint components --fix; prettier --write \"src/**/*.js\"",
-    "storybook": "open 'http://localhost:7007' && storybook start"
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "iphone": "react-native run-ios",
+    "android": "adb reverse tcp:8081 tcp:8081; react-native run-android",
+    "clean": "yarn --reset-cache; rimraf node_modules .cache/* cache/* coverage/*",
+    "pretty": "eslint components --fix; prettier --write \"src/**/*.js\""
   },
   "dependencies": {
-    "@emotion/core": "^10.0.0-beta.12",
     "axios": "^0.18.0",
-    "detox-cli": "^7.4.0",
-    "global": "^4.3.2",
-    "react": "16.6.0-alpha.8af6728",
-    "react-native": "0.57.4",
+    "eslint": "^5.10.0",
+    "fbjs-scripts": "^1.0.1",
+    "react": "^16.6.3",
+    "react-devtools-core": "^3.4.3",
+    "react-dom": "^16.6.3",
+    "react-is": "^16.6.3",
+    "react-native": "^0.57.8",
     "react-native-camera": "git+https://git@github.com/react-native-community/react-native-camera",
-    "react-native-keyboard-aware-scroll-view": "^0.7.4",
+    "react-native-camera-kit": "^6.3.1",
+    "react-native-cli": "^2.0.1",
+    "react-native-image-picker": "^0.27.2",
+    "react-native-keyboard-aware-scroll-view": "^0.8.0",
     "react-native-keyboard-spacer": "^0.4.1",
-    "react-navigation": "^2.14.0",
-    "rn-fetch-blob": "^0.10.13"
+    "react-navigation": "^2.18.3",
+    "rn-fetch-blob": "^0.10.14"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0-0",
-    "@babel/preset-env": "^7.0.0-0",
-    "@emotion/styled-base": "^10.0.0-beta.12",
-    "@storybook/addon-knobs": "^4.0.7",
-    "@storybook/addon-links": "^4.0.4",
-    "@storybook/addon-ondevice-backgrounds": "^4.0.4",
-    "@storybook/addon-ondevice-knobs": "^4.0.4",
-    "@storybook/addon-ondevice-notes": "^4.0.4",
-    "@storybook/addon-options": "^4.0.4",
-    "@storybook/addons": "^4.0.4",
-    "@storybook/react-native": "^4.0.4",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.2.0",
     "babel-eslint": "^10.0.1",
-    "babel-jest": "23.6.0",
-    "babel-plugin-styled-components": "^1.8.0",
+    "babel-plugin-styled-components": "^1.10.0",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "babel-preset-react-native": "^4.0.1",
     "babel-runtime": "^6.26.0",
-    "detox": "^9.0.6",
-    "enzyme": "^3.7.0",
-    "enzyme-adapter-react-16": "^1.6.0",
-    "enzyme-to-json": "^3.3.4",
-    "eslint": "^5.8.0",
     "eslint-config-airbnb": "^17.1.0",
-    "eslint-config-prettier": "^3.1.0",
+    "eslint-config-prettier": "^3.3.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-prettier": "^3.0.0",
     "eslint-plugin-react": "^7.11.1",
-    "husky": "^1.1.3",
-    "jasmine": "^3.3.0",
-    "jest": "23.6.0",
-    "jsdom": "^13.0.0",
-    "lint-staged": "^8.0.4",
-    "metro-react-native-babel-preset": "0.49.0",
-    "prettier": "^1.14.3",
+    "metro-react-native-babel-preset": "^0.51.0",
+    "prettier": "^1.15.3",
     "prop-types": "^15.6.2",
-    "react-dom": "16.6.1",
-    "react-test-renderer": "16.6.0-alpha.8af6728",
-    "styled-components": "^4.0.3"
-  },
-  "lint-staged": {
-    "*.js": [
-      "yarn test:unit"
-    ],
-    "*": [
-      "git add ."
-    ]
+    "styled-components": "^4.1.3"
   },
   "pretty": "prettier --semi false --print-width 100 --single-quote --trailing-comma all --write",
   "jest": {
@@ -116,16 +81,5 @@
     "transformIgnorePatterns": [
       "/node_modules/(?!react-native|react-clone-referenced-element|react-navigation)"
     ]
-  },
-  "detox": {
-    "configurations": {
-      "ios.sim.debug": {
-        "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/RMS.app",
-        "build": "xcodebuild -project ios/RMS.xcodeproj -scheme RMS -configuration Debug -derivedDataPath ios/build -destination 'platform=iOS Simulator,name=iPhone 7,OS=11.3'",
-        "type": "ios.simulator",
-        "name": "iPhone 7"
-      }
-    },
-    "test-runner": "jest"
   }
 }

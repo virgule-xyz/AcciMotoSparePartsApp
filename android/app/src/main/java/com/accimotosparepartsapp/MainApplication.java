@@ -3,8 +3,10 @@ package com.accimotosparepartsapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import org.reactnative.camera.RNCameraPackage;
+import com.imagepicker.ImagePickerPackage;
+import com.wix.RNCameraKit.RNCameraKitPackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
+import org.reactnative.camera.RNCameraPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -25,8 +27,10 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new RNCameraPackage(),
-            new RNFetchBlobPackage()
+            new ImagePickerPackage(),
+            new RNCameraKitPackage(),
+            new RNFetchBlobPackage(),
+            new RNCameraPackage()
       );
     }
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, ActivityIndicator } from 'react-native';
-import { RNCamera } from 'react-native-camera';
+import ImagePicker from 'react-native-image-picker';
 import { withBack, AppHeader, AppFooter, Button, PictureContext } from '@components';
 import { ButtonHeight, ButtonMargins, langue } from '../UI';
 
@@ -94,19 +94,22 @@ class Screen5 extends Component {
               <ActivityIndicator size="large" color="#fff" />
             </View>
             <View style={styles.cameraWrapper}>
-              <RNCamera
+              <CameraKitCamera
                 ref={ref => {
                   this.camera = ref;
                 }}
-                style={styles.preview}
-                type={RNCamera.Constants.Type.back}
-                flashMode={RNCamera.Constants.FlashMode.auto}
-                ratio="1:1"
-                aspect="fit"
-                defaultVideoQuality={RNCamera.Constants.VideoQuality['480p']}
-                disabled={takingPicture}
-                permissionDialogTitle={langue.sentence('permission_camera_title')}
-                permissionDialogMessage={langue.sentence('permission_camera_message')}
+                style={{
+                  flex: 1,
+                  backgroundColor: 'transparent',
+                  backfaceVisibility: 'hidden',
+                }}
+                cameraOptions={{
+                  flashMode: 'auto', // on/off/auto(default)
+                  focusMode: 'on', // off/on(default)
+                  zoomMode: 'on', // off/on(default)
+                  ratioOverlay: '1:1', // optional, ratio overlay on the camera and crop the image seamlessly
+                  ratioOverlayColor: '#00000000', // optional
+                }}
               />
               <View style={styles.cameraFooter}>
                 <Button

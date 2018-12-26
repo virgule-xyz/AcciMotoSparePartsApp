@@ -325,7 +325,6 @@ class SparePartSelector extends Component {
             permissionDialogTitle={langue.sentence('permission_camera_title')}
             permissionDialogMessage={langue.sentence('permission_camera_message')}
             onBarCodeRead={event => this.onBarcodeRead(event)}
-            onXXXGoogleVisionBarcodesDetected={event => this.onBarcodeRead(event)}
           >
             <View
               style={{

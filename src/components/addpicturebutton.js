@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, Text, Image } from 'react-native';
 import { withNavigation } from 'react-navigation';
+import ImagePicker from 'react-native-image-picker';
 import {
   ButtonHeight,
   ButtonRadius,
@@ -10,6 +11,7 @@ import {
   ColorBlack,
   langue,
 } from '../UI';
+import { PictureContext } from '@components';
 
 const styles = StyleSheet.create({
   actionButtonNew: {
@@ -36,15 +38,34 @@ const styles = StyleSheet.create({
 const addIcon = require('../assets/images/add.png');
 
 const AddPictureButton = ({ navigation }) => (
-  <TouchableOpacity
-    style={styles.actionButtonNew}
-    onPress={() => {
-      navigation.navigate('Screen5');
-    }}
-  >
-    <Image source={addIcon} style={styles.icons} />
-    <Text style={styles.buttonText}>{langue.sentence('nouvelle_photo')}</Text>
-  </TouchableOpacity>
+  <PictureContext.Consumer>
+    {({ addPicture }) => (
+      <TouchableOpacity
+        style={styles.actionButtonNew}
+        onPress={() => {
+          ImagePicker.launchCamera(
+            {
+              title: '',
+              mediaType: 'photo',
+              quality: 0.9,
+            },
+            response => {
+              if (response.didCancel) {
+                console.log('User cancelled image picker');
+              } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+              } else {
+                addPicture(response.data);
+              }
+            },
+          );
+        }}
+      >
+        <Image source={addIcon} style={styles.icons} />
+        <Text style={styles.buttonText}>{langue.sentence('nouvelle_photo')}</Text>
+      </TouchableOpacity>
+    )}
+  </PictureContext.Consumer>
 );
 
 export default withNavigation(AddPictureButton);

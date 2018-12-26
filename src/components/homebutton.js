@@ -46,25 +46,7 @@ const styles = StyleSheet.create({
 
 const HomeButton = ({ navigation, home, style }) => {
   const askBeforeGoBackLanguages = () => {
-    Alert.alert(
-      AlertTitle,
-      langue.sentence('question_retour_home'),
-      [
-        {
-          text: langue.sentence('non'),
-          style: 'cancel',
-        },
-        {
-          text: langue.sentence('oui'),
-          onPress: () => {
-            navigation.navigate('Screen1');
-          },
-        },
-      ],
-      {
-        cancelable: false,
-      },
-    );
+    navigation.navigate('Screen1');
   };
 
   const askBeforeGoBackHome = () => {

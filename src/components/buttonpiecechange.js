@@ -29,26 +29,7 @@ const styles = StyleSheet.create({
 
 const ButtonPieceChange = ({ navigation, style }) => {
   const askBeforeGoBackHome = () => {
-    Alert.alert(
-      AlertTitle,
-      langue.sentence('question_retour_piece'),
-      [
-        {
-          text: langue.sentence('non'),
-          onPress: () => {},
-          style: 'cancel',
-        },
-        {
-          text: langue.sentence('oui'),
-          onPress: () => {
-            navigation.navigate('Screen2');
-          },
-        },
-      ],
-      {
-        cancelable: false,
-      },
-    );
+    navigation.navigate('Screen2');
   };
 
   return (
